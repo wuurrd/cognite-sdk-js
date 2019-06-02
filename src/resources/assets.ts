@@ -13,15 +13,10 @@ import {
   generateSearchEndpoint,
   generateUpdateEndpoint,
 } from '../standardMethods';
-import {
-  Asset,
-  AssetChange,
-  AssetIdEither,
-  AssetListScope,
-  AssetSearchFilter,
-  ExternalAssetItem,
-} from '../types/types';
+import * as types from '../types/types';
 import { projectUrl } from '../utils';
+import { Asset } from './classes/asset';
+import { AssetList } from './classes/assetList';
 
 export interface AssetsAPI {
   /**
@@ -35,7 +30,7 @@ export interface AssetsAPI {
    * const createdAssets = await client.assets.create(assets);
    * ```
    */
-  create: (items: ExternalAssetItem[]) => Promise<Asset[]>;
+  create: (items: types.ExternalAssetItem[]) => Promise<AssetList>;
 
   /**
    * [List assets](https://doc.cognitedata.com/api/v1/#operation/listAssets)
@@ -44,7 +39,7 @@ export interface AssetsAPI {
    * const assets = await client.assets.list({ filter: { name: '21PT1019' } });
    * ```
    */
-  list: (scope?: AssetListScope) => CogniteAsyncIterator<Asset>;
+  list: (scope?: types.AssetListScope) => CogniteAsyncIterator<types.Asset>;
 
   /**
    * [Retrieve assets](https://doc.cognitedata.com/api/v1/#operation/byIdsAssets)
@@ -53,7 +48,7 @@ export interface AssetsAPI {
    * const assets = await client.assets.retrieve([{id: 123}, {externalId: 'abc'}]);
    * ```
    */
-  retrieve: (ids: AssetIdEither[]) => Promise<Asset[]>;
+  retrieve: (ids: types.AssetIdEither[]) => Promise<types.Asset[]>;
 
   /**
    * [Update assets](https://doc.cognitedata.com/api/v1/#operation/updateAssets)
@@ -62,7 +57,7 @@ export interface AssetsAPI {
    * const assets = await client.assets.update([{id: 123, update: {name: {set: 'New name'}}}]);
    * ```
    */
-  update: (changes: AssetChange[]) => Promise<Asset[]>;
+  update: (changes: types.AssetChange[]) => Promise<types.Asset[]>;
 
   /**
    * [Search for assets](https://doc.cognitedata.com/api/v1/#operation/searchAssets)
@@ -78,7 +73,7 @@ export interface AssetsAPI {
    * }]);
    * ```
    */
-  search: (query: AssetSearchFilter) => Promise<Asset[]>;
+  search: (query: types.AssetSearchFilter) => Promise<types.Asset[]>;
 
   /**
    * [Delete assets](https://doc.cognitedata.com/api/v1/#operation/deleteAssets)
@@ -86,19 +81,19 @@ export interface AssetsAPI {
    * ```js
    * await client.assets.delete([{id: 123}, {externalId: 'abc'}]);
    */
-  delete: (ids: AssetIdEither[]) => Promise<{}>;
+  delete: (ids: types.AssetIdEither[]) => Promise<{}>;
 }
 
 export function assetChunker(
-  assets: ExternalAssetItem[],
+  assets: types.ExternalAssetItem[],
   chunkSize: number = 1000
-): ExternalAssetItem[][] {
-  const nodes: Node<ExternalAssetItem>[] = assets.map(asset => {
+): types.ExternalAssetItem[][] {
+  const nodes: Node<types.ExternalAssetItem>[] = assets.map(asset => {
     return { data: asset };
   });
 
   // find all new exteralIds and map the new externalId to the asset
-  const externalIdMap = new Map<string, Node<ExternalAssetItem>>();
+  const externalIdMap = new Map<string, Node<types.ExternalAssetItem>>();
   nodes.forEach(node => {
     const { externalId } = node.data;
     if (externalId) {
@@ -127,7 +122,15 @@ export function generateAssetsObject(
 ): AssetsAPI {
   const path = projectUrl(project) + '/assets';
   return {
-    create: generateCreateEndpoint(instance, path, map, assetChunker),
+    create: async items => {
+      const response = await generateCreateEndpoint(
+        instance,
+        path,
+        map,
+        assetChunker
+      )(items);
+      return new AssetList(thi);
+    },
     list: generateListEndpoint(instance, path, map, true),
     retrieve: generateRetrieveEndpoint(instance, path, map),
     update: generateUpdateEndpoint(instance, path, map),
