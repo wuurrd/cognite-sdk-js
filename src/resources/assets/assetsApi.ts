@@ -3,6 +3,7 @@
 import { AxiosInstance } from 'axios';
 import { CogniteAsyncIterator } from '../../autoPagination';
 import { MetadataMap } from '../../metadata';
+// import { CogniteMultiError } from '../../multiError';
 import {
   generateCreateEndpoint,
   generateDeleteEndpoint,
@@ -17,10 +18,14 @@ import {
   AssetIdEither,
   AssetListScope,
   AssetSearchFilter,
+  // CogniteInternalId,
   ExternalAssetItem,
+  // ExternalId,
+  // IdEither,
+  // InternalId,
 } from '../../types/types';
 import { projectUrl } from '../../utils';
-import { assetChunker } from './assetUtils';
+import { assetChunker, filterMissingIdsFromErrorResponse } from './assetUtils';
 
 export class AssetsAPI {
   /**
@@ -88,7 +93,7 @@ export class AssetsAPI {
    * await client.assets.delete([{id: 123}, {externalId: 'abc'}]);
    * ```
    */
-  public delete: AssetDeleteEndpoint;
+  private deleteEndpoint: AssetDeleteEndpoint;
 
   /** @hidden */
   constructor(project: string, instance: AxiosInstance, map: MetadataMap) {
@@ -98,9 +103,67 @@ export class AssetsAPI {
     this.retrieve = generateRetrieveEndpoint(instance, path, map);
     this.update = generateUpdateEndpoint(instance, path, map);
     this.search = generateSearchEndpoint(instance, path, map);
-    this.delete = generateDeleteEndpoint(instance, path, map);
+    this.deleteEndpoint = generateDeleteEndpoint(instance, path, map);
   }
+
+  public delete: AssetDeleteEndpoint = async ids => {
+    let idsToRetry = [...ids];
+    let response = {};
+    do {
+      try {
+        response = await this.deleteEndpoint(ids);
+        idsToRetry = [];
+      } catch (err) {
+        idsToRetry = filterMissingIdsFromErrorResponse(err);
+      }
+    } while (idsToRetry.length !== 0);
+    return response;
+  };
 }
+
+// function extractIdFromIdEither(obj: IdEither) {
+//   if ((obj as ExternalId).externalId) {
+//     return (obj as ExternalId).externalId;
+//   }
+//   return (obj as InternalId).id;
+// }
+
+// function silentlyDeleteAssets(
+//   endpoint: AssetDeleteEndpoint
+// ): AssetDeleteEndpoint {
+//   return async items => {
+//     let currentIdSet = [...items];
+//     let error;
+//     const responses = [];
+//     do {
+//       error = null;
+//       try {
+//         const response = await endpoint(currentIdSet);
+//         responses.push(response);
+//       } catch (err) {
+//         error = err;
+//         if (!(err instanceof CogniteMultiError)) {
+//           throw err;
+//         }
+//         // check if we have encountered the non-existing ID request case
+//         const hasMissingIds = err.missing && err.missing.length > 0;
+//         const hasCorrectStatusCode = err.status === 400;
+//         const noDuplicates = !err.duplicated || err.duplicated.length === 0;
+//         if (!(hasCorrectStatusCode && hasMissingIds && noDuplicates)) {
+//           throw err;
+//         }
+
+//         const missingIds = new Set<CogniteInternalId | string>();
+//         err.missing!.map(extractIdFromIdEither).forEach(missingIds.add);
+
+//         currentIdSet = currentIdSet.filter(
+//           missingItem => !missingIds.has(extractIdFromIdEither(missingItem))
+//         );
+//       }
+//     } while (error);
+//     return responses;
+//   };
+// }
 
 export type AssetCreateEndpoint = (
   items: ExternalAssetItem[]

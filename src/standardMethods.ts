@@ -246,7 +246,7 @@ export function generateDeleteEndpoint<IdType>(
           url: `${resourcePath}/delete`,
           data: { items: input },
         }),
-      true
+      false
     );
     return metadataMap.addAndReturn({}, responses[0]);
   };

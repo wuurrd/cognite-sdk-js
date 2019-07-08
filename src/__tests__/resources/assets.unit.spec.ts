@@ -1,10 +1,14 @@
 // Copyright 2019 Cognite AS
 
+import { CogniteError } from '../../error';
+import { CogniteMultiError } from '../../multiError';
 import {
   assetChunker,
+  filterMissingIdsFromErrorResponse,
   promiseAllAtOnce,
   promiseEachInSequence,
 } from '../../resources/assets/assetUtils';
+import { IdEither } from '../../types/types';
 
 describe('Asset unit test', () => {
   describe('multi promise resolution', () => {
@@ -155,6 +159,117 @@ describe('Asset unit test', () => {
           visitedAssets.add(asset);
         });
       });
+    });
+  });
+
+  describe('filterMissingIdsFromErrorResponse', () => {
+    test('single failed request', () => {
+      const error = new CogniteMultiError<IdEither, {}>({
+        succeded: [],
+        responses: [],
+        failed: [
+          [
+            {
+              id: 4664253610563142,
+            },
+            {
+              externalId: 'test-child25433464104',
+            },
+          ],
+        ],
+        errors: [
+          new CogniteError('', 400, '', {
+            missing: [
+              {
+                externalId: 'test-child25433464104',
+              },
+            ],
+          }),
+        ],
+      });
+
+      expect(filterMissingIdsFromErrorResponse(error)).toEqual([
+        { id: 4664253610563142 },
+      ]);
+    });
+
+    test('multiple missing ids', () => {
+      const error = new CogniteMultiError<IdEither, {}>({
+        succeded: [],
+        responses: [],
+        failed: [
+          [
+            {
+              id: 4664253610563142,
+            },
+            {
+              id: 123,
+            },
+            {
+              externalId: 'test-child25433464104',
+            },
+          ],
+        ],
+        errors: [
+          new CogniteError('', 400, '', {
+            missing: [
+              {
+                externalId: 'test-child25433464104',
+              },
+              {
+                id: 4664253610563142,
+              },
+            ],
+          }),
+        ],
+      });
+
+      expect(filterMissingIdsFromErrorResponse(error)).toEqual([{ id: 123 }]);
+    });
+
+    test('wrong status code', () => {
+      const error = new CogniteMultiError<IdEither, {}>({
+        succeded: [],
+        responses: [],
+        failed: [
+          [
+            {
+              id: 4664253610563142,
+            },
+            {
+              id: 123,
+            },
+            {
+              externalId: 'test-child25433464104',
+            },
+          ],
+        ],
+        errors: [new CogniteError('', 500, '')],
+      });
+      expect(() => filterMissingIdsFromErrorResponse(error)).toThrow();
+    });
+
+    test('some succeeded requests', () => {
+      const error = new CogniteMultiError<IdEither, {}>({
+        succeded: [[{ id: 567 }]],
+        responses: [],
+        failed: [
+          [
+            {
+              id: 123,
+            },
+            {
+              externalId: 'test-child25433464104',
+            },
+          ],
+        ],
+        errors: [
+          new CogniteError('', 400, '', {
+            missing: [{ externalId: 'test-child25433464104' }],
+          }),
+        ],
+      });
+      expect(filterMissingIdsFromErrorResponse(error)).toEqual([{ id: 123 }]);
     });
   });
 });

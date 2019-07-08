@@ -13,12 +13,18 @@ export class MetadataMap {
   }
 
   public addAndReturn<T>(value: T, metadata: Metadata): T {
-    this.map.set(value, {
-      // we extract out only what is necessary
-      status: metadata.status,
-      headers: metadata.headers,
-    });
-    return value;
+    try {
+      this.map.set(value, {
+        // we extract out only what is necessary
+        status: metadata.status,
+        headers: metadata.headers,
+      });
+      return value;
+    } catch (err) {
+      console.log(value);
+      console.log(err);
+      throw err;
+    }
   }
 
   public get(value: any): undefined | Metadata {

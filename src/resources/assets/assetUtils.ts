@@ -4,7 +4,7 @@ import { chunk } from 'lodash';
 import { CogniteError } from '../../error';
 import { Node, topologicalSort } from '../../graphUtils';
 import { CogniteMultiError } from '../../multiError';
-import { ExternalAssetItem } from '../../types/types';
+import { ExternalAssetItem, IdEither } from '../../types/types';
 
 /** @hidden */
 export function assetChunker(
@@ -114,4 +114,66 @@ export async function promiseEachInSequence<RequestType, ResponseType>(
       };
     }
   }, Promise.resolve(new Array<ResponseType>()));
+}
+
+// tslint:disable-next-line:cognitive-complexity
+function didRequestFailSolelyDueToMissingIds(
+  multiError: CogniteMultiError<IdEither, {}>
+) {
+  if (!(multiError instanceof CogniteMultiError)) {
+    return false;
+  }
+
+  if (!(multiError.failed && multiError.failed.length !== 0)) {
+    return false;
+  }
+
+  if (!(multiError.errors && multiError.errors.length > 0)) {
+    return false;
+  }
+
+  for (const err of multiError.errors) {
+    if (!(err instanceof CogniteError)) {
+      return false;
+    }
+    if (!(err.missing && err.missing.length > 0)) {
+      return false;
+    }
+    if (err.status !== 400) {
+      return false;
+    }
+    if (err.duplicated && err.duplicated.length !== 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/** @hidden */
+export function filterMissingIdsFromErrorResponse(
+  multiError: CogniteMultiError<IdEither, {}>
+) {
+  if (!didRequestFailSolelyDueToMissingIds(multiError)) {
+    // console.error('Error not solely caused my missing ids');
+    throw multiError;
+  }
+
+  const missingIds = new Set<string>();
+  multiError.errors.forEach(err => {
+    // @ts-ignore // we have checked that err instanceof CogniteError with didRequestFailSolelyDueToMissingIds
+    err.missing.forEach((id: object) => {
+      missingIds.add(JSON.stringify(id));
+    });
+  });
+
+  const idsToRetry: IdEither[] = [];
+  multiError.failed.forEach(id => {
+    if (missingIds.has(JSON.stringify(id))) {
+      return;
+    }
+    idsToRetry.push(id);
+  });
+
+  return idsToRetry;
 }

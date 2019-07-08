@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 export class CogniteError extends Error {
   public status: number;
   public requestId?: string;
-  public missing?: object[];
+  public missing?: any[];
   public duplicated?: any[];
   /** @hidden */
   constructor(

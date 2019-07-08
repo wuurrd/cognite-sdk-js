@@ -75,6 +75,16 @@ export function addRetryToAxiosInstance(instance: AxiosInstance) {
         return false;
       }
 
+      // { Error: connect ETIMEDOUT 34.76.254.249:443
+      //   at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1097:14)
+      //   errno: 'ETIMEDOUT',
+      //   code: 'ETIMEDOUT',
+      //   syscall: 'connect',
+      // @ts-ignore (err.syscall is not defined)
+      if (err.code === 'ETIMEDOUT' && err.syscall === 'connect') {
+        return true;
+      }
+
       if (!err.response) {
         return false;
       }

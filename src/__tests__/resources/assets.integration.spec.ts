@@ -159,4 +159,32 @@ describe('Asset integration test', () => {
     expect(rootAsset.name).toBe(asset.name);
     expect(rootAsset.description).toBe(asset.description);
   });
+
+  test('silently ignore delete errors on missing ids', async () => {
+    const root = {
+      name: 'test-root',
+      externalId: 'test-root' + randomInt(),
+    };
+    const child1 = {
+      name: 'test-child1',
+      parentExternalId: root.externalId,
+    };
+    const child2 = {
+      name: 'test-child2',
+      externalId: 'test-child2' + randomInt(),
+      parentExternalId: root.externalId,
+    };
+    const [
+      createdRoot,
+      createdChild1,
+      createdChild2,
+    ] = await client.assets.create([root, child1, child2]);
+    await client.assets.delete([{ id: createdRoot.id }]);
+    await expect(
+      client.assets.delete([
+        { id: createdChild1.id },
+        { externalId: createdChild2.externalId! },
+      ])
+    ).resolves.toEqual({});
+  });
 });
