@@ -8,7 +8,5 @@ export interface PostDatapoint {
      *
      * The string data value of a string metric.
      */
-    value: Value;
+    value: number | string;
 }
-
-export type Value = number | string;

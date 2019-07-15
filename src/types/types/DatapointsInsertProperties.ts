@@ -1,5 +1,3 @@
-export type DatapointsInsertProperties = any[] | boolean | number | number | null | DatapointsInsertPropertiesObject | string;
-
 export interface DatapointsInsertPropertiesObject {
     /**
      * The list of datapoints. The limit per request is 100000 datapoints.
@@ -17,7 +15,5 @@ export interface Datapoint {
      *
      * The string data value of a string metric.
      */
-    value: Value;
+    value: number | string;
 }
-
-export type Value = number | string;

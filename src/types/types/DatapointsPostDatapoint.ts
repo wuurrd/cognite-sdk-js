@@ -23,7 +23,5 @@ export interface Datapoint {
      *
      * The string data value of a string metric.
      */
-    value: Value;
+    value: number | string;
 }
-
-export type Value = number | string;

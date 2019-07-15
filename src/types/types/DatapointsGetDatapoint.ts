@@ -27,7 +27,5 @@ export interface Datapoint {
     /**
      * The data value.
      */
-    value: Value;
+    value: number | string;
 }
-
-export type Value = number | string;

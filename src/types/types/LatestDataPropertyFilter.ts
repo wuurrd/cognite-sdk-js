@@ -1,5 +1,3 @@
-export type LatestDataPropertyFilter = any[] | boolean | number | number | null | LatestDataPropertyFilterObject | string;
-
 export interface LatestDataPropertyFilterObject {
     /**
      * Get datapoints before this time. The format is N[timeunit]-ago where timeunit is

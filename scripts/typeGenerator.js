@@ -13,7 +13,7 @@ async function convertType(urlPath, language, schema, schemaName) {
     const jsonFile = path.resolve(urlPath, `${schemaName}.json`);
     await fs.writeFile(jsonFile, json);
     const outputPath = path.resolve(urlPath, `${schemaName}.${language}`);
-    const string = 'quicktype --lang '.concat(language, ' --out ', outputPath, ' --src-lang schema ', '--src ', jsonFile, ' --just-types --explicit-unions');
+    const string = 'quicktype --lang '.concat(language, ' --out ', outputPath, ' --src-lang schema ', '--src ', jsonFile, ' --just-types');
     await exec(string);
     await fs.unlink(jsonFile);
     return outputPath;
