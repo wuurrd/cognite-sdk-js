@@ -21,16 +21,26 @@ async function convertType(urlPath, language, schema, schemaName) {
 }
 
 function generateTypes(language, urlPath) {
-    SwaggerParser.dereference(urlPath + 'v1_spec.json', {}, async (_, api) => {
+    SwaggerParser.dereference('/Users/eirikdahlen/workspace/SDKjs/cognitesdk-js/src/types/v1_spec.json', {}, async (_, api) => {
         urlPath = urlPath + '/generated';
         fsExtra.removeSync(urlPath);
         await exec('mkdir '.concat(urlPath)).catch((err) => console.log(err));
 
         const promises = Object.keys(api.components.schemas).map(schemaName => {
             const schema = api.components.schemas[schemaName];
-            const newSchemaName = lodash.chain(schemaName).camelCase().upperFirst();
+            const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
+            // const newSchemaName = lodash.chain(schemaName).split('_').upperFirst().values();
             return convertType(urlPath, language, schema, newSchemaName);
         });
+        const promises2 = Object.keys(api.components.responses).map(schemaName => {
+            if (schemaName === "ProjectResponse") {
+                const schema = api.components.responses[schemaName].content['application/json'].schema;
+                const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
+                // const newSchemaName = lodash.chain(schemaName).camelCase().upperFirst();
+                return convertType(urlPath, language, schema, newSchemaName);
+            }
+        });
+        promises.push(...promises2);
         const files = await Promise.all(promises);
         console.log(JSON.stringify(files, null, 2));
 

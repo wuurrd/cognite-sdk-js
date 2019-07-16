@@ -5,7 +5,7 @@
 /**
  * Represents the current authentication status of the request
  */
-export interface LoginStatusDto {
+export interface LoginStatusDTO {
   /**
    * ID of the api key making the request. This is optional and only present if an api key is
    * used as authentication.

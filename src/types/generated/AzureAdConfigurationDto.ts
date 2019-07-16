@@ -5,7 +5,7 @@
 /**
  * Data specific to Azure AD authentication
  */
-export interface AzureAdConfigurationDto {
+export interface AzureADConfigurationDTO {
   /**
    * Azure application ID. You get this when creating the Azure app.
    */

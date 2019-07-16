@@ -6,15 +6,15 @@
  * A list of objects along with possible cursors to get the next, or previous, page of
  * results
  */
-export interface DataWithCursorRawDbRow {
-  items?: DataWithCursorRawDbRowItem[];
+export interface DataWithCursorRawDBRow {
+  items?: DataWithCursorRawDBRowItem[];
   /**
    * Cursor to get the next page of results (if available).
    */
   nextCursor?: string;
 }
 
-export interface DataWithCursorRawDbRowItem {
+export interface DataWithCursorRawDBRowItem {
   /**
    * Row data stored as a JSON object.
    */

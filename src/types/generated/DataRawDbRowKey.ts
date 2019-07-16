@@ -2,14 +2,14 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface DataRawDbRowKey {
-  items?: DataRawDbRowKeyItem[];
+export interface DataRawDBRowKey {
+  items?: DataRawDBRowKeyItem[];
 }
 
 /**
  * A row key
  */
-export interface DataRawDbRowKeyItem {
+export interface DataRawDBRowKeyItem {
   /**
    * Unique row key
    */

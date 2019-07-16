@@ -5,11 +5,11 @@
 /**
  * List of responses. The order matches the requests order.
  */
-export interface DataGetTimeSeriesMetadataDto {
-  items: DataGetTimeSeriesMetadataDtoItem[];
+export interface DataGetTimeSeriesMetadataDTO {
+  items: DataGetTimeSeriesMetadataDTOItem[];
 }
 
-export interface DataGetTimeSeriesMetadataDtoItem {
+export interface DataGetTimeSeriesMetadataDTOItem {
   /**
    * The asset that this time series belongs to.
    */

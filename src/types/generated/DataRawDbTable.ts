@@ -2,14 +2,14 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface DataRawDbTable {
-  items?: DataRawDbTableItem[];
+export interface DataRawDBTable {
+  items?: DataRawDBTableItem[];
 }
 
 /**
  * A NoSQL database table to store customer data
  */
-export interface DataRawDbTableItem {
+export interface DataRawDBTableItem {
   /**
    * Unique name of the table
    */

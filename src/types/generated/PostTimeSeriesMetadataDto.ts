@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface PostTimeSeriesMetadataDto {
+export interface PostTimeSeriesMetadataDTO {
   /**
    * The asset that this time series belongs to.
    */

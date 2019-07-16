@@ -2,11 +2,11 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface DataRawDbRow {
-  items?: DataRawDbRowItem[];
+export interface DataRawDBRow {
+  items?: DataRawDBRowItem[];
 }
 
-export interface DataRawDbRowItem {
+export interface DataRawDBRowItem {
   /**
    * Row data stored as a JSON object.
    */

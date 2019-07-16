@@ -6,8 +6,8 @@
  * A list of objects along with possible cursors to get the next, or previous, page of
  * results
  */
-export interface DataWithCursorRawDb {
-  items?: DataWithCursorRawDbItem[];
+export interface DataWithCursorRawDB {
+  items?: DataWithCursorRawDBItem[];
   /**
    * Cursor to get the next page of results (if available).
    */
@@ -17,7 +17,7 @@ export interface DataWithCursorRawDb {
 /**
  * A NoSQL database to store customer data.
  */
-export interface DataWithCursorRawDbItem {
+export interface DataWithCursorRawDBItem {
   /**
    * Unique name of a database.
    */

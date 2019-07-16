@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface TokenStatusDto {
+export interface TokenStatusDTO {
   /**
    * Whether this token has expired
    */

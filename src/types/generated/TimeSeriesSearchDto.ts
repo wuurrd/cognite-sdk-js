@@ -2,11 +2,11 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface TimeSeriesSearchDto {
+export interface TimeSeriesSearchDTO {
   /**
    * Filtering parameters
    */
-  filter?: TimeSeriesSearchDtoFilter;
+  filter?: TimeSeriesSearchDTOFilter;
   /**
    * Return up to this many results.
    */
@@ -14,13 +14,13 @@ export interface TimeSeriesSearchDto {
   /**
    * Search parameters
    */
-  search?: TimeSeriesSearchDtoSearch;
+  search?: TimeSeriesSearchDTOSearch;
 }
 
 /**
  * Filtering parameters
  */
-export interface TimeSeriesSearchDtoFilter {
+export interface TimeSeriesSearchDTOFilter {
   /**
    * Filter out time series that are not linked to any of these assets.
    */
@@ -28,7 +28,7 @@ export interface TimeSeriesSearchDtoFilter {
   /**
    * Filter out time series with createdTime outside this range.
    */
-  createdTime?: TimeSeriesSearchDtoCreatedTime;
+  createdTime?: TimeSeriesSearchDTOCreatedTime;
   /**
    * Prefix filter on externalId. (case-sensitive)
    */
@@ -44,7 +44,7 @@ export interface TimeSeriesSearchDtoFilter {
   /**
    * Filter out time series with lastUpdatedTime outside this range.
    */
-  lastUpdatedTime?: TimeSeriesSearchDtoLastUpdatedTime;
+  lastUpdatedTime?: TimeSeriesSearchDTOLastUpdatedTime;
   /**
    * Filter out timeseries that do not match these metadata fields and values
    * (case-sensitive). The format is {"key1":"value1","key2":"value2"}.
@@ -67,7 +67,7 @@ export interface TimeSeriesSearchDtoFilter {
 /**
  * Filter out time series with createdTime outside this range.
  */
-export interface TimeSeriesSearchDtoCreatedTime {
+export interface TimeSeriesSearchDTOCreatedTime {
   /**
    * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
    * Time (UTC), minus leap seconds.
@@ -83,7 +83,7 @@ export interface TimeSeriesSearchDtoCreatedTime {
 /**
  * Filter out time series with lastUpdatedTime outside this range.
  */
-export interface TimeSeriesSearchDtoLastUpdatedTime {
+export interface TimeSeriesSearchDTOLastUpdatedTime {
   /**
    * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
    * Time (UTC), minus leap seconds.
@@ -99,7 +99,7 @@ export interface TimeSeriesSearchDtoLastUpdatedTime {
 /**
  * Search parameters
  */
-export interface TimeSeriesSearchDtoSearch {
+export interface TimeSeriesSearchDTOSearch {
   /**
    * Prefix and fuzzy search on description.
    */

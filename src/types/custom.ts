@@ -3,8 +3,14 @@ import {
   AssetIdEither,
   BoundingBox3D,
   Cursor,
+  DataExternalAssetItem,
   FileFilter,
   FilesMetadata,
+  NewApiKeyResponseDto,
+  OutputProjectAuthentication,
+  SecurityCategoryDto,
+  SecurityCategorySpecDto,
+  ServiceAccount,
 } from './types';
 
 export interface FileRequestFilter extends Cursor, FileFilter {}
@@ -148,9 +154,22 @@ export interface Revision3DListRequest extends Limit {
   published?: boolean;
 }
 
+export interface ProjectUpdate {
+  name?: string;
+  defaultGroupId?: number; // int64
+  authentication?: OutputProjectAuthentication;
+}
+
 export interface ListGroups {
   /**
    * Whether to get all groups, only available with the groups:list acl.
    */
   all?: boolean;
 }
+export type CogniteEvent = Event;
+export type TimeseriesIdEither = IdEither;
+export type SecurityCategory = SecurityCategoryDto;
+export type SecurityCategorySpec = SecurityCategorySpecDto;
+export type ExternalAssetItem = DataExternalAssetItem;
+// export type ApiKeyObject = NewApiKeyResponseDto;
+export type GroupServiceAccount = ServiceAccount;

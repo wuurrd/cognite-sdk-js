@@ -5,15 +5,15 @@
 /**
  * A list of objects along with possible cursors to get the next page of result
  */
-export interface DataWithCursorGetTimeSeriesMetadataDto {
-  items: DataWithCursorGetTimeSeriesMetadataDtoItem[];
+export interface DataWithCursorGetTimeSeriesMetadataDTO {
+  items: DataWithCursorGetTimeSeriesMetadataDTOItem[];
   /**
    * The cursor to get the next page of results (if available).
    */
   nextCursor?: string;
 }
 
-export interface DataWithCursorGetTimeSeriesMetadataDtoItem {
+export interface DataWithCursorGetTimeSeriesMetadataDTOItem {
   /**
    * The asset that this time series belongs to.
    */

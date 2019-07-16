@@ -2,11 +2,11 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface SingleTokenStatusDtoResponse {
-  data: SingleTokenStatusDtoResponseData;
+export interface SingleTokenStatusDTOResponse {
+  data: SingleTokenStatusDTOResponseData;
 }
 
-export interface SingleTokenStatusDtoResponseData {
+export interface SingleTokenStatusDTOResponseData {
   /**
    * Whether this token has expired
    */

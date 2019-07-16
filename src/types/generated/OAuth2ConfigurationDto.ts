@@ -5,7 +5,7 @@
 /**
  * Data related to generic OAuth2 authentication. Not used for Azure AD
  */
-export interface OAuth2ConfigurationDto {
+export interface OAuth2ConfigurationDTO {
   /**
    * Client ID. You probably get this when registering your client with the OAuth2 provider.
    */

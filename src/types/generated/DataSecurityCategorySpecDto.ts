@@ -2,11 +2,11 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface DataSecurityCategorySpecDto {
-  items: DataSecurityCategorySpecDtoItem[];
+export interface DataSecurityCategorySpecDTO {
+  items: DataSecurityCategorySpecDTOItem[];
 }
 
-export interface DataSecurityCategorySpecDtoItem {
+export interface DataSecurityCategorySpecDTOItem {
   /**
    * Name of the security category
    */

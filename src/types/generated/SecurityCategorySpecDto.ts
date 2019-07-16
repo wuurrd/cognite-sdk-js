@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface SecurityCategorySpecDto {
+export interface SecurityCategorySpecDTO {
   /**
    * Name of the security category
    */

@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface NewApiKeyResponseDto {
+export interface NewApiKeyResponseDTO {
   /**
    * The time of creation in Unix milliseconds.
    */
@@ -18,7 +18,7 @@ export interface NewApiKeyResponseDto {
   /**
    * The status of the API key.
    */
-  status: NewApiKeyResponseDtoStatus;
+  status: NewApiKeyResponseDTOStatus;
   /**
    * The API key to be used against the API.
    */
@@ -28,7 +28,7 @@ export interface NewApiKeyResponseDto {
 /**
  * The status of the API key.
  */
-export enum NewApiKeyResponseDtoStatus {
+export enum NewApiKeyResponseDTOStatus {
   Active = 'ACTIVE',
   Deleted = 'DELETED',
 }

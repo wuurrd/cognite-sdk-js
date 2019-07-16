@@ -5,7 +5,7 @@
 /**
  * A row key
  */
-export interface RawDbRowKey {
+export interface RawDBRowKey {
   /**
    * Unique row key
    */
