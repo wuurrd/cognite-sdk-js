@@ -5,7 +5,7 @@
 /**
  * Changes will be applied to time series.
  */
-export interface TimeSeriesUpdateByExternalID {
+export interface TimeSeriesUpdateByExternalId {
   update: TimeSeriesUpdateByExternalIdUpdate;
   /**
    * The external ID provided by the client. Must be unique within the project.
@@ -17,7 +17,7 @@ export interface TimeSeriesUpdateByExternalIdUpdate {
   /**
    * The change that will be applied to the key.
    */
-  assetId?: TimeSeriesUpdateByExternalIdAssetID;
+  assetId?: TimeSeriesUpdateByExternalIdAssetId;
   /**
    * The change that will be applied to the key.
    */
@@ -25,7 +25,7 @@ export interface TimeSeriesUpdateByExternalIdUpdate {
   /**
    * The change that will be applied to the key.
    */
-  externalId?: TimeSeriesUpdateByExternalIdExternalID;
+  externalId?: TimeSeriesUpdateByExternalIdExternalId;
   /**
    * Custom, application specific metadata. String key -> String value. Limits: Maximum length
    * of key is 32 bytes, value 512 bytes, up to 16 key-value pairs.
@@ -48,7 +48,7 @@ export interface TimeSeriesUpdateByExternalIdUpdate {
 /**
  * The change that will be applied to the key.
  */
-export interface TimeSeriesUpdateByExternalIdAssetID {
+export interface TimeSeriesUpdateByExternalIdAssetId {
   set?: number;
   setNull?: boolean;
 }
@@ -64,7 +64,7 @@ export interface TimeSeriesUpdateByExternalIdDescription {
 /**
  * The change that will be applied to the key.
  */
-export interface TimeSeriesUpdateByExternalIdExternalID {
+export interface TimeSeriesUpdateByExternalIdExternalId {
   set?: string;
   setNull?: boolean;
 }

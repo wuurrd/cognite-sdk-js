@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface EitherID {
+export interface EitherId {
   /**
    * Javascript friendly internal ID given to the object.
    */

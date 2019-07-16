@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CogniteeventsACLACL {
+export interface CogniteeventsAclAcl {
   actions: EventAction[];
   scope: CogniteeventsAclAclEventScope;
 }

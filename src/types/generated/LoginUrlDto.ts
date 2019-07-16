@@ -5,7 +5,7 @@
 /**
  * Represents an url where the user can be redirected to sign in.
  */
-export interface LoginURLDto {
+export interface LoginUrlDto {
   /**
    * The url where the user can be redirected to sign in.
    */

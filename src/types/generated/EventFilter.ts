@@ -34,7 +34,7 @@ export interface EventFilter {
   /**
    * The IDs of the root assets that the related assets should be children of.
    */
-  rootAssetIds?: EventFilterRootAssetID[];
+  rootAssetIds?: EventFilterRootAssetId[];
   /**
    * The source of this event.
    */
@@ -101,7 +101,7 @@ export interface EventFilterLastUpdatedTime {
   min?: number;
 }
 
-export interface EventFilterRootAssetID {
+export interface EventFilterRootAssetId {
   /**
    * A JavaScript-friendly internal ID for the object.
    */

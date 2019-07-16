@@ -2,16 +2,16 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitetimeseriesACLScope {
+export interface CognitetimeseriesAclScope {
   all?: { [key: string]: any };
-  assetIdScope?: CognitetimeseriesAclScopeScopeAssetIDScope;
-  idscope?: CognitetimeseriesAclScopeScopeTimeSeriesIDScope;
+  assetIdScope?: CognitetimeseriesAclScopeScopeAssetIdScope;
+  idscope?: CognitetimeseriesAclScopeScopeTimeSeriesIdScope;
 }
 
-export interface CognitetimeseriesAclScopeScopeAssetIDScope {
+export interface CognitetimeseriesAclScopeScopeAssetIdScope {
   subtreeIds?: string[];
 }
 
-export interface CognitetimeseriesAclScopeScopeTimeSeriesIDScope {
+export interface CognitetimeseriesAclScopeScopeTimeSeriesIdScope {
   ids?: string[];
 }

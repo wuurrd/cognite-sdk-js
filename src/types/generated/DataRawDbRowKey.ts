@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface DataRawDBRowKey {
+export interface DataRawDbRowKey {
   items?: DataRawDbRowKeyItem[];
 }
 

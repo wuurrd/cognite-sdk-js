@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CogniteusersACLACL {
+export interface CogniteusersAclAcl {
   actions: UserAction[];
   scope: CogniteusersAclAclUserScope;
 }

@@ -2,6 +2,6 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitesecuritycategoriesACLScope {
+export interface CognitesecuritycategoriesAclScope {
   all?: { [key: string]: any };
 }

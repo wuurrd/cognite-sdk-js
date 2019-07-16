@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitegroupsACLACL {
+export interface CognitegroupsAclAcl {
   actions: CognitegroupsAclAclGroupAction[];
   scope: CognitegroupsAclAclGroupScope;
 }

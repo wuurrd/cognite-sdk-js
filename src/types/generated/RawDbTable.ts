@@ -5,7 +5,7 @@
 /**
  * A NoSQL database table to store customer data
  */
-export interface RawDBTable {
+export interface RawDbTable {
   /**
    * Unique name of the table
    */

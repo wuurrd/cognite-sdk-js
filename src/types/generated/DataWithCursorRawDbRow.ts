@@ -6,7 +6,7 @@
  * A list of objects along with possible cursors to get the next, or previous, page of
  * results
  */
-export interface DataWithCursorRawDBRow {
+export interface DataWithCursorRawDbRow {
   items?: DataWithCursorRawDbRowItem[];
   /**
    * Cursor to get the next page of results (if available).

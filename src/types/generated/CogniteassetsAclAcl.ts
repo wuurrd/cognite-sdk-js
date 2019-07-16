@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CogniteassetsACLACL {
+export interface CogniteassetsAclAcl {
   actions: AssetAction[];
   scope: CogniteassetsAclAclAssetScope;
 }

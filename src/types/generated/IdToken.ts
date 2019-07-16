@@ -5,7 +5,7 @@
 /**
  * An ID JWT token
  */
-export interface IDToken {
+export interface IdToken {
   /**
    * The expiration time of the token in seconds (unix)
    */

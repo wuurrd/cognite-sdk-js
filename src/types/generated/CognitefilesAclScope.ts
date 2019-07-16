@@ -2,6 +2,6 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitefilesACLScope {
+export interface CognitefilesAclScope {
   all?: { [key: string]: any };
 }

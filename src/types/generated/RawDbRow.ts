@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface RawDBRow {
+export interface RawDbRow {
   /**
    * Row data stored as a JSON object.
    */

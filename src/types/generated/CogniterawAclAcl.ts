@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CogniterawACLACL {
+export interface CogniterawAclAcl {
   actions: CogniterawAclAclRawAction[];
   scope: CogniterawAclAclRawScope;
 }

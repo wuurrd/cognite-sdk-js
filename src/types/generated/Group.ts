@@ -19,22 +19,22 @@ export interface Group {
 }
 
 export interface GroupCapability {
-  groupsAcl?: GroupACLGroup;
-  assetsAcl?: GroupACLAsset;
-  eventsAcl?: GroupACLEvent;
-  filesAcl?: GroupACLFile;
-  usersAcl?: GroupACLUser;
-  projectsAcl?: GroupACLProject;
-  securityCategoriesAcl?: GroupACLSecurityCategory;
-  rawAcl?: GroupACLRaw;
-  timeSeriesAcl?: GroupACLTimeseries;
-  apikeysAcl?: GroupACLApikey;
-  threedAcl?: GroupACLThreed;
-  sequencesAcl?: GroupACLSequences;
-  analyticsAcl?: GroupACLAnalytics;
+  groupsAcl?: GroupAclGroup;
+  assetsAcl?: GroupAclAsset;
+  eventsAcl?: GroupAclEvent;
+  filesAcl?: GroupAclFile;
+  usersAcl?: GroupAclUser;
+  projectsAcl?: GroupAclProject;
+  securityCategoriesAcl?: GroupAclSecurityCategory;
+  rawAcl?: GroupAclRaw;
+  timeSeriesAcl?: GroupAclTimeseries;
+  apikeysAcl?: GroupAclApikey;
+  threedAcl?: GroupAclThreed;
+  sequencesAcl?: GroupAclSequences;
+  analyticsAcl?: GroupAclAnalytics;
 }
 
-export interface GroupACLAnalytics {
+export interface GroupAclAnalytics {
   actions: GroupAnalyticsAction[];
   scope: GroupAnalyticsScope;
 }
@@ -49,12 +49,12 @@ export interface GroupAnalyticsScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLApikey {
-  actions: GroupApikeysACLAction[];
+export interface GroupAclApikey {
+  actions: GroupApikeysAclAction[];
   scope: GroupApikeyScope;
 }
 
-export enum GroupApikeysACLAction {
+export enum GroupApikeysAclAction {
   Create = 'CREATE',
   Delete = 'DELETE',
   List = 'LIST',
@@ -65,12 +65,12 @@ export interface GroupApikeyScope {
   currentuserscope?: { [key: string]: any };
 }
 
-export interface GroupACLAsset {
-  actions: GroupAssetsACLAction[];
+export interface GroupAclAsset {
+  actions: GroupAssetsAclAction[];
   scope: GroupAssetScope;
 }
 
-export enum GroupAssetsACLAction {
+export enum GroupAssetsAclAction {
   Read = 'READ',
   Write = 'WRITE',
 }
@@ -79,8 +79,8 @@ export interface GroupAssetScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLEvent {
-  actions: GroupAssetsACLAction[];
+export interface GroupAclEvent {
+  actions: GroupAssetsAclAction[];
   scope: GroupEventScope;
 }
 
@@ -88,8 +88,8 @@ export interface GroupEventScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLFile {
-  actions: GroupAssetsACLAction[];
+export interface GroupAclFile {
+  actions: GroupAssetsAclAction[];
   scope: GroupFileScope;
 }
 
@@ -97,7 +97,7 @@ export interface GroupFileScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLGroup {
+export interface GroupAclGroup {
   actions: GroupGroupAction[];
   scope: GroupGroupScope;
 }
@@ -115,7 +115,7 @@ export interface GroupGroupScope {
   currentuserscope?: { [key: string]: any };
 }
 
-export interface GroupACLProject {
+export interface GroupAclProject {
   actions: GroupProjectAction[];
   scope: GroupProjectScope;
 }
@@ -131,7 +131,7 @@ export interface GroupProjectScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLRaw {
+export interface GroupAclRaw {
   actions: GroupRawAction[];
   scope: GroupRawScope;
 }
@@ -146,7 +146,7 @@ export interface GroupRawScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLSecurityCategory {
+export interface GroupAclSecurityCategory {
   actions: GroupSecurityCategoryAction[];
   scope: GroupSecurityCategoryScope;
 }
@@ -162,8 +162,8 @@ export interface GroupSecurityCategoryScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLSequences {
-  actions: GroupAssetsACLAction[];
+export interface GroupAclSequences {
+  actions: GroupAssetsAclAction[];
   scope: GroupSequencesScope;
 }
 
@@ -171,7 +171,7 @@ export interface GroupSequencesScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLThreed {
+export interface GroupAclThreed {
   actions: GroupThreedAction[];
   scope: GroupThreedScope;
 }
@@ -187,27 +187,27 @@ export interface GroupThreedScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupACLTimeseries {
-  actions: GroupAssetsACLAction[];
+export interface GroupAclTimeseries {
+  actions: GroupAssetsAclAction[];
   scope: GroupTimeseriesScope;
 }
 
 export interface GroupTimeseriesScope {
   all?: { [key: string]: any };
-  assetIdScope?: GroupScopeAssetIDScope;
-  idscope?: GroupScopeTimeSeriesIDScope;
+  assetIdScope?: GroupScopeAssetIdScope;
+  idscope?: GroupScopeTimeSeriesIdScope;
 }
 
-export interface GroupScopeAssetIDScope {
+export interface GroupScopeAssetIdScope {
   subtreeIds?: string[];
 }
 
-export interface GroupScopeTimeSeriesIDScope {
+export interface GroupScopeTimeSeriesIdScope {
   ids?: string[];
 }
 
-export interface GroupACLUser {
-  actions: GroupApikeysACLAction[];
+export interface GroupAclUser {
+  actions: GroupApikeysAclAction[];
   scope: GroupUserScope;
 }
 

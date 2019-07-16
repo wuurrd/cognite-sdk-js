@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface InternalID {
+export interface InternalId {
   /**
    * Javascript friendly internal ID given to the object.
    */

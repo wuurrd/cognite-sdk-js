@@ -5,7 +5,7 @@
 /**
  * Changes will be applied to event.
  */
-export interface EventChangeByExternalID {
+export interface EventChangeByExternalId {
   update: EventChangeByExternalIdUpdate;
   /**
    * External Id provided by client. Should be unique within the project
@@ -17,7 +17,7 @@ export interface EventChangeByExternalIdUpdate {
   /**
    * Change that will be applied to the array object.
    */
-  assetIds?: EventChangeByExternalIdAssetIDS;
+  assetIds?: EventChangeByExternalIdAssetIds;
   /**
    * Removable string change.
    */
@@ -26,7 +26,7 @@ export interface EventChangeByExternalIdUpdate {
   /**
    * Removable string change.
    */
-  externalId?: EventChangeByExternalIdExternalID;
+  externalId?: EventChangeByExternalIdExternalId;
   /**
    * Custom, application specific metadata. String key -> String value. Limits: Maximum length
    * of key is 32 bytes, value 512 bytes, up to 16 key-value pairs.
@@ -50,7 +50,7 @@ export interface EventChangeByExternalIdUpdate {
 /**
  * Change that will be applied to the array object.
  */
-export interface EventChangeByExternalIdAssetIDS {
+export interface EventChangeByExternalIdAssetIds {
   set?: number[];
   add?: number[];
   remove?: number[];
@@ -72,7 +72,7 @@ export interface EventChangeByExternalIdEndTime {
 /**
  * Removable string change.
  */
-export interface EventChangeByExternalIdExternalID {
+export interface EventChangeByExternalIdExternalId {
   set?: string;
   setNull?: boolean;
 }

@@ -25,7 +25,7 @@ export interface DataEventChangeUpdate {
   /**
    * Change that will be applied to the array object.
    */
-  assetIds?: DataEventChangeAssetIDS;
+  assetIds?: DataEventChangeAssetIds;
   /**
    * Removable string change.
    */
@@ -34,7 +34,7 @@ export interface DataEventChangeUpdate {
   /**
    * Removable string change.
    */
-  externalId?: DataEventChangeExternalID;
+  externalId?: DataEventChangeExternalId;
   /**
    * Custom, application specific metadata. String key -> String value. Limits: Maximum length
    * of key is 32 bytes, value 512 bytes, up to 16 key-value pairs.
@@ -58,7 +58,7 @@ export interface DataEventChangeUpdate {
 /**
  * Change that will be applied to the array object.
  */
-export interface DataEventChangeAssetIDS {
+export interface DataEventChangeAssetIds {
   set?: number[];
   add?: number[];
   remove?: number[];
@@ -80,7 +80,7 @@ export interface DataEventChangeEndTime {
 /**
  * Removable string change.
  */
-export interface DataEventChangeExternalID {
+export interface DataEventChangeExternalId {
   set?: string;
   setNull?: boolean;
 }

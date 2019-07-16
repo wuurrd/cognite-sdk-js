@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitefilesACLACL {
+export interface CognitefilesAclAcl {
   actions: FileAction[];
   scope: CognitefilesAclAclFileScope;
 }

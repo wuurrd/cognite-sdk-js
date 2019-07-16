@@ -49,7 +49,7 @@ export interface AssetListScopeFilter {
    * Whether the filtered assets are root assets, or not.
    */
   root?: boolean;
-  rootIds?: AssetListScopeRootID[];
+  rootIds?: AssetListScopeRootId[];
   /**
    * The source of the asset.
    */
@@ -88,7 +88,7 @@ export interface AssetListScopeLastUpdatedTime {
   min?: number;
 }
 
-export interface AssetListScopeRootID {
+export interface AssetListScopeRootId {
   /**
    * A JavaScript-friendly internal ID for the object.
    */

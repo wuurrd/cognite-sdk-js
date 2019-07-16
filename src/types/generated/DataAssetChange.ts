@@ -29,7 +29,7 @@ export interface DataAssetChangeUpdate {
   /**
    * Removable string change.
    */
-  externalId?: DataAssetChangeExternalID;
+  externalId?: DataAssetChangeExternalId;
   /**
    * Custom, application specific metadata. String key -> String value. Limits: Maximum length
    * of key is 32 bytes, value 512 bytes, up to 16 key-value pairs.
@@ -56,7 +56,7 @@ export interface DataAssetChangeDescription {
 /**
  * Removable string change.
  */
-export interface DataAssetChangeExternalID {
+export interface DataAssetChangeExternalId {
   set?: string;
   setNull?: boolean;
 }

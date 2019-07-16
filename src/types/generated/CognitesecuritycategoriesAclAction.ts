@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export enum CognitesecuritycategoriesACLAction {
+export enum CognitesecuritycategoriesAclAction {
   Create = 'CREATE',
   Delete = 'DELETE',
   List = 'LIST',

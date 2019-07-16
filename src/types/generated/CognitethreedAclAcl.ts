@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitethreedACLACL {
+export interface CognitethreedAclAcl {
   actions: CognitethreedAclAclThreedAction[];
   scope: CognitethreedAclAclThreedScope;
 }

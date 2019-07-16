@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CogniteprojectsACLACL {
+export interface CogniteprojectsAclAcl {
   actions: CogniteprojectsAclAclProjectAction[];
   scope: CogniteprojectsAclAclProjectScope;
 }

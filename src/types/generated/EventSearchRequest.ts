@@ -51,7 +51,7 @@ export interface EventSearchRequestFilter {
   /**
    * The IDs of the root assets that the related assets should be children of.
    */
-  rootAssetIds?: EventSearchRequestRootAssetID[];
+  rootAssetIds?: EventSearchRequestRootAssetId[];
   /**
    * The source of this event.
    */
@@ -118,7 +118,7 @@ export interface EventSearchRequestLastUpdatedTime {
   min?: number;
 }
 
-export interface EventSearchRequestRootAssetID {
+export interface EventSearchRequestRootAssetId {
   /**
    * A JavaScript-friendly internal ID for the object.
    */

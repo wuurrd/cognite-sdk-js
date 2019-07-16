@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface NewAPIKeyResponseDto {
+export interface NewApiKeyResponseDto {
   /**
    * The time of creation in Unix milliseconds.
    */

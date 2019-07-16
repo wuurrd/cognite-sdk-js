@@ -2,6 +2,6 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitetimeseriesACLIDScope {
+export interface CognitetimeseriesAclIdScope {
   ids?: string[];
 }

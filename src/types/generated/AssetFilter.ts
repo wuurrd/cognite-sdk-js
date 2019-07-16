@@ -45,7 +45,7 @@ export interface AssetFilterFilter {
    * Whether the filtered assets are root assets, or not.
    */
   root?: boolean;
-  rootIds?: AssetFilterRootID[];
+  rootIds?: AssetFilterRootId[];
   /**
    * The source of the asset.
    */
@@ -84,7 +84,7 @@ export interface AssetFilterLastUpdatedTime {
   min?: number;
 }
 
-export interface AssetFilterRootID {
+export interface AssetFilterRootId {
   /**
    * A JavaScript-friendly internal ID for the object.
    */

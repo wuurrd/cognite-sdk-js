@@ -5,7 +5,7 @@
 /**
  * Raw row result written in CSV format, with column columnHeaders.
  */
-export interface RawRowCSV {
+export interface RawRowCsv {
   /**
    * Headers for the different columns in the response.
    */

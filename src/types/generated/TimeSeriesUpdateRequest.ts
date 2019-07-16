@@ -25,7 +25,7 @@ export interface TimeSeriesUpdateRequestUpdate {
   /**
    * The change that will be applied to the key.
    */
-  assetId?: TimeSeriesUpdateRequestAssetID;
+  assetId?: TimeSeriesUpdateRequestAssetId;
   /**
    * The change that will be applied to the key.
    */
@@ -33,7 +33,7 @@ export interface TimeSeriesUpdateRequestUpdate {
   /**
    * The change that will be applied to the key.
    */
-  externalId?: TimeSeriesUpdateRequestExternalID;
+  externalId?: TimeSeriesUpdateRequestExternalId;
   /**
    * Custom, application specific metadata. String key -> String value. Limits: Maximum length
    * of key is 32 bytes, value 512 bytes, up to 16 key-value pairs.
@@ -56,7 +56,7 @@ export interface TimeSeriesUpdateRequestUpdate {
 /**
  * The change that will be applied to the key.
  */
-export interface TimeSeriesUpdateRequestAssetID {
+export interface TimeSeriesUpdateRequestAssetId {
   set?: number;
   setNull?: boolean;
 }
@@ -72,7 +72,7 @@ export interface TimeSeriesUpdateRequestDescription {
 /**
  * The change that will be applied to the key.
  */
-export interface TimeSeriesUpdateRequestExternalID {
+export interface TimeSeriesUpdateRequestExternalId {
   set?: string;
   setNull?: boolean;
 }

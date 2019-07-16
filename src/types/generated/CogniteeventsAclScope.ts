@@ -2,6 +2,6 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CogniteeventsACLScope {
+export interface CogniteeventsAclScope {
   all?: { [key: string]: any };
 }

@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export enum CogniteprojectsACLAction {
+export enum CogniteprojectsAclAction {
   Create = 'CREATE',
   List = 'LIST',
   Read = 'READ',

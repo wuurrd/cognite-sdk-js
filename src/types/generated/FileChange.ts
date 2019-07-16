@@ -13,11 +13,11 @@ export interface FileChangeObject {
   /**
    * Change that will be applied to the array object.
    */
-  assetIds?: FileChangeAssetIDS;
+  assetIds?: FileChangeAssetIds;
   /**
    * Removable string change.
    */
-  externalId?: FileChangeExternalID;
+  externalId?: FileChangeExternalId;
   /**
    * Custom, application specific metadata. String key -> String value. Limits: Maximum length
    * of key is 32 bytes, value 512 bytes, up to 16 key-value pairs.
@@ -32,7 +32,7 @@ export interface FileChangeObject {
 /**
  * Change that will be applied to the array object.
  */
-export interface FileChangeAssetIDS {
+export interface FileChangeAssetIds {
   set?: number[];
   add?: number[];
   remove?: number[];
@@ -41,7 +41,7 @@ export interface FileChangeAssetIDS {
 /**
  * Removable string change.
  */
-export interface FileChangeExternalID {
+export interface FileChangeExternalId {
   set?: string;
   setNull?: boolean;
 }

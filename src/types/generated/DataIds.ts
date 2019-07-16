@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface DataIDS {
+export interface DataIds {
   items: DataIdsItem[];
 }
 

@@ -23,22 +23,22 @@ export interface DataGroupItem {
 }
 
 export interface DataGroupCapability {
-  groupsAcl?: DataGroupACLGroup;
-  assetsAcl?: DataGroupACLAsset;
-  eventsAcl?: DataGroupACLEvent;
-  filesAcl?: DataGroupACLFile;
-  usersAcl?: DataGroupACLUser;
-  projectsAcl?: DataGroupACLProject;
-  securityCategoriesAcl?: DataGroupACLSecurityCategory;
-  rawAcl?: DataGroupACLRaw;
-  timeSeriesAcl?: DataGroupACLTimeseries;
-  apikeysAcl?: DataGroupACLApikey;
-  threedAcl?: DataGroupACLThreed;
-  sequencesAcl?: DataGroupACLSequences;
-  analyticsAcl?: DataGroupACLAnalytics;
+  groupsAcl?: DataGroupAclGroup;
+  assetsAcl?: DataGroupAclAsset;
+  eventsAcl?: DataGroupAclEvent;
+  filesAcl?: DataGroupAclFile;
+  usersAcl?: DataGroupAclUser;
+  projectsAcl?: DataGroupAclProject;
+  securityCategoriesAcl?: DataGroupAclSecurityCategory;
+  rawAcl?: DataGroupAclRaw;
+  timeSeriesAcl?: DataGroupAclTimeseries;
+  apikeysAcl?: DataGroupAclApikey;
+  threedAcl?: DataGroupAclThreed;
+  sequencesAcl?: DataGroupAclSequences;
+  analyticsAcl?: DataGroupAclAnalytics;
 }
 
-export interface DataGroupACLAnalytics {
+export interface DataGroupAclAnalytics {
   actions: DataGroupAnalyticsAction[];
   scope: DataGroupAnalyticsScope;
 }
@@ -53,12 +53,12 @@ export interface DataGroupAnalyticsScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLApikey {
-  actions: DataGroupApikeysACLAction[];
+export interface DataGroupAclApikey {
+  actions: DataGroupApikeysAclAction[];
   scope: DataGroupApikeyScope;
 }
 
-export enum DataGroupApikeysACLAction {
+export enum DataGroupApikeysAclAction {
   Create = 'CREATE',
   Delete = 'DELETE',
   List = 'LIST',
@@ -69,12 +69,12 @@ export interface DataGroupApikeyScope {
   currentuserscope?: { [key: string]: any };
 }
 
-export interface DataGroupACLAsset {
-  actions: DataGroupAssetsACLAction[];
+export interface DataGroupAclAsset {
+  actions: DataGroupAssetsAclAction[];
   scope: DataGroupAssetScope;
 }
 
-export enum DataGroupAssetsACLAction {
+export enum DataGroupAssetsAclAction {
   Read = 'READ',
   Write = 'WRITE',
 }
@@ -83,8 +83,8 @@ export interface DataGroupAssetScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLEvent {
-  actions: DataGroupAssetsACLAction[];
+export interface DataGroupAclEvent {
+  actions: DataGroupAssetsAclAction[];
   scope: DataGroupEventScope;
 }
 
@@ -92,8 +92,8 @@ export interface DataGroupEventScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLFile {
-  actions: DataGroupAssetsACLAction[];
+export interface DataGroupAclFile {
+  actions: DataGroupAssetsAclAction[];
   scope: DataGroupFileScope;
 }
 
@@ -101,7 +101,7 @@ export interface DataGroupFileScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLGroup {
+export interface DataGroupAclGroup {
   actions: DataGroupGroupAction[];
   scope: DataGroupGroupScope;
 }
@@ -119,7 +119,7 @@ export interface DataGroupGroupScope {
   currentuserscope?: { [key: string]: any };
 }
 
-export interface DataGroupACLProject {
+export interface DataGroupAclProject {
   actions: DataGroupProjectAction[];
   scope: DataGroupProjectScope;
 }
@@ -135,7 +135,7 @@ export interface DataGroupProjectScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLRaw {
+export interface DataGroupAclRaw {
   actions: DataGroupRawAction[];
   scope: DataGroupRawScope;
 }
@@ -150,7 +150,7 @@ export interface DataGroupRawScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLSecurityCategory {
+export interface DataGroupAclSecurityCategory {
   actions: DataGroupSecurityCategoryAction[];
   scope: DataGroupSecurityCategoryScope;
 }
@@ -166,8 +166,8 @@ export interface DataGroupSecurityCategoryScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLSequences {
-  actions: DataGroupAssetsACLAction[];
+export interface DataGroupAclSequences {
+  actions: DataGroupAssetsAclAction[];
   scope: DataGroupSequencesScope;
 }
 
@@ -175,7 +175,7 @@ export interface DataGroupSequencesScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLThreed {
+export interface DataGroupAclThreed {
   actions: DataGroupThreedAction[];
   scope: DataGroupThreedScope;
 }
@@ -191,27 +191,27 @@ export interface DataGroupThreedScope {
   all?: { [key: string]: any };
 }
 
-export interface DataGroupACLTimeseries {
-  actions: DataGroupAssetsACLAction[];
+export interface DataGroupAclTimeseries {
+  actions: DataGroupAssetsAclAction[];
   scope: DataGroupTimeseriesScope;
 }
 
 export interface DataGroupTimeseriesScope {
   all?: { [key: string]: any };
-  assetIdScope?: DataGroupScopeAssetIDScope;
-  idscope?: DataGroupScopeTimeSeriesIDScope;
+  assetIdScope?: DataGroupScopeAssetIdScope;
+  idscope?: DataGroupScopeTimeSeriesIdScope;
 }
 
-export interface DataGroupScopeAssetIDScope {
+export interface DataGroupScopeAssetIdScope {
   subtreeIds?: string[];
 }
 
-export interface DataGroupScopeTimeSeriesIDScope {
+export interface DataGroupScopeTimeSeriesIdScope {
   ids?: string[];
 }
 
-export interface DataGroupACLUser {
-  actions: DataGroupApikeysACLAction[];
+export interface DataGroupAclUser {
+  actions: DataGroupApikeysAclAction[];
   scope: DataGroupUserScope;
 }
 

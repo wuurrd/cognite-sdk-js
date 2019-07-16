@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface FileLinkIDS {
+export interface FileLinkIds {
   items?: FileLinkIdsItem[];
 }
 

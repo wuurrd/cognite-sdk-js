@@ -23,22 +23,22 @@ export interface GroupResponseItem {
 }
 
 export interface GroupResponseCapability {
-  groupsAcl?: GroupResponseACLGroup;
-  assetsAcl?: GroupResponseACLAsset;
-  eventsAcl?: GroupResponseACLEvent;
-  filesAcl?: GroupResponseACLFile;
-  usersAcl?: GroupResponseACLUser;
-  projectsAcl?: GroupResponseACLProject;
-  securityCategoriesAcl?: GroupResponseACLSecurityCategory;
-  rawAcl?: GroupResponseACLRaw;
-  timeSeriesAcl?: GroupResponseACLTimeseries;
-  apikeysAcl?: GroupResponseACLApikey;
-  threedAcl?: GroupResponseACLThreed;
-  sequencesAcl?: GroupResponseACLSequences;
-  analyticsAcl?: GroupResponseACLAnalytics;
+  groupsAcl?: GroupResponseAclGroup;
+  assetsAcl?: GroupResponseAclAsset;
+  eventsAcl?: GroupResponseAclEvent;
+  filesAcl?: GroupResponseAclFile;
+  usersAcl?: GroupResponseAclUser;
+  projectsAcl?: GroupResponseAclProject;
+  securityCategoriesAcl?: GroupResponseAclSecurityCategory;
+  rawAcl?: GroupResponseAclRaw;
+  timeSeriesAcl?: GroupResponseAclTimeseries;
+  apikeysAcl?: GroupResponseAclApikey;
+  threedAcl?: GroupResponseAclThreed;
+  sequencesAcl?: GroupResponseAclSequences;
+  analyticsAcl?: GroupResponseAclAnalytics;
 }
 
-export interface GroupResponseACLAnalytics {
+export interface GroupResponseAclAnalytics {
   actions: GroupResponseAnalyticsAction[];
   scope: GroupResponseAnalyticsScope;
 }
@@ -53,12 +53,12 @@ export interface GroupResponseAnalyticsScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLApikey {
-  actions: GroupResponseApikeysACLAction[];
+export interface GroupResponseAclApikey {
+  actions: GroupResponseApikeysAclAction[];
   scope: GroupResponseApikeyScope;
 }
 
-export enum GroupResponseApikeysACLAction {
+export enum GroupResponseApikeysAclAction {
   Create = 'CREATE',
   Delete = 'DELETE',
   List = 'LIST',
@@ -69,12 +69,12 @@ export interface GroupResponseApikeyScope {
   currentuserscope?: { [key: string]: any };
 }
 
-export interface GroupResponseACLAsset {
-  actions: GroupResponseAssetsACLAction[];
+export interface GroupResponseAclAsset {
+  actions: GroupResponseAssetsAclAction[];
   scope: GroupResponseAssetScope;
 }
 
-export enum GroupResponseAssetsACLAction {
+export enum GroupResponseAssetsAclAction {
   Read = 'READ',
   Write = 'WRITE',
 }
@@ -83,8 +83,8 @@ export interface GroupResponseAssetScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLEvent {
-  actions: GroupResponseAssetsACLAction[];
+export interface GroupResponseAclEvent {
+  actions: GroupResponseAssetsAclAction[];
   scope: GroupResponseEventScope;
 }
 
@@ -92,8 +92,8 @@ export interface GroupResponseEventScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLFile {
-  actions: GroupResponseAssetsACLAction[];
+export interface GroupResponseAclFile {
+  actions: GroupResponseAssetsAclAction[];
   scope: GroupResponseFileScope;
 }
 
@@ -101,7 +101,7 @@ export interface GroupResponseFileScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLGroup {
+export interface GroupResponseAclGroup {
   actions: GroupResponseGroupAction[];
   scope: GroupResponseGroupScope;
 }
@@ -119,7 +119,7 @@ export interface GroupResponseGroupScope {
   currentuserscope?: { [key: string]: any };
 }
 
-export interface GroupResponseACLProject {
+export interface GroupResponseAclProject {
   actions: GroupResponseProjectAction[];
   scope: GroupResponseProjectScope;
 }
@@ -135,7 +135,7 @@ export interface GroupResponseProjectScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLRaw {
+export interface GroupResponseAclRaw {
   actions: GroupResponseRawAction[];
   scope: GroupResponseRawScope;
 }
@@ -150,7 +150,7 @@ export interface GroupResponseRawScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLSecurityCategory {
+export interface GroupResponseAclSecurityCategory {
   actions: GroupResponseSecurityCategoryAction[];
   scope: GroupResponseSecurityCategoryScope;
 }
@@ -166,8 +166,8 @@ export interface GroupResponseSecurityCategoryScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLSequences {
-  actions: GroupResponseAssetsACLAction[];
+export interface GroupResponseAclSequences {
+  actions: GroupResponseAssetsAclAction[];
   scope: GroupResponseSequencesScope;
 }
 
@@ -175,7 +175,7 @@ export interface GroupResponseSequencesScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLThreed {
+export interface GroupResponseAclThreed {
   actions: GroupResponseThreedAction[];
   scope: GroupResponseThreedScope;
 }
@@ -191,27 +191,27 @@ export interface GroupResponseThreedScope {
   all?: { [key: string]: any };
 }
 
-export interface GroupResponseACLTimeseries {
-  actions: GroupResponseAssetsACLAction[];
+export interface GroupResponseAclTimeseries {
+  actions: GroupResponseAssetsAclAction[];
   scope: GroupResponseTimeseriesScope;
 }
 
 export interface GroupResponseTimeseriesScope {
   all?: { [key: string]: any };
-  assetIdScope?: GroupResponseScopeAssetIDScope;
-  idscope?: GroupResponseScopeTimeSeriesIDScope;
+  assetIdScope?: GroupResponseScopeAssetIdScope;
+  idscope?: GroupResponseScopeTimeSeriesIdScope;
 }
 
-export interface GroupResponseScopeAssetIDScope {
+export interface GroupResponseScopeAssetIdScope {
   subtreeIds?: string[];
 }
 
-export interface GroupResponseScopeTimeSeriesIDScope {
+export interface GroupResponseScopeTimeSeriesIdScope {
   ids?: string[];
 }
 
-export interface GroupResponseACLUser {
-  actions: GroupResponseApikeysACLAction[];
+export interface GroupResponseAclUser {
+  actions: GroupResponseApikeysAclAction[];
   scope: GroupResponseUserScope;
 }
 

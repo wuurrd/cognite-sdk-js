@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitetimeseriesACLACL {
+export interface CognitetimeseriesAclAcl {
   actions: TimeseriesAction[];
   scope: CognitetimeseriesAclAclTimeseriesScope;
 }
@@ -14,14 +14,14 @@ export enum TimeseriesAction {
 
 export interface CognitetimeseriesAclAclTimeseriesScope {
   all?: { [key: string]: any };
-  assetIdScope?: CognitetimeseriesAclAclScopeAssetIDScope;
-  idscope?: CognitetimeseriesAclAclScopeTimeSeriesIDScope;
+  assetIdScope?: CognitetimeseriesAclAclScopeAssetIdScope;
+  idscope?: CognitetimeseriesAclAclScopeTimeSeriesIdScope;
 }
 
-export interface CognitetimeseriesAclAclScopeAssetIDScope {
+export interface CognitetimeseriesAclAclScopeAssetIdScope {
   subtreeIds?: string[];
 }
 
-export interface CognitetimeseriesAclAclScopeTimeSeriesIDScope {
+export interface CognitetimeseriesAclAclScopeTimeSeriesIdScope {
   ids?: string[];
 }

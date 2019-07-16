@@ -3,22 +3,22 @@
  */
 
 export interface CogniteCapability {
-  groupsAcl?: CogniteCapabilityACLGroup;
-  assetsAcl?: CogniteCapabilityACLAsset;
-  eventsAcl?: CogniteCapabilityACLEvent;
-  filesAcl?: CogniteCapabilityACLFile;
-  usersAcl?: CogniteCapabilityACLUser;
-  projectsAcl?: CogniteCapabilityACLProject;
-  securityCategoriesAcl?: CogniteCapabilityACLSecurityCategory;
-  rawAcl?: CogniteCapabilityACLRaw;
-  timeSeriesAcl?: CogniteCapabilityACLTimeseries;
-  apikeysAcl?: CogniteCapabilityACLApikey;
-  threedAcl?: CogniteCapabilityACLThreed;
-  sequencesAcl?: CogniteCapabilityACLSequences;
-  analyticsAcl?: CogniteCapabilityACLAnalytics;
+  groupsAcl?: CogniteCapabilityAclGroup;
+  assetsAcl?: CogniteCapabilityAclAsset;
+  eventsAcl?: CogniteCapabilityAclEvent;
+  filesAcl?: CogniteCapabilityAclFile;
+  usersAcl?: CogniteCapabilityAclUser;
+  projectsAcl?: CogniteCapabilityAclProject;
+  securityCategoriesAcl?: CogniteCapabilityAclSecurityCategory;
+  rawAcl?: CogniteCapabilityAclRaw;
+  timeSeriesAcl?: CogniteCapabilityAclTimeseries;
+  apikeysAcl?: CogniteCapabilityAclApikey;
+  threedAcl?: CogniteCapabilityAclThreed;
+  sequencesAcl?: CogniteCapabilityAclSequences;
+  analyticsAcl?: CogniteCapabilityAclAnalytics;
 }
 
-export interface CogniteCapabilityACLAnalytics {
+export interface CogniteCapabilityAclAnalytics {
   actions: CogniteCapabilityAnalyticsAction[];
   scope: CogniteCapabilityAnalyticsScope;
 }
@@ -33,12 +33,12 @@ export interface CogniteCapabilityAnalyticsScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLApikey {
-  actions: CogniteCapabilityApikeysACLAction[];
+export interface CogniteCapabilityAclApikey {
+  actions: CogniteCapabilityApikeysAclAction[];
   scope: CogniteCapabilityApikeyScope;
 }
 
-export enum CogniteCapabilityApikeysACLAction {
+export enum CogniteCapabilityApikeysAclAction {
   Create = 'CREATE',
   Delete = 'DELETE',
   List = 'LIST',
@@ -49,12 +49,12 @@ export interface CogniteCapabilityApikeyScope {
   currentuserscope?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLAsset {
-  actions: CogniteCapabilityAssetsACLAction[];
+export interface CogniteCapabilityAclAsset {
+  actions: CogniteCapabilityAssetsAclAction[];
   scope: CogniteCapabilityAssetScope;
 }
 
-export enum CogniteCapabilityAssetsACLAction {
+export enum CogniteCapabilityAssetsAclAction {
   Read = 'READ',
   Write = 'WRITE',
 }
@@ -63,8 +63,8 @@ export interface CogniteCapabilityAssetScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLEvent {
-  actions: CogniteCapabilityAssetsACLAction[];
+export interface CogniteCapabilityAclEvent {
+  actions: CogniteCapabilityAssetsAclAction[];
   scope: CogniteCapabilityEventScope;
 }
 
@@ -72,8 +72,8 @@ export interface CogniteCapabilityEventScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLFile {
-  actions: CogniteCapabilityAssetsACLAction[];
+export interface CogniteCapabilityAclFile {
+  actions: CogniteCapabilityAssetsAclAction[];
   scope: CogniteCapabilityFileScope;
 }
 
@@ -81,7 +81,7 @@ export interface CogniteCapabilityFileScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLGroup {
+export interface CogniteCapabilityAclGroup {
   actions: CogniteCapabilityGroupAction[];
   scope: CogniteCapabilityGroupScope;
 }
@@ -99,7 +99,7 @@ export interface CogniteCapabilityGroupScope {
   currentuserscope?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLProject {
+export interface CogniteCapabilityAclProject {
   actions: CogniteCapabilityProjectAction[];
   scope: CogniteCapabilityProjectScope;
 }
@@ -115,7 +115,7 @@ export interface CogniteCapabilityProjectScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLRaw {
+export interface CogniteCapabilityAclRaw {
   actions: CogniteCapabilityRawAction[];
   scope: CogniteCapabilityRawScope;
 }
@@ -130,7 +130,7 @@ export interface CogniteCapabilityRawScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLSecurityCategory {
+export interface CogniteCapabilityAclSecurityCategory {
   actions: CogniteCapabilitySecurityCategoryAction[];
   scope: CogniteCapabilitySecurityCategoryScope;
 }
@@ -146,8 +146,8 @@ export interface CogniteCapabilitySecurityCategoryScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLSequences {
-  actions: CogniteCapabilityAssetsACLAction[];
+export interface CogniteCapabilityAclSequences {
+  actions: CogniteCapabilityAssetsAclAction[];
   scope: CogniteCapabilitySequencesScope;
 }
 
@@ -155,7 +155,7 @@ export interface CogniteCapabilitySequencesScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLThreed {
+export interface CogniteCapabilityAclThreed {
   actions: CogniteCapabilityThreedAction[];
   scope: CogniteCapabilityThreedScope;
 }
@@ -171,27 +171,27 @@ export interface CogniteCapabilityThreedScope {
   all?: { [key: string]: any };
 }
 
-export interface CogniteCapabilityACLTimeseries {
-  actions: CogniteCapabilityAssetsACLAction[];
+export interface CogniteCapabilityAclTimeseries {
+  actions: CogniteCapabilityAssetsAclAction[];
   scope: CogniteCapabilityTimeseriesScope;
 }
 
 export interface CogniteCapabilityTimeseriesScope {
   all?: { [key: string]: any };
-  assetIdScope?: CogniteCapabilityScopeAssetIDScope;
-  idscope?: CogniteCapabilityScopeTimeSeriesIDScope;
+  assetIdScope?: CogniteCapabilityScopeAssetIdScope;
+  idscope?: CogniteCapabilityScopeTimeSeriesIdScope;
 }
 
-export interface CogniteCapabilityScopeAssetIDScope {
+export interface CogniteCapabilityScopeAssetIdScope {
   subtreeIds?: string[];
 }
 
-export interface CogniteCapabilityScopeTimeSeriesIDScope {
+export interface CogniteCapabilityScopeTimeSeriesIdScope {
   ids?: string[];
 }
 
-export interface CogniteCapabilityACLUser {
-  actions: CogniteCapabilityApikeysACLAction[];
+export interface CogniteCapabilityAclUser {
+  actions: CogniteCapabilityApikeysAclAction[];
   scope: CogniteCapabilityUserScope;
 }
 

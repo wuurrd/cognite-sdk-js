@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitesequencesACLACL {
+export interface CognitesequencesAclAcl {
   actions: SequencesAction[];
   scope: CognitesequencesAclAclSequencesScope;
 }

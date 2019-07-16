@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CognitesecuritycategoriesACLACL {
+export interface CognitesecuritycategoriesAclAcl {
   actions: CognitesecuritycategoriesAclAclSecurityCategoryAction[];
   scope: CognitesecuritycategoriesAclAclSecurityCategoryScope;
 }

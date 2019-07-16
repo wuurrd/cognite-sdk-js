@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface TimeSeriesLookupByID {
+export interface TimeSeriesLookupById {
   /**
    * List of ID objects
    */

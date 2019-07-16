@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export enum CognitegroupsACLAction {
+export enum CognitegroupsAclAction {
   Create = 'CREATE',
   Delete = 'DELETE',
   List = 'LIST',

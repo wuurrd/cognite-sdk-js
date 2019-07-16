@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export enum CognitetimeseriesACLAction {
+export enum CognitetimeseriesAclAction {
   Read = 'READ',
   Write = 'WRITE',
 }

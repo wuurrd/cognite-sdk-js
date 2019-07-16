@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface LoginURLResponse {
+export interface LoginUrlResponse {
   /**
    * Represents an url where the user can be redirected to sign in.
    */

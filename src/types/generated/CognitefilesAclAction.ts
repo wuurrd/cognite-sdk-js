@@ -2,7 +2,7 @@
  * Copyright 2019 Cognite AS
  */
 
-export enum CognitefilesACLAction {
+export enum CognitefilesAclAction {
   Read = 'READ',
   Write = 'WRITE',
 }

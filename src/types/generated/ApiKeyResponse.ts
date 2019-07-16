@@ -2,11 +2,11 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface APIKeyResponse {
-  items: APIKeyObject[];
+export interface ApiKeyResponse {
+  items: ApiKeyObject[];
 }
 
-export interface APIKeyObject {
+export interface ApiKeyObject {
   /**
    * The time of creation in Unix milliseconds.
    */

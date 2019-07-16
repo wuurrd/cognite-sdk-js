@@ -21,39 +21,39 @@ async function convertType(urlPath, language, schema, schemaName) {
 }
 
 function generateTypes(language, urlPath) {
-    SwaggerParser.dereference('https://storage.googleapis.com/cognitedata-api-docs/dist/v1.json', {}, async (_, api) => {
+    SwaggerParser.dereference(urlPath + 'v1_spec.json', {}, async (_, api) => {
         urlPath = urlPath + '/generated';
-        // fsExtra.removeSync(urlPath);
-        // await exec('mkdir '.concat(urlPath)).catch((err) => console.log(err));
+        fsExtra.removeSync(urlPath);
+        await exec('mkdir '.concat(urlPath)).catch((err) => console.log(err));
 
-        // const promises = Object.keys(api.components.schemas).map(schemaName => {
-        //     const schema = api.components.schemas[schemaName];
-        //     const newSchemaName = lodash.chain(schemaName).camelCase().upperFirst();
-        //     return convertType(urlPath, language, schema, newSchemaName);
-        // });
-        // const files = await Promise.all(promises);
-        // console.log(JSON.stringify(files, null, 2));
+        const promises = Object.keys(api.components.schemas).map(schemaName => {
+            const schema = api.components.schemas[schemaName];
+            const newSchemaName = lodash.chain(schemaName).camelCase().upperFirst();
+            return convertType(urlPath, language, schema, newSchemaName);
+        });
+        const files = await Promise.all(promises);
+        console.log(JSON.stringify(files, null, 2));
 
 
         const fileArray = fsExtra.readdirSync('./src/types/generated/');
         console.log(JSON.stringify(fileArray, null, 2));
-        const dict = {};
+        const hashMap = {};
         const regex = /export (interface|enum) (.+) {/g;
             for (let file of fileArray) {
                 const content = fsExtra.readFileSync('./src/types/generated/' + file);
                 let array = regex.exec(content.toString());
                 while (array) {
-                    dict[array[2]] = dict[array[2]] || 0;
-                    dict[array[2]]++;
+                    hashMap[array[2]] = hashMap[array[2]] || 0;
+                    hashMap[array[2]]++;
                     array = regex.exec(content.toString());
                 }
             }
         for (let file of fileArray) {
             let content = fsExtra.readFileSync('./src/types/generated/' + file).toString();
             const className = file.substring(0, file.length - 3);
-            for (let key of Object.keys(dict)) {
+            for (let key of Object.keys(hashMap)) {
 
-                if (dict[key] > 1) {
+                if (hashMap[key] > 1) {
                     let array = regex.exec(content);
                     const regex2 = new RegExp(`:\\s+${key}(\\[\\])*;`, 'g');
                     let array2 = regex2.exec(content);

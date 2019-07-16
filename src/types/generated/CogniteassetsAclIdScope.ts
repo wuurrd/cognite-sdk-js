@@ -2,6 +2,6 @@
  * Copyright 2019 Cognite AS
  */
 
-export interface CogniteassetsACLIDScope {
+export interface CogniteassetsAclIdScope {
   subtreeIds?: string[];
 }
