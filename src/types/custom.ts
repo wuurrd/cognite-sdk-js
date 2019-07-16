@@ -6,10 +6,11 @@ import {
   DataExternalAssetItem,
   FileFilter,
   FilesMetadata,
-  NewApiKeyResponseDto,
+  // tslint:disable-next-line:comment-format
+  //NewApiKeyResponseDTO,
   OutputProjectAuthentication,
-  SecurityCategoryDto,
-  SecurityCategorySpecDto,
+  SecurityCategoryDTO,
+  SecurityCategorySpecDTO,
   ServiceAccount,
 } from './types';
 
@@ -168,8 +169,9 @@ export interface ListGroups {
 }
 export type CogniteEvent = Event;
 export type TimeseriesIdEither = IdEither;
-export type SecurityCategory = SecurityCategoryDto;
-export type SecurityCategorySpec = SecurityCategorySpecDto;
+export type SecurityCategory = SecurityCategoryDTO;
+export type SecurityCategorySpec = SecurityCategorySpecDTO;
 export type ExternalAssetItem = DataExternalAssetItem;
+// tslint:disable-next-line:no-commented-code
 // export type ApiKeyObject = NewApiKeyResponseDto;
 export type GroupServiceAccount = ServiceAccount;
