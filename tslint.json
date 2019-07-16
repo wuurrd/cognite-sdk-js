@@ -9,7 +9,8 @@
     "array-type": [true, "array"],
     "no-reference": false,
     "no-return-await": true,
-    "file-header": [true, "Copyright \\d{4} Cognite AS"]
+    "file-header": [true, "Copyright \\d{4} Cognite AS", "Copyright 2019 Cognite AS"]
+
   },
   "rulesDirectory": ["tslint-plugin-prettier"]
 }
