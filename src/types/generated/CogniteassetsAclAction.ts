@@ -1,8 +1,4 @@
-/*!
- * Copyright 2019 Cognite AS
- */
-
 export enum CogniteassetsAclAction {
-  Read = 'READ',
-  Write = 'WRITE',
+    Read = "READ",
+    Write = "WRITE",
 }

@@ -1,19 +1,15 @@
-/*!
- * Copyright 2019 Cognite AS
- */
-
 export interface CognitethreedAclAcl {
-  actions: CognitethreedAclAclThreedAction[];
-  scope: CognitethreedAclAclThreedScope;
+    actions: CognitethreedAclAclThreedAction[];
+    scope: CognitethreedAclAclThreedScope;
 }
 
 export enum CognitethreedAclAclThreedAction {
-  Create = 'CREATE',
-  Delete = 'DELETE',
-  Read = 'READ',
-  Update = 'UPDATE',
+    Create = "CREATE",
+    Delete = "DELETE",
+    Read = "READ",
+    Update = "UPDATE",
 }
 
 export interface CognitethreedAclAclThreedScope {
-  all?: { [key: string]: any };
+    all?: { [key: string]: any };
 }

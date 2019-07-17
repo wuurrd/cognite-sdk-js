@@ -1,17 +1,13 @@
-/*!
- * Copyright 2019 Cognite AS
- */
-
 export interface DataRawDBRowKey {
-  items?: DataRawDBRowKeyItem[];
+    items?: DataRawDBRowKeyItem[];
 }
 
 /**
  * A row key
  */
 export interface DataRawDBRowKeyItem {
-  /**
-   * Unique row key
-   */
-  key: string;
+    /**
+     * Unique row key
+     */
+    key: string;
 }

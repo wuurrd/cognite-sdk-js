@@ -1,17 +1,13 @@
-/*!
- * Copyright 2019 Cognite AS
- */
-
 export interface CognitefilesAclAcl {
-  actions: FileAction[];
-  scope: CognitefilesAclAclFileScope;
+    actions: FileAction[];
+    scope: CognitefilesAclAclFileScope;
 }
 
 export enum FileAction {
-  Read = 'READ',
-  Write = 'WRITE',
+    Read = "READ",
+    Write = "WRITE",
 }
 
 export interface CognitefilesAclAclFileScope {
-  all?: { [key: string]: any };
+    all?: { [key: string]: any };
 }

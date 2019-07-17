@@ -8,6 +8,14 @@ const fsExtra = require('fs-extra')
 const path = require('path');
 const lodash = require('lodash');
 
+/**
+ * Converts JSON Schema to types with specified language
+ * 
+ * @param  urlPath Path for directory
+ * @param  language Specified language for what you want to generate
+ * @param  schema  The content of the schema
+ * @param  schemaName The name of the schema
+ */
 
 async function convertType(urlPath, language, schema, schemaName) {
     const json = JSON.stringify(schema, null, 2);
@@ -18,6 +26,42 @@ async function convertType(urlPath, language, schema, schemaName) {
     await exec(string);
     await fs.unlink(jsonFile);
     return outputPath;
+}
+
+/**
+ * FileChange.ts and DataExternalAsset.ts has conflicting interfaces with other classes
+ * This method handles these two specialcases
+ * 
+ * @param url Path to folder
+ */
+function handleSpecialCase(url, file, regex, result) {
+    let content = fsExtra.readFileSync(url + file).toString();
+    let array = regex.exec(content.toString());
+    while (array) {
+        content = content.replace(regex, result).toString();
+        array = regex.exec(content);
+    }
+    fsExtra.writeFileSync(url + file, content);
+}
+
+function generateDateTypes(fileArray, url) {
+    
+}
+
+/**
+ * Creates the index.ts file in the /generated folder
+ * 
+ * @param fileArray All the files in an array
+ * @param url the path to the folder
+ */
+function generateIndexFile(fileArray, url) {
+    const urlPath = path.resolve(url, 'index.ts');
+    fsExtra.writeFileSync(urlPath, '// Copyright 2019 Cognite AS');
+    for (let file of fileArray) {
+        const className = file.substring(0, file.length - 3);
+        const data = "\nexport * from " + `'./${className}';`;
+        fsExtra.appendFileSync(urlPath, data);
+    }
 }
 
 function generateTypes(language, urlPath) {
@@ -44,22 +88,22 @@ function generateTypes(language, urlPath) {
         const files = await Promise.all(promises);
         console.log(JSON.stringify(files, null, 2));
 
-
-        const fileArray = fsExtra.readdirSync('./src/types/generated/');
-        console.log(JSON.stringify(fileArray, null, 2));
+        const url = './src/types/generated/';
+        const fileArray = fsExtra.readdirSync(url);
+        // console.log(JSON.stringify(fileArray, null, 2));
         const hashMap = {};
         const regex = /export (interface|enum) (.+) {/g;
             for (let file of fileArray) {
-                const content = fsExtra.readFileSync('./src/types/generated/' + file);
-                let array = regex.exec(content.toString());
+                const content = fsExtra.readFileSync(url + file).toString();
+                let array = regex.exec(content);
                 while (array) {
                     hashMap[array[2]] = hashMap[array[2]] || 0;
                     hashMap[array[2]]++;
-                    array = regex.exec(content.toString());
+                    array = regex.exec(content);
                 }
             }
         for (let file of fileArray) {
-            let content = fsExtra.readFileSync('./src/types/generated/' + file).toString();
+            let content = fsExtra.readFileSync(url + file).toString();
             const className = file.substring(0, file.length - 3);
             for (let key of Object.keys(hashMap)) {
 
@@ -79,8 +123,13 @@ function generateTypes(language, urlPath) {
                     }
                 }
             }
-            fsExtra.writeFileSync('./src/types/generated/' + file, content);
+            fsExtra.writeFileSync(url + file, content);
         }
+
+        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.ts', / FileChangeUpdate/g, ' FileChangeObject');
+        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.ts', / DataExternalAssetItem/g, ' DataExternalAssetElement');
+        generateDateTypes(fileArray, path.resolve(__dirname, '../src/types/generated/'));
+        generateIndexFile(fileArray, url);
     });
 }
 

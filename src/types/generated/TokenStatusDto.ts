@@ -1,18 +1,14 @@
-/*!
- * Copyright 2019 Cognite AS
- */
-
 export interface TokenStatusDTO {
-  /**
-   * Whether this token has expired
-   */
-  expired: boolean;
-  /**
-   * The token that was sent for validation
-   */
-  token: string;
-  /**
-   * Whether this token is valid
-   */
-  valid: boolean;
+    /**
+     * Whether this token has expired
+     */
+    expired: boolean;
+    /**
+     * The token that was sent for validation
+     */
+    token: string;
+    /**
+     * Whether this token is valid
+     */
+    valid: boolean;
 }
