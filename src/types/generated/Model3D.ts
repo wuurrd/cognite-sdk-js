@@ -2,7 +2,7 @@ export interface Model3D {
     /**
      * The creation time of the resource, in milliseconds since January 1, 1970 at 00:00 UTC.
      */
-    createdTime: number;
+    createdTime: Date;
     /**
      * The ID of the model.
      */

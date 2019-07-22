@@ -36,7 +36,7 @@ export interface DataWithCursorItem {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    createdTime: number;
+    createdTime: Date;
     /**
      * A JavaScript-friendly internal ID for the object.
      */
@@ -45,7 +45,7 @@ export interface DataWithCursorItem {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    lastUpdatedTime: number;
+    lastUpdatedTime: Date;
     /**
      * Whether or not the actual file is uploaded.  This field is returned only by the API, it
      * has no effect in a post body.
@@ -55,5 +55,5 @@ export interface DataWithCursorItem {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    uploadedTime?: number;
+    uploadedTime: Date;
 }

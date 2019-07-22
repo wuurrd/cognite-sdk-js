@@ -60,12 +60,12 @@ export interface AssetListScopeCreatedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    max?: number;
+       max?: Date;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    min?: number;
+       min?: Date;
 }
 
 /**
@@ -76,12 +76,12 @@ export interface AssetListScopeLastUpdatedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    max?: number;
+       max?: Date;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    min?: number;
+       min?: Date;
 }
 
 export interface AssetListScopeRootId {

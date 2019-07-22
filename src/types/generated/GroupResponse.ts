@@ -4,7 +4,7 @@ export interface GroupResponse {
 
 export interface GroupResponseItem {
     capabilities?: GroupResponseCapability[];
-    deletedTime?:  number;
+    deletedTime: Date;
     id:            number;
     isDeleted:     boolean;
     /**

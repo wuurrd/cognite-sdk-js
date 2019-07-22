@@ -44,28 +44,26 @@ function handleSpecialCase(url, file, regex, result) {
     fsExtra.writeFileSync(url + file, content);
 }
 
-function generateDateTypes(fileArray, url) {
+function generateDateTypes(fileArray, url, dateKeys) {
     for (let file of fileArray) {
-        console.log(file);
         let content = fsExtra.readFileSync(url + '/' + file).toString();
-        const regex = / createdTime.* (.+);/g;
-        let array = regex.exec(content);
-        while (array) {
-            if (array[1] == "number") {
-                content = content.replace(regex, " createdTime: Date;" );
-            } else {
-                const maxRegex = /max.*: (.+);/g;
-                const minRegex = /min.*: (.+);/g;
-                content = content.replace(maxRegex, " max?: Date;" );
-                content = content.replace(minRegex, " min?: Date;" );
-                
+        for (let keyword of dateKeys) {
+            const regex = new RegExp(` ${keyword}.* (.+);`, 'g');
+            let array = regex.exec(content);
+            while (array) {
+                if (array[1] == "number") {
+                    content = content.replace(regex, ` ${keyword}: Date;` );
+                } else {
+                    const maxRegex = /max.*: (.+);/g;
+                    const minRegex = /min.*: (.+);/g;
+                    content = content.replace(maxRegex, " max?: Date;" );
+                    content = content.replace(minRegex, " min?: Date;" );
+                    
+                }
+                array = regex.exec(content);
             }
-            // console.log(content);
-            array = regex.exec(content);
         }
-        fsExtra.writeFileSync(url + file, content);
-        console.log(content);
-        console.log('--------------------------------------------------------');
+        fsExtra.writeFileSync(url + '/' + file, content);
     }
 }
 
@@ -149,7 +147,14 @@ function generateTypes(language, urlPath) {
 
         // handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.ts', / FileChangeUpdate/g, ' FileChangeObject');
         // handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.ts', / DataExternalAssetItem/g, ' DataExternalAssetElement');
-        generateDateTypes(fileArray, path.resolve(__dirname, '../src/types/generated/'));
+        const dateKeys = [
+            'createdTime',
+            'lastUpdatedTime',
+            'uploadedTime',
+            'deletedTime',
+            'timestamp',
+          ];
+        generateDateTypes(fileArray, path.resolve(__dirname, '../src/types/generated/'), dateKeys);
         // generateIndexFile(fileArray, url);
     });
 }

@@ -6,7 +6,7 @@ export interface NewApiKeyResponseItem {
     /**
      * The time of creation in Unix milliseconds.
      */
-    createdTime: number;
+    createdTime: Date;
     /**
      * The internal ID for the API key.
      */

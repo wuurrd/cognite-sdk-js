@@ -57,12 +57,12 @@ export interface EventFilterCreatedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    max?: number;
+       max?: Date;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    min?: number;
+       min?: Date;
 }
 
 /**
@@ -73,12 +73,12 @@ export interface EventFilterEndTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    max?: number;
+       max?: Date;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    min?: number;
+       min?: Date;
 }
 
 /**
@@ -89,12 +89,12 @@ export interface EventFilterLastUpdatedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    max?: number;
+       max?: Date;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    min?: number;
+       min?: Date;
 }
 
 export interface EventFilterRootAssetId {
@@ -116,10 +116,10 @@ export interface EventFilterStartTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    max?: number;
+       max?: Date;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    min?: number;
+       min?: Date;
 }

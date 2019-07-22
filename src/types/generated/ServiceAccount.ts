@@ -2,7 +2,7 @@ export interface ServiceAccount {
     /**
      * Time of deletion
      */
-    deletedTime?: number;
+    deletedTime: Date;
     /**
      * List of group ids
      */

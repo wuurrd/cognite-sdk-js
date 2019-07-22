@@ -4,7 +4,7 @@ export interface DataGroup {
 
 export interface DataGroupItem {
     capabilities?: DataGroupCapability[];
-    deletedTime?:  number;
+    deletedTime: Date;
     id:            number;
     isDeleted:     boolean;
     /**
