@@ -1,4 +1,8 @@
+/*!
+ * Copyright 2019 Cognite AS
+ */
+
 export enum CogniteeventsAclAction {
-    Read = "READ",
-    Write = "WRITE",
+  Read = 'READ',
+  Write = 'WRITE',
 }

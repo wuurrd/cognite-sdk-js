@@ -1,7 +1,11 @@
+/*!
+ * Copyright 2019 Cognite AS
+ */
+
 export interface DataApiKeyRequest {
-    items: DataApiKeyRequestItem[];
+  items: DataApiKeyRequestItem[];
 }
 
 export interface DataApiKeyRequestItem {
-    serviceAccountId: number;
+  serviceAccountId: number;
 }

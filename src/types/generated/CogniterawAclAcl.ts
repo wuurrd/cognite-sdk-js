@@ -1,14 +1,18 @@
+/*!
+ * Copyright 2019 Cognite AS
+ */
+
 export interface CogniterawAclAcl {
-    actions: CogniterawAclAclRawAction[];
-    scope: CogniterawAclAclRawScope;
+  actions: CogniterawAclAclRawAction[];
+  scope: CogniterawAclAclRawScope;
 }
 
 export enum CogniterawAclAclRawAction {
-    List = "LIST",
-    Read = "READ",
-    Write = "WRITE",
+  List = 'LIST',
+  Read = 'READ',
+  Write = 'WRITE',
 }
 
 export interface CogniterawAclAclRawScope {
-    all?: { [key: string]: any };
+  all?: { [key: string]: any };
 }

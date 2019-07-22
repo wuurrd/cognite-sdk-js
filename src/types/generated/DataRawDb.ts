@@ -1,13 +1,17 @@
+/*!
+ * Copyright 2019 Cognite AS
+ */
+
 export interface DataRawDB {
-    items?: DataRawDBItem[];
+  items?: DataRawDBItem[];
 }
 
 /**
  * A NoSQL database to store customer data.
  */
 export interface DataRawDBItem {
-    /**
-     * Unique name of a database.
-     */
-    name: string;
+  /**
+   * Unique name of a database.
+   */
+  name: string;
 }
