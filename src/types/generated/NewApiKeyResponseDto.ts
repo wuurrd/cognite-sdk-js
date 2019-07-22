@@ -2,7 +2,7 @@ export interface NewApiKeyResponseDTO {
     /**
      * The time of creation in Unix milliseconds.
      */
-    createdTime: Date;
+    createdTime: number;
     /**
      * The internal ID for the API key.
      */

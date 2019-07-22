@@ -1,6 +1,6 @@
 export interface Group {
     capabilities?: GroupCapability[];
-    deletedTime: Date;
+    deletedTime?:  number;
     id:            number;
     isDeleted:     boolean;
     /**

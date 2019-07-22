@@ -17,7 +17,7 @@ export interface DatapointsGetAggregateDatapointDatapoint {
     /**
      * The data timestamp in milliseconds since the epoch (Jan 1, 1970).
      */
-    timestamp: Date;
+    timestamp: number;
     /**
      * The integral average value in the aggregate period.
      */
@@ -41,11 +41,11 @@ export interface DatapointsGetAggregateDatapointDatapoint {
     /**
      * The maximum value in the aggregate period.
      */
-     max?: Date;
+    max?: number;
     /**
      * The minimum value in the aggregate period.
      */
-     min?: Date;
+    min?: number;
     /**
      * The last value before or at the beginning of the aggregate.
      */

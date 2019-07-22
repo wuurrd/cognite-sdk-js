@@ -62,12 +62,12 @@ export interface FileFilterCreatedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-        max?: Date;
+    max?: number;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-        min?: Date;
+    min?: number;
 }
 
 /**
@@ -78,12 +78,12 @@ export interface FileFilterLastUpdatedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-        max?: Date;
+    max?: number;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-        min?: Date;
+    min?: number;
 }
 
 /**
@@ -94,10 +94,10 @@ export interface FileFilterUploadedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-        max?: Date;
+    max?: number;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-        min?: Date;
+    min?: number;
 }

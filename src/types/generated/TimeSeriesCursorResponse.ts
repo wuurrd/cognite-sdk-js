@@ -17,7 +17,7 @@ export interface TimeSeriesCursorResponseItem {
     /**
      * Time when this time series was created in CDF in milliseconds since Jan 1, 1970.
      */
-    createdTime: Date;
+    createdTime: number;
     /**
      * Description of the time series.
      */
@@ -42,7 +42,7 @@ export interface TimeSeriesCursorResponseItem {
      * The latest time when this time series was updated in CDF in milliseconds since Jan 1,
      * 1970.
      */
-    lastUpdatedTime: Date;
+    lastUpdatedTime: number;
     /**
      * Custom, application specific metadata. String key -> String value. Limits: Maximum length
      * of key is 32 bytes, value 512 bytes, up to 16 key-value pairs.

@@ -6,7 +6,7 @@ export interface ApiKeyObject {
     /**
      * The time of creation in Unix milliseconds.
      */
-    createdTime: Date;
+    createdTime: number;
     /**
      * The ID of the API key.
      */

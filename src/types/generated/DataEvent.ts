@@ -54,10 +54,10 @@ export interface DataEventItem {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    createdTime: Date;
+    createdTime: number;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-    lastUpdatedTime: Date;
+    lastUpdatedTime: number;
 }

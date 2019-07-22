@@ -74,12 +74,12 @@ export interface EventSearchRequestCreatedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-       max?: Date;
+    max?: number;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-       min?: Date;
+    min?: number;
 }
 
 /**
@@ -90,12 +90,12 @@ export interface EventSearchRequestEndTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-       max?: Date;
+    max?: number;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-       min?: Date;
+    min?: number;
 }
 
 /**
@@ -106,12 +106,12 @@ export interface EventSearchRequestLastUpdatedTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-       max?: Date;
+    max?: number;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-       min?: Date;
+    min?: number;
 }
 
 export interface EventSearchRequestRootAssetId {
@@ -133,12 +133,12 @@ export interface EventSearchRequestStartTime {
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-       max?: Date;
+    max?: number;
     /**
      * The number of milliseconds since 00:00:00 Thursday, 1 January 1970, Coordinated Universal
      * Time (UTC), minus leap seconds.
      */
-       min?: Date;
+    min?: number;
 }
 
 export interface EventSearchRequestSearch {

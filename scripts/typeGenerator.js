@@ -85,77 +85,77 @@ function generateIndexFile(fileArray, url) {
 
 function generateTypes(language, urlPath) {
     SwaggerParser.dereference('/Users/eirikdahlen/workspace/SDKjs/cognitesdk-js/src/types/v1_spec.json', {}, async (_, api) => {
-        // urlPath = urlPath + '/generated';
-        // fsExtra.removeSync(urlPath);
-        // await exec('mkdir '.concat(urlPath)).catch((err) => console.log(err));
+        urlPath = urlPath + '/generated';
+        fsExtra.removeSync(urlPath);
+        await exec('mkdir '.concat(urlPath)).catch((err) => console.log(err));
 
-        // const promises = Object.keys(api.components.schemas).map(schemaName => {
-        //     const schema = api.components.schemas[schemaName];
-        //     const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
-        //     // const newSchemaName = lodash.chain(schemaName).split('_').upperFirst().values();
-        //     return convertType(urlPath, language, schema, newSchemaName);
-        // });
-        // const promises2 = Object.keys(api.components.responses).map(schemaName => {
-        //     if (schemaName === "ProjectResponse") {
-        //         const schema = api.components.responses[schemaName].content['application/json'].schema;
-        //         const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
-        //         // const newSchemaName = lodash.chain(schemaName).camelCase().upperFirst();
-        //         return convertType(urlPath, language, schema, newSchemaName);
-        //     }
-        // });
-        // promises.push(...promises2);
-        // const files = await Promise.all(promises);
-        // console.log(JSON.stringify(files, null, 2));
+        const promises = Object.keys(api.components.schemas).map(schemaName => {
+            const schema = api.components.schemas[schemaName];
+            const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
+            // const newSchemaName = lodash.chain(schemaName).split('_').upperFirst().values();
+            return convertType(urlPath, language, schema, newSchemaName);
+        });
+        const promises2 = Object.keys(api.components.responses).map(schemaName => {
+            if (schemaName === "ProjectResponse") {
+                const schema = api.components.responses[schemaName].content['application/json'].schema;
+                const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
+                // const newSchemaName = lodash.chain(schemaName).camelCase().upperFirst();
+                return convertType(urlPath, language, schema, newSchemaName);
+            }
+        });
+        promises.push(...promises2);
+        const files = await Promise.all(promises);
+        console.log(JSON.stringify(files, null, 2));
 
         const url = './src/types/generated/';
         const fileArray = fsExtra.readdirSync(url);
-        // // console.log(JSON.stringify(fileArray, null, 2));
-        // const hashMap = {};
-        // const regex = /export (interface|enum) (.+) {/g;
-        //     for (let file of fileArray) {
-        //         const content = fsExtra.readFileSync(url + file).toString();
-        //         let array = regex.exec(content);
-        //         while (array) {
-        //             hashMap[array[2]] = hashMap[array[2]] || 0;
-        //             hashMap[array[2]]++;
-        //             array = regex.exec(content);
-        //         }
-        //     }
-        // for (let file of fileArray) {
-        //     let content = fsExtra.readFileSync(url + file).toString();
-        //     const className = file.substring(0, file.length - 3);
-        //     for (let key of Object.keys(hashMap)) {
+        // console.log(JSON.stringify(fileArray, null, 2));
+        const hashMap = {};
+        const regex = /export (interface|enum) (.+) {/g;
+            for (let file of fileArray) {
+                const content = fsExtra.readFileSync(url + file).toString();
+                let array = regex.exec(content);
+                while (array) {
+                    hashMap[array[2]] = hashMap[array[2]] || 0;
+                    hashMap[array[2]]++;
+                    array = regex.exec(content);
+                }
+            }
+        for (let file of fileArray) {
+            let content = fsExtra.readFileSync(url + file).toString();
+            const className = file.substring(0, file.length - 3);
+            for (let key of Object.keys(hashMap)) {
 
-        //         if (hashMap[key] > 1) {
-        //             let array = regex.exec(content);
-        //             const regex2 = new RegExp(`:\\s+${key}(\\[\\])*;`, 'g');
-        //             let array2 = regex2.exec(content);
-        //             while (array) {
-        //                 if (key !== className) {
-        //                 content = content.replace(new RegExp(`export (interface|enum) ${key} {`), `export $1 ${className + key} {`);
-        //                 }
-        //                 array = regex.exec(content);
-        //             }
-        //             while (array2) {
-        //                 content = content.replace(regex2, `: ${className + key}$1;`);                        
-        //                 array2 = regex2.exec(content);
-        //             }
-        //         }
-        //     }
-        //     fsExtra.writeFileSync(url + file, content);
-        // }
+                if (hashMap[key] > 1) {
+                    let array = regex.exec(content);
+                    const regex2 = new RegExp(`:\\s+${key}(\\[\\])*;`, 'g');
+                    let array2 = regex2.exec(content);
+                    while (array) {
+                        if (key !== className) {
+                        content = content.replace(new RegExp(`export (interface|enum) ${key} {`), `export $1 ${className + key} {`);
+                        }
+                        array = regex.exec(content);
+                    }
+                    while (array2) {
+                        content = content.replace(regex2, `: ${className + key}$1;`);                        
+                        array2 = regex2.exec(content);
+                    }
+                }
+            }
+            fsExtra.writeFileSync(url + file, content);
+        }
 
-        // handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.ts', / FileChangeUpdate/g, ' FileChangeObject');
-        // handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.ts', / DataExternalAssetItem/g, ' DataExternalAssetElement');
-        const dateKeys = [
-            'createdTime',
-            'lastUpdatedTime',
-            'uploadedTime',
-            'deletedTime',
-            'timestamp',
-          ];
-        generateDateTypes(fileArray, path.resolve(__dirname, '../src/types/generated/'), dateKeys);
-        // generateIndexFile(fileArray, url);
+        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.ts', / FileChangeUpdate/g, ' FileChangeObject');
+        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.ts', / DataExternalAssetItem/g, ' DataExternalAssetElement');
+        // const dateKeys = [
+        //     'createdTime',
+        //     'lastUpdatedTime',
+        //     'uploadedTime',
+        //     'deletedTime',
+        //     'timestamp',
+        //   ];
+        // generateDateTypes(fileArray, path.resolve(__dirname, '../src/types/generated/'), dateKeys);
+        generateIndexFile(fileArray, url);
     });
 }
 
