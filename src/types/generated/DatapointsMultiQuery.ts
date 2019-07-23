@@ -16,7 +16,7 @@ export interface DatapointsMultiQuery {
    * aggregation interval is 2 days, if end was originally 3 days after the start, it will be
    * rounded to 4 days after the start.
    */
-  end?: number | string;
+  end?: Date | string;
   /**
    * The time granularity size and unit to aggregate over.
    */
@@ -39,7 +39,7 @@ export interface DatapointsMultiQuery {
    * granularities (d)
    * are rounded to 0:00 AM; hourly granularities (h) to the start of the hour, etc.
    */
-  start?: number | string;
+  start?: Date | string;
 }
 
 /**
@@ -80,7 +80,7 @@ export interface DatapointsMultiQueryItem {
    * aggregation interval is 2 days, if end was originally 3 days after the start, it will be
    * rounded to 4 days after the start.
    */
-  end?: number | string;
+  end?: Date | string;
   /**
    * The granularity size and granularity of the aggregates.
    */
@@ -103,7 +103,7 @@ export interface DatapointsMultiQueryItem {
    * granularities (d)
    * are rounded to 0:00 AM; hourly granularities (h) to the start of the hour, etc.
    */
-  start?: number | string;
+  start?: Date | string;
   /**
    * The external ID provided by the client. Must be unique within the project.
    */

@@ -4,6 +4,7 @@ import {
   BoundingBox3D,
   Cursor,
   DataExternalAssetItem,
+  Event,
   FileFilter,
   FilesMetadata,
   // tslint:disable-next-line:comment-format
