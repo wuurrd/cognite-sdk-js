@@ -125,7 +125,6 @@ function generateTypes(language, urlPath) {
 
         const url = './src/types/generated/';
         const fileArray = fsExtra.readdirSync(url);
-        // console.log(JSON.stringify(fileArray, null, 2));
         const hashMap = {};
         const regex = /export (interface|enum) (.+) {/g;
             for (let file of fileArray) {
