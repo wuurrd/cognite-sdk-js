@@ -9,7 +9,6 @@ import {
   RevealRevision3D,
   RevealSector3D,
   Revision3D,
-  Revision3DStatus,
   UnrealRevision3D,
 } from '../../types/types';
 import { transformDateInRequest } from '../../utils';
