@@ -11,10 +11,10 @@ const lodash = require('lodash');
 /**
  * Converts JSON Schema to types with specified language
  * 
- * @param  urlPath Path for directory
- * @param  language Specified language for what you want to generate
- * @param  schema  The content of the schema
- * @param  schemaName The name of the schema
+ * @param  {string} urlPath Path for directory
+ * @param  {string} language Specified language for what you want to generate
+ * @param  {string} schema  The content of the schema
+ * @param  {string} schemaName The name of the schema
  */
 
 async function convertType(urlPath, language, schema, schemaName) {
@@ -32,7 +32,7 @@ async function convertType(urlPath, language, schema, schemaName) {
  * FileChange.ts and DataExternalAsset.ts has conflicting interfaces with other classes
  * This method handles these two specialcases
  * 
- * @param url Path to folder
+ * @param {string} url Path to folder
  */
 function handleSpecialCase(url, file, regex, result) {
     let content = fsExtra.readFileSync(url + file).toString();
@@ -44,6 +44,13 @@ function handleSpecialCase(url, file, regex, result) {
     fsExtra.writeFileSync(url + file, content);
 }
 
+/**
+ * Changes all values in @param dateKeys from number to Date
+ * 
+ * @param {Array} fileArray Array of all the files
+ * @param {string} url The path
+ * @param {Array} dateKeys Array of all values that should be Date and not number
+ */
 function generateDateTypes(fileArray, url, dateKeys) {
     for (let file of fileArray) {
         let content = fsExtra.readFileSync(url + '/' + file).toString();
@@ -62,34 +69,41 @@ function generateDateTypes(fileArray, url, dateKeys) {
                         content = content.replace(maxRegex, " max?: Date;" );
                         content = content.replace(minRegex, " min?: Date;" );
                         array2 = regex2.exec(content);
-                        
                     }
-                    // array2 = regex2.exec(content);
                 }
                 array = regex.exec(content);
             }
         }
-        const regex3 = new RegExp('Datapoints.*\.ts');
-        if (file.match(regex3)) {
-            const regexEnd = / end\?:.*string;/g;
-            const regexStart = / start\?:.*string;/g;
-            let array3 = regexEnd.exec(content);
-            console.log(array3);
-            while (array3) {
-                content = content.replace(regexEnd, ' end?: Date | string;');
-                content = content.replace(regexStart, ' start?: Date | string;')
-                array3 = regex3.exec(content);
-            }
-        }
+        content = handleEndStartDateTypes(content, file);
         fsExtra.writeFileSync(url + '/' + file, content);
     }
 }
 
 /**
+ * Some of the Datapoints(...).ts files has start and end values that should be Date or string, not number or string
+ * 
+ * @param {string} content Content of the file.
+ */
+function handleEndStartDateTypes(content, file) {
+    const regex = new RegExp('Datapoints.*\.ts');
+    if (file.match(regex)) {
+        const regexEnd = / end\?:.*string;/g;
+        const regexStart = / start\?:.*string;/g;
+        let array = regexEnd.exec(content);
+        while (array) {
+            content = content.replace(regexEnd, ' end?: Date | string;');
+            content = content.replace(regexStart, ' start?: Date | string;')
+            array = regex.exec(content);
+        }
+    }
+    return content;
+}
+
+/**
  * Creates the index.ts file in the /generated folder
  * 
- * @param fileArray All the files in an array
- * @param url the path to the folder
+ * @param {Array} fileArray All the files in an array
+ * @param {string} url the path to the folder
  */
 function generateIndexFile(fileArray, url) {
     const urlPath = path.resolve(url, 'index.ts');
@@ -101,65 +115,81 @@ function generateIndexFile(fileArray, url) {
     }
 }
 
+function countReoccuringNames(url, fileArray, regex) {
+    const hashMap = {};
+    for (let file of fileArray) {
+        const content = fsExtra.readFileSync(url + file).toString();
+        let array = regex.exec(content);
+        while (array) {
+            hashMap[array[2]] = hashMap[array[2]] || 0;
+            hashMap[array[2]]++;
+            array = regex.exec(content);
+        }
+    }
+    return hashMap;
+}
+
+function generateTypeNames(fileArray, hashMap, regex, url) {
+    for (let file of fileArray) {
+        let content = fsExtra.readFileSync(url + file).toString();
+        const className = file.substring(0, file.length - 3);
+        for (let key of Object.keys(hashMap)) {
+            if (hashMap[key] > 1) {
+                let array = regex.exec(content);
+                const regex2 = new RegExp(`:\\s+${key}(\\[\\])*;`, 'g');
+                let array2 = regex2.exec(content);
+                while (array) {
+                    if (key !== className) {
+                    content = content.replace(new RegExp(`export (interface|enum) ${key} {`), `export $1 ${className + key} {`);
+                    }
+                    array = regex.exec(content);
+                }
+                while (array2) {
+                    content = content.replace(regex2, `: ${className + key}$1;`);                        
+                    array2 = regex2.exec(content);
+                }
+            }
+        }
+        fsExtra.writeFileSync(url + file, content);
+    }
+}
+
+async function createFilesFromJSON(api, urlPath, language) {
+    const promises = Object.keys(api.components.schemas).map(schemaName => {
+        const schema = api.components.schemas[schemaName];
+        const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
+        return convertType(urlPath, language, schema, newSchemaName);
+    });
+    const promises2 = Object.keys(api.components.responses).map(schemaName => {
+        if (schemaName === "ProjectResponse") {
+            const schema = api.components.responses[schemaName].content['application/json'].schema;
+            const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
+            return convertType(urlPath, language, schema, newSchemaName);
+        }
+    });
+    promises.push(...promises2);
+    await Promise.all(promises);
+}
+
+/**
+ * Main function to run the script
+ * 
+ * @param {string} language 
+ * @param {string} urlPath 
+ */
 function generateTypes(language, urlPath) {
     SwaggerParser.dereference('/Users/eirikdahlen/workspace/SDKjs/cognitesdk-js/src/types/v1_spec.json', {}, async (_, api) => {
         urlPath = urlPath + '/generated';
         fsExtra.removeSync(urlPath);
         await exec('mkdir '.concat(urlPath)).catch((err) => console.log(err));
 
-        const promises = Object.keys(api.components.schemas).map(schemaName => {
-            const schema = api.components.schemas[schemaName];
-            const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
-            return convertType(urlPath, language, schema, newSchemaName);
-        });
-        const promises2 = Object.keys(api.components.responses).map(schemaName => {
-            if (schemaName === "ProjectResponse") {
-                const schema = api.components.responses[schemaName].content['application/json'].schema;
-                const newSchemaName = schemaName.split('_').map(a => lodash.upperFirst(a)).reduce((a, b) => a + b);
-                return convertType(urlPath, language, schema, newSchemaName);
-            }
-        });
-        promises.push(...promises2);
-        const files = await Promise.all(promises);
-        console.log(JSON.stringify(files, null, 2));
-
+        await createFilesFromJSON(api, urlPath, language);
+        
         const url = './src/types/generated/';
-        const fileArray = fsExtra.readdirSync(url);
-        const hashMap = {};
         const regex = /export (interface|enum) (.+) {/g;
-            for (let file of fileArray) {
-                const content = fsExtra.readFileSync(url + file).toString();
-                let array = regex.exec(content);
-                while (array) {
-                    hashMap[array[2]] = hashMap[array[2]] || 0;
-                    hashMap[array[2]]++;
-                    array = regex.exec(content);
-                }
-            }
-        for (let file of fileArray) {
-            let content = fsExtra.readFileSync(url + file).toString();
-            const className = file.substring(0, file.length - 3);
-            for (let key of Object.keys(hashMap)) {
-
-                if (hashMap[key] > 1) {
-                    let array = regex.exec(content);
-                    const regex2 = new RegExp(`:\\s+${key}(\\[\\])*;`, 'g');
-                    let array2 = regex2.exec(content);
-                    while (array) {
-                        if (key !== className) {
-                        content = content.replace(new RegExp(`export (interface|enum) ${key} {`), `export $1 ${className + key} {`);
-                        }
-                        array = regex.exec(content);
-                    }
-                    while (array2) {
-                        content = content.replace(regex2, `: ${className + key}$1;`);                        
-                        array2 = regex2.exec(content);
-                    }
-                }
-            }
-            fsExtra.writeFileSync(url + file, content);
-        }
-
+        const fileArray = fsExtra.readdirSync(url);
+        const hashMap = countReoccuringNames(url, fileArray, regex);
+        generateTypeNames(fileArray, hashMap, regex, url);
         handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.ts', / FileChangeUpdate/g, ' FileChangeObject');
         handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.ts', / DataExternalAssetItem/g, ' DataExternalAssetElement');
         const dateKeys = [
