@@ -69,6 +69,7 @@
     "generate-types": "node ./scripts/typeGenerator.js"
   },
   "dependencies": {
+    "@cognite/sdk": "^2.0.1",
     "axios": "0.18.1",
     "lodash": "^4.17.11",
     "query-string": "^5.1.1",
