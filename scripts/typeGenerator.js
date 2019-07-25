@@ -30,7 +30,7 @@ async function convertType(urlPath, language, schema, schemaName) {
 
 /**
  * FileChange.ts and DataExternalAsset.ts has conflicting interfaces with other classes
- * This method handles these two specialcases
+ * This method handles these two specialcases for TypeScript types
  * 
  * @param {string} url Path to folder
  */
