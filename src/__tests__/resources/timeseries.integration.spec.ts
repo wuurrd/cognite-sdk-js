@@ -78,6 +78,8 @@ describe('Timeseries integration test', () => {
     const result = await client.timeseries
       .list({ assetIds: [asset.id] })
       .autoPagingToArray({ limit: Infinity });
+    // wait (eventual consistency delay)
+    await sleepPromise(2000);
     expect(result.length).toBe(1);
     expect(result[0].id).toBe(createdTimeseries[0].id);
   });
