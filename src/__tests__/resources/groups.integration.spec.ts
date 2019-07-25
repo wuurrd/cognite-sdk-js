@@ -1,7 +1,12 @@
 // Copyright 2019 Cognite AS
 
 import CogniteClient from '../../cogniteClient';
-import { Group, GroupSpec, ServiceAccount } from '../../types/types';
+import {
+  Group,
+  GroupSpec,
+  GroupSpecAssetsAclAction,
+  ServiceAccount,
+} from '../../types/types';
 import { sleepPromise } from '../../utils';
 import { randomInt, retryInSeconds, setupLoggedInClient } from '../testUtils';
 
@@ -27,7 +32,10 @@ describe('Groups integration test', () => {
         name: 'Group name' + randomInt(),
         capabilities: [
           {
-            eventsAcl: { actions: ['READ'], scope: { all: {} } },
+            eventsAcl: {
+              actions: [GroupSpecAssetsAclAction.Read],
+              scope: { all: {} },
+            },
           },
         ],
       },

@@ -12,7 +12,7 @@ import {
   ApiKeyObject,
   ApiKeyRequest,
   CogniteInternalId,
-  NewApiKeyResponse,
+  NewApiKeyResponseDTO,
 } from '../../types/types';
 import { projectUrl } from '../../utils';
 
@@ -63,6 +63,6 @@ export type ApiKeysListEndpoint = (
 
 export type ApiKeysCreateEndpoint = (
   items: ApiKeyRequest[]
-) => Promise<NewApiKeyResponse[]>;
+) => Promise<NewApiKeyResponseDTO[]>;
 
 export type ApiKeysDeleteEndpoint = (items: CogniteInternalId[]) => Promise<{}>;

@@ -7,9 +7,12 @@ import {
   Node3D,
   RevealNode3D,
   RevealRevision3D,
+  RevealRevision3DStatus,
   RevealSector3D,
   Revision3D,
+  Revision3DStatus,
   UnrealRevision3D,
+  UnrealRevision3DStatus,
 } from '../../types/types';
 import { transformDateInRequest } from '../../utils';
 import {
@@ -33,7 +36,7 @@ describe('3D mocked', () => {
     fileId: randomInt(),
     published: true,
     id: randomInt(),
-    status: 'Done',
+    status: Revision3DStatus.Done,
   };
   const nodes: Node3D[] = [
     {
@@ -51,6 +54,7 @@ describe('3D mocked', () => {
   ];
   const revisionReveal: RevealRevision3D = {
     ...revision,
+    status: RevealRevision3DStatus.Done,
     sceneThreedFiles: [
       {
         version: randomInt(),
@@ -84,7 +88,10 @@ describe('3D mocked', () => {
       ],
     },
   ];
-  const revisionUnreal: UnrealRevision3D = { ...revisionReveal };
+  const revisionUnreal: UnrealRevision3D = {
+    ...revisionReveal,
+    status: UnrealRevision3DStatus.Done,
+  };
 
   beforeAll(async () => {
     client = setupLoggedInClient();
