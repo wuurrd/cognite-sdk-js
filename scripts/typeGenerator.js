@@ -190,8 +190,8 @@ function generateTypes(language, urlPath) {
         const fileArray = fsExtra.readdirSync(url);
         const hashMap = countReoccuringNames(url, fileArray, regex);
         generateTypeNames(fileArray, hashMap, regex, url);
-        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.ts', / FileChangeUpdate/g, ' FileChangeObject');
-        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.ts', / DataExternalAssetItem/g, ' DataExternalAssetElement');
+        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.' + language, / FileChangeUpdate/g, ' FileChangeObject');
+        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.' + language, / DataExternalAssetItem/g, ' DataExternalAssetElement');
         const dateKeys = [
             'createdTime',
             'lastUpdatedTime',
