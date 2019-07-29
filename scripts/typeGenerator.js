@@ -22,7 +22,7 @@ async function convertType(urlPath, language, schema, schemaName) {
     const jsonFile = path.resolve(urlPath, `${schemaName}.json`);
     await fs.writeFile(jsonFile, json);
     const outputPath = path.resolve(urlPath, `${schemaName}.${language}`);
-    const string = 'quicktype --lang '.concat(language, ' --out ', outputPath, ' --src-lang schema ', '--src ', jsonFile, ' --just-types --acronym-style original');
+    const string = 'quicktype --lang '.concat(language, ' --out ', outputPath, ' --src-lang schema ', '--src ', jsonFile, ' --just-types');
     await exec(string);
     await fs.unlink(jsonFile);
     return outputPath;
@@ -107,10 +107,10 @@ function handleEndStartDateTypes(content, file) {
  */
 function generateIndexFile(fileArray, url, language) {
     const urlPath = path.resolve(url, 'index.' + language);
-    fsExtra.writeFileSync(urlPath, '// Copyright 2019 Cognite AS');
+    fsExtra.writeFileSync(urlPath, '\n');
     for (let file of fileArray) {
         const className = file.substring(0, file.length - 3);
-        const data = "\nexport * from " + `'./${className}';`;
+        const data = `from src.types.generated.${className} import *\n`;
         fsExtra.appendFileSync(urlPath, data);
     }
 }
@@ -121,8 +121,8 @@ function countReoccuringNames(url, fileArray, regex) {
         const content = fsExtra.readFileSync(url + file).toString();
         let array = regex.exec(content);
         while (array) {
-            hashMap[array[2]] = hashMap[array[2]] || 0;
-            hashMap[array[2]]++;
+            hashMap[array[1]] = hashMap[array[1]] || 0;
+            hashMap[array[1]]++;
             array = regex.exec(content);
         }
     }
@@ -136,17 +136,29 @@ function generateTypeNames(fileArray, hashMap, regex, url) {
         for (let key of Object.keys(hashMap)) {
             if (hashMap[key] > 1) {
                 let array = regex.exec(content);
-                const regex2 = new RegExp(`:\\s+${key}(\\[\\])*;`, 'g');
-                let array2 = regex2.exec(content);
                 while (array) {
                     if (key !== className) {
-                    content = content.replace(new RegExp(`export (interface|enum) ${key} {`), `export $1 ${className + key} {`);
+                        content = content.replace(new RegExp(`class ${key}:`), `class ${className + key}:`);
                     }
                     array = regex.exec(content);
                 }
+                const regex2 = new RegExp(`: ${key}(,|\\n|\\))`, 'g');
+                let array2 = regex2.exec(content);
                 while (array2) {
-                    content = content.replace(regex2, `: ${className + key}$1;`);                        
+                    content = content.replace(regex2, `: ${className + key}$1`);                        
                     array2 = regex2.exec(content);
+                }
+                const regex3 = new RegExp(`: (Optional|List)\\[${key}\\](,|\\n|\\))`, 'g');
+                let array3 = regex3.exec(content);
+                while (array3) {
+                    content = content.replace(regex3, `: $1\[${className + key}\]$2`);                        
+                    array3 = regex3.exec(content);
+                }
+                const regex4 = new RegExp(`: Optional\\[List\\[${key}\\]\\](,|\\n|\\))`, 'g');
+                let array4 = regex4.exec(content);
+                while (array4) {
+                    content = content.replace(regex4, `: Optional\[List\[${className + key}\]\]$1`);                        
+                    array4 = regex4.exec(content);
                 }
             }
         }
@@ -186,20 +198,20 @@ function generateTypes(language, urlPath) {
         await createFilesFromJSON(api, urlPath, language);
         
         const url = './src/types/generated/';
-        const regex = /export (interface|enum) (.+) {/g;
+        const regex = /class (.+):/g;
         const fileArray = fsExtra.readdirSync(url);
         const hashMap = countReoccuringNames(url, fileArray, regex);
         generateTypeNames(fileArray, hashMap, regex, url);
-        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.' + language, / FileChangeUpdate/g, ' FileChangeObject');
-        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.' + language, / DataExternalAssetItem/g, ' DataExternalAssetElement');
-        const dateKeys = [
-            'createdTime',
-            'lastUpdatedTime',
-            'uploadedTime',
-            'deletedTime',
-            'timestamp',
-          ];
-        generateDateTypes(fileArray, path.resolve(__dirname, '../src/types/generated/'), dateKeys);
+        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/FileChange.' + language, / FileChangeUpdate(:|\n|\))/g, ' FileChangeObject$1');
+        handleSpecialCase(path.resolve(__dirname, '../src/types/generated/'), '/DataExternalAsset.' + language, / (List\[|.*)DataExternalAssetItem(:|\])/g, ' $1DataExternalAssetElement$2');
+        // const dateKeys = [
+        //     'createdTime',
+        //     'lastUpdatedTime',
+        //     'uploadedTime',
+        //     'deletedTime',
+        //     'timestamp',
+        //   ];
+        // generateDateTypes(fileArray, path.resolve(__dirname, '../src/types/generated/'), dateKeys);
         generateIndexFile(fileArray, url, language);
     });
 }
@@ -209,4 +221,4 @@ function generateTypes(language, urlPath) {
  * C# - cs, Go - go, Rust - rs, Crystal - cr, C++ - c++, Objective-C - objc, Java - java, TypeScript - ts, JavaScript - js, Flow - flow,  
   Swift - swift, Kotlin (beta) - kotlin, Elm - elm, JSON Schema - schema, Ruby - ruby, Dart - dart, Python - py, Pike - pike. 
  */
-generateTypes('ts', path.resolve(__dirname, '../src/types/'));
+generateTypes('py', path.resolve(__dirname, '../src/types/'));
