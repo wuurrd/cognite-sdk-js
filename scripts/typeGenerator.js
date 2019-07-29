@@ -105,8 +105,8 @@ function handleEndStartDateTypes(content, file) {
  * @param {Array} fileArray All the files in an array
  * @param {string} url the path to the folder
  */
-function generateIndexFile(fileArray, url) {
-    const urlPath = path.resolve(url, 'index.ts');
+function generateIndexFile(fileArray, url, language) {
+    const urlPath = path.resolve(url, 'index.' + language);
     fsExtra.writeFileSync(urlPath, '// Copyright 2019 Cognite AS');
     for (let file of fileArray) {
         const className = file.substring(0, file.length - 3);
@@ -200,7 +200,7 @@ function generateTypes(language, urlPath) {
             'timestamp',
           ];
         generateDateTypes(fileArray, path.resolve(__dirname, '../src/types/generated/'), dateKeys);
-        generateIndexFile(fileArray, url);
+        generateIndexFile(fileArray, url, language);
     });
 }
 
