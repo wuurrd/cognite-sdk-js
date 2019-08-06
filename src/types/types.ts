@@ -127,11 +127,7 @@ export interface ApiKeyListScope {
   includeDeleted?: boolean;
 }
 
-export interface ApiKeyObject {
-  /**
-   * Internal id for the api key
-   */
-  id: CogniteInternalId;
+export interface ApiKeyObject extends InternalId {
   /**
    * Id of the service account
    */
@@ -151,13 +147,29 @@ export type ArrayPatchLong =
   | { set: number[] }
   | { add?: number[]; remove?: number[] };
 
-export interface Asset extends ExternalAsset, AssetInternalId {
+export interface LastUpdatedTime {
+  /**
+   * The time when the resouce was last updated
+   */
+  lastUpdatedTime: Date;
+}
+
+export interface CreatedTime {
+  /**
+   * The time when the resouce was created
+   */
+  createdTime: Date;
+}
+
+export interface Asset
+  extends ExternalAsset,
+    AssetInternalId,
+    LastUpdatedTime,
+    CreatedTime {
   /**
    * The id of the root for the tree this asset belongs to
    */
   rootId: CogniteInternalId;
-  lastUpdatedTime: Date;
-  createdTime: Date;
 }
 
 export type AssetChange = AssetChangeById | AssetChangeByExternalId;
@@ -173,25 +185,90 @@ export type AssetDescription = string;
 
 export type AssetExternalId = ExternalId;
 
+export interface FilterOptional<Options> {
+  filter?: Options;
+}
+
+export interface NameFilter {
+  /**
+   * When specified only return resources with this name
+   */
+  name?: string;
+}
+
+export interface ParentIdsFilter {
+  /**
+   * When specified only return resources which has a parentId included in the list
+   */
+  parentIds?: CogniteInternalId[];
+}
+
+export interface RootIdsFilter {
+  /**
+   * When specified only return resouces that belongs to one of these root ids
+   */
+  rootIds?: IdEither[];
+}
+
+export interface MetadataFilter {
+  /**
+   * When specified it should also return resources containing the set of key-value pairs
+   */
+  metadata?: Metadata;
+}
+
+export interface SourceFilter {
+  /**
+   * When specified only return resources with this source
+   */
+  source?: string;
+}
+
+export interface CreatedTimeFilter {
+  /**
+   * When specified only return resources that was created in the specified timespan
+   */
+  createdTime?: DateRange;
+}
+
+export interface LastUpdatedTimeFilter {
+  /**
+   * When specified only return resources that was last updated in the specified timespan
+   */
+  lastUpdatedTime?: DateRange;
+}
+
+export interface RootFilter {
+  /**
+   * When specified only return resources that it marked as root
+   */
+  root?: boolean;
+}
+
+export interface ExternalIdPrefixFilter {
+  /**
+   * When specified only return resources with externalId starting with this string
+   */
+  externalIdPrefix?: CogniteExternalId;
+}
+
+export interface AssetFilterOptions
+  extends NameFilter,
+    ParentIdsFilter,
+    RootIdsFilter,
+    MetadataFilter,
+    SourceFilter,
+    CreatedTimeFilter,
+    LastUpdatedTimeFilter,
+    RootFilter,
+    ExternalIdPrefixFilter {}
+
 /**
  * Filter on assets with exact match
  */
-export interface AssetFilter extends Limit {
-  filter?: {
-    name?: AssetName;
-    parentIds?: CogniteInternalId[];
-    rootIds?: IdEither[];
-    metadata?: Metadata;
-    source?: AssetSource;
-    createdTime?: DateRange;
-    lastUpdatedTime?: DateRange;
-    /**
-     * Filtered assets are root assets or not
-     */
-    root?: boolean;
-    externalIdPrefix?: CogniteExternalId;
-  };
-}
+export interface AssetFilter
+  extends Limit,
+    FilterOptional<AssetFilterOptions> {}
 
 export type AssetIdEither = IdEither;
 
@@ -295,10 +372,11 @@ export type CREATE = 'CREATE';
 
 export type CogniteCapability = SingleCogniteCapability[];
 
-export interface CogniteEvent extends ExternalEvent, InternalId {
-  lastUpdatedTime: Date;
-  createdTime: Date;
-}
+export interface CogniteEvent
+  extends ExternalEvent,
+    InternalId,
+    LastUpdatedTime,
+    CreatedTime {}
 
 /**
  * External Id provided by client. Should be unique within the project.
@@ -309,12 +387,14 @@ export type CogniteInternalId = number;
 
 export type CreateAssetMapping3D = AssetMapping3DBase;
 
-export interface CreateModel3D {
+export interface Name {
   /**
-   * The name of the model.
+   * The name of the resource
    */
   name: string;
 }
+
+export type CreateModel3D = Name;
 
 export interface CreateRevision3D {
   /**
@@ -400,12 +480,7 @@ export interface DatapointsInsertProperties {
   datapoints: PostDatapoint[];
 }
 
-export interface DatapointsMetadata extends InternalId {
-  /**
-   * External id of the timeseries the datapoints belong to.
-   */
-  externalId?: CogniteExternalId;
-}
+export interface DatapointsMetadata extends InternalId, ExternalIdOptional {}
 
 export interface DatapointsMultiQuery extends Limit {
   items: DatapointsQuery[];
@@ -493,64 +568,102 @@ export interface EventChangeByExternalId extends EventPatch, ExternalId {}
 
 export interface EventChangeById extends EventPatch, InternalId {}
 
-export interface EventFilter {
-  startTime?: DateRange;
-  endTime?: DateRange;
-  createdTime?: DateRange;
-  lastUpdatedTime?: DateRange;
-  metadata?: Metadata;
+export interface AssetIdsFilter {
   /**
-   * Asset IDs of related equipment that this event relates to.
+   * When specified only return resources directly connected to one of the assets
    */
   assetIds?: CogniteInternalId[];
+}
+
+export interface RootAssetIdsFilter {
   /**
-   * The IDs of the root assets that the related assets should be children of.
+   * When specified only return resources connected to an asset in an subtree under one of the root assets
    */
   rootAssetIds?: IdEither[];
+}
+
+export interface TypeFilter {
   /**
-   * Filter by event source
-   */
-  source?: string;
-  /**
-   * Filter by event type
+   * When specified only return resources of this type
    */
   type?: string;
+}
+
+export interface EventFilter
+  extends CreatedTimeFilter,
+    LastUpdatedTimeFilter,
+    MetadataFilter,
+    AssetIdsFilter,
+    RootAssetIdsFilter,
+    SourceFilter,
+    TypeFilter,
+    ExternalIdPrefixFilter {
+  startTime?: DateRange;
+  endTime?: DateRange;
   /**
    * Filter by event subtype
    */
   subtype?: string;
-  /**
-   * Filter events with an externalId starting with this value
-   */
-  externalIdPrefix?: string;
 }
 
 export interface EventFilterRequest extends Cursor, Limit {
   filter?: EventFilter;
 }
 
-export interface EventPatch {
-  update: {
-    externalId?: SinglePatchString;
-    startTime?: SinglePatchDate;
-    endTime?: SinglePatchDate;
-    description?: SinglePatchString;
-    metadata?: ObjectPatch;
-    assetIds?: ArrayPatchLong;
-    source?: SinglePatchString;
-  };
+export interface ExternalIdUpdate {
+  externalId?: SinglePatchString;
 }
 
-export interface EventSearch {
+export interface DescriptionUpdate {
+  description?: SinglePatchString;
+}
+
+export interface SourceUpdate {
+  source?: SinglePatchString;
+}
+
+export interface MetadataUpdate {
+  metadata?: ObjectPatch;
+}
+
+export interface AssetIdsUpdate {
+  assetIds?: ArrayPatchLong;
+}
+
+export interface StartTimeUpdate {
+  startTime?: SinglePatchDate;
+}
+
+export interface EndTimeUpdate {
+  endTime?: SinglePatchDate;
+}
+
+export interface EventPatchUpdate
+  extends ExternalIdUpdate,
+    StartTimeUpdate,
+    EndTimeUpdate,
+    DescriptionUpdate,
+    MetadataUpdate,
+    AssetIdsUpdate,
+    SourceUpdate {}
+
+export interface EventPatch {
+  update: EventPatchUpdate;
+}
+
+export interface DescriptionSearch {
   description?: string;
 }
+
+export type EventSearch = DescriptionSearch;
 
 export interface EventSearchRequest extends Limit {
   filter?: EventFilter;
   search?: EventSearch;
 }
 
-export interface ExternalAsset {
+export interface ExternalAsset extends ExternalIdOptional, Name {
+  // SourceOptional { // MetadataOptional, // DescriptionOptional, // ParentIdOptional,
   externalId?: CogniteExternalId;
   name: AssetName;
   parentId?: CogniteInternalId;
@@ -592,6 +705,13 @@ export interface ExternalFilesMetadata {
 
 export interface ExternalId {
   externalId: CogniteExternalId;
+}
+
+export interface ExternalIdOptional {
+  /**
+   * The external id of the resource
+   */
+  externalId?: CogniteExternalId;
 }
 
 export interface FileChange {
@@ -647,8 +767,7 @@ export type FileName = string;
 
 export interface FileRequestFilter extends Cursor, FileFilter {}
 
-export interface FilesMetadata extends ExternalFilesMetadata {
-  id: CogniteInternalId;
+export interface FilesMetadata extends InternalId, ExternalFilesMetadata {
   /**
    * Whether or not the actual file is uploaded
    */
@@ -755,28 +874,20 @@ export interface GetTimeSeriesMetadataDTO extends InternalId {
   lastUpdatedTime: Date;
 }
 
-export interface Group {
-  name: GroupName;
-  sourceId?: GroupSourceId;
-  capabilities?: CogniteCapability;
-  id: number;
-  isDeleted: boolean;
+export interface DeletedTime {
+  /**
+   * The time of deletion
+   */
   deletedTime?: Date;
 }
 
-/**
- * Name of the group
- * @example Production Engineers
- */
-export type GroupName = string;
+export interface Group extends InternalId, Name, DeletedTime {
+  sourceId?: GroupSourceId;
+  capabilities?: CogniteCapability;
+  isDeleted: boolean;
+}
 
-export interface GroupServiceAccount {
-  /**
-   * Unique name of the service account
-   * @example some-internal-service@apple.com
-   */
-  name: string;
-  id: CogniteInternalId;
+export interface GroupServiceAccount extends InternalId, Name, DeletedTime {
   /**
    * List of group ids
    */
@@ -785,10 +896,6 @@ export interface GroupServiceAccount {
    * If this service account has been logically deleted
    */
   isDeleted: boolean;
-  /**
-   * Time of deletion
-   */
-  deletedTime?: Date;
 }
 
 /**
@@ -797,8 +904,7 @@ export interface GroupServiceAccount {
  */
 export type GroupSourceId = string;
 
-export interface GroupSpec {
-  name: GroupName;
+export interface GroupSpec extends Name {
   sourceId?: GroupSourceId;
   capabilities?: CogniteCapability;
 }
@@ -822,6 +928,7 @@ export interface InputProjectAuthentication {
 export type IntegerRange = Range<number>;
 
 export interface InternalId {
+  // The internal id for the resource
   id: CogniteInternalId;
 }
 
