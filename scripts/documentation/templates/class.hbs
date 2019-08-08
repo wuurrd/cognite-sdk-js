@@ -1,0 +1,16 @@
+# Class: {{name}}
+
+## Constructors
+{{#each constructors}}
+
+{{#each signatures}}
+{{name}}({{#each parameters}}{{name}}{{/each}})
+{{/each}}
+
+{{#if comment}}
+{{#if comment.shortText}}
+{{comment.shortText}}
+{{/if}}
+{{{comment.text}}}
+{{/if}}
+{{/each}}

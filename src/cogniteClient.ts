@@ -154,16 +154,14 @@ export default class CogniteClient {
   /**
    * Create a new SDK client
    *
-   * @param options Client options
-   *
    * ```js
    * import { CogniteClient } from '@cognite/sdk';
-   *
    * const client = new CogniteClient({ appId: 'YOUR APPLICATION NAME' });
-   *
    * // can also specify a base URL
    * const client = new CogniteClient({ ..., baseUrl: 'https://greenfield.cognitedata.com' });
    * ```
+   *
+   * @param options Abc
    */
   constructor(options: ClientOptions) {
     if (!isObject(options)) {

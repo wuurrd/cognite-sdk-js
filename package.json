@@ -33,6 +33,7 @@
     "axios-mock-adapter": "1.15.0",
     "dtsgenerator": "^2.0.6",
     "es-check": "^5.0.0",
+    "handlebars": "^4.1.2",
     "husky": "^3.0.2",
     "jest": "^23.6.0",
     "ls": "^0.2.1",
@@ -51,7 +52,7 @@
     "tslint-plugin-prettier": "^2.0.1",
     "tslint-sonarts": "^1.9.0",
     "typedoc": "^0.13.0",
-    "typedoc-plugin-markdown": "^1.1.19",
+    "typedoc-plugin-markdown": "^2.1.1",
     "typescript": "^3.3.3333",
     "typescript-parser": "^2.6.1"
   },
