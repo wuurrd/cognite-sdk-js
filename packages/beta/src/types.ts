@@ -129,3 +129,51 @@ export interface RelationshipsFilter extends CreatedAndLastUpdatedTimeFilter {
    */
   labels?: LabelFilter;
 }
+
+export interface EntityMatchingFitRequest {
+  /**
+   * List of entities with field id or externalId to match from, for example, time series.
+   */
+  matchFrom: IdEither[];
+  /**
+   * List of entities with field id or externalId to match to, for example assets.
+   */
+  matchTo: IdEither[];
+  /**
+   * 
+   */
+  //trueMatches?: IdEither[][]
+  /**
+   * Which field in matchFrom and matchTo to use as the id field
+   */
+  idField?: EntityMatchingFitRequestIdField;
+  externalId?: CogniteExternalId;
+  /**
+   * User defined name of the model.
+   */
+  name?: string;
+}
+
+export interface EntityMatchingFitResponse {
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
+  /**
+   * User defined name of the model.
+   */
+  name?: string;
+  /**
+   * User defined description of the model
+   */
+  description?: string;
+  /**
+   * The status of the job.
+   */
+  status?: 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+} 
+
+export const EntityMatchingFitRequestIdField = {
+  id: 'id' as EntityMatchingFitRequestIdField,
+  externalId: 'externalId' as EntityMatchingFitRequestIdField,
+};
+
+export type EntityMatchingFitRequestIdField = 'id' | 'externalId';
