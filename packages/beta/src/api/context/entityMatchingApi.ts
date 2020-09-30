@@ -5,7 +5,7 @@ import {
   EntityMatchingFitRequest,
   EntityMatchingFitResponse,
   EntityMatchingUpdateRequest,
-  EntityMatchingUpdateResponse
+  EntityMatchingUpdateResponse,
 } from '../../types';
 
 export class EntityMatchingApi extends BaseResourceAPI<unknown> {
@@ -23,7 +23,7 @@ export class EntityMatchingApi extends BaseResourceAPI<unknown> {
   ): Promise<EntityMatchingUpdateResponse> => {
     const path = this.url('update');
     const response = await this.post<EntityMatchingUpdateResponse>(path, {
-    data: scope,
+      data: scope,
     });
-  }
+  };
 }

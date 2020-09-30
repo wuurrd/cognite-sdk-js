@@ -10,7 +10,7 @@ import {
   Label,
   Timestamp,
   Range,
-  LabelFilter,, CogniteClient
+  LabelFilter,
 } from '@cognite/sdk';
 
 export * from '@cognite/sdk';
@@ -178,34 +178,34 @@ export const EntityMatchingFitRequestIdField = {
 
 export type EntityMatchingFitRequestIdField = 'id' | 'externalId';
 
-
 export interface EntityMatchingUpdateRequest {
-  items: EntityMatchingUpdateRequestItems
+  items: EntityMatchingUpdateRequestItems;
 }
 
-export interface EntityMatchingUpdateResponse extends Array<EntityMatchingUpdateResponseObject>{};
+export type EntityMatchingUpdateResponse = Array<
+  EntityMatchingUpdateResponseObject
+>;
 
 export type EntityMatchingUpdateRequestItems = {
-  id?: CogniteInternalId,
-  externalId?: CogniteExternalId,
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
   update?: {
     name?: {
-      set: string
-    },
+      set: string;
+    };
     description: {
-      set: string
-    }
-  }
-}
+      set: string;
+    };
+  };
+};
 
 export type EntityMatchingUpdateResponseObject = {
-  id? : CogniteInternalId,
-  externalId? : CogniteExternalId,
-  name? : string,
-  description? : string,
-  featureType? : string,
-  classifier? : string,
-  keysFromTo? : Array<string[]>,
-  originalModelId? : number
-}
-
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
+  name?: string;
+  description?: string;
+  featureType?: string;
+  classifier?: string;
+  keysFromTo?: Array<string[]>;
+  originalModelId?: number;
+};
