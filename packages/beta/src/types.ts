@@ -140,7 +140,7 @@ export interface EntityMatchingFitRequest {
    */
   matchTo: IdEither[];
   /**
-   * 
+   *
    */
   //trueMatches?: IdEither[][]
   /**
@@ -169,7 +169,7 @@ export interface EntityMatchingFitResponse {
    * The status of the job.
    */
   status?: 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
-} 
+}
 
 export const EntityMatchingFitRequestIdField = {
   id: 'id' as EntityMatchingFitRequestIdField,

@@ -1,17 +1,11 @@
 // Copyright 2020 Cognite AS
 
-import {
-  BaseResourceAPI,
-  CDFHttpClient,
-  MetadataMap
-} from '@cognite/sdk-core';
+import { BaseResourceAPI, CDFHttpClient, MetadataMap } from '@cognite/sdk-core';
 import {
   EntityMatchingFitRequest,
-  EntityMatchingFitResponse
+  EntityMatchingFitResponse,
 } from '../../types';
-import {
-  EntityMatchingApi
-} from './entityMatchingApi';
+import { EntityMatchingApi } from './entityMatchingApi';
 
 export class ContextApi extends BaseResourceAPI<unknown> {
   private entityMatchingApi: EntityMatchingApi;
@@ -24,11 +18,7 @@ export class ContextApi extends BaseResourceAPI<unknown> {
   ) {
     super(resourcePath, httpClient, map);
     const path = resourcePath + '/entitymatching';
-    this.entityMatchingApi = new EntityMatchingApi(
-      path,
-      httpClient,
-      map
-    );
+    this.entityMatchingApi = new EntityMatchingApi(path, httpClient, map);
   }
 
   /**
@@ -36,8 +26,9 @@ export class ContextApi extends BaseResourceAPI<unknown> {
    * ```js
    * ```
    */
-  public entityMatchingFit = (scope: EntityMatchingFitRequest): Promise<EntityMatchingFitResponse> => {
-    return this.entityMatchingApi.fit(scope)
+  public entityMatchingFit = (
+    scope: EntityMatchingFitRequest
+  ): Promise<EntityMatchingFitResponse> => {
+    return this.entityMatchingApi.fit(scope);
   };
 }
-
