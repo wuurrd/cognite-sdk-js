@@ -11,6 +11,7 @@ import {
   Timestamp,
   Range,
   LabelFilter,
+  SinglePatchString,
 } from '@cognite/sdk';
 
 export * from '@cognite/sdk';
@@ -184,3 +185,68 @@ export const EntityMatchingFitRequestIdField = {
 
 // TODO: why snake case??
 export type EntityMatchingFitRequestIdField = 'id' | 'external_id';
+
+export interface EntityMatchingUpdateRequest {
+  items: EntityMatchingUpdateRequestItems;
+}
+// TODO: check with team on items: array
+export interface EntityMatchingUpdateRequestItems {
+  /**
+   * id:
+   */
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
+  update?: {
+    name?: SinglePatchString;
+    description: SinglePatchString;
+  };
+}
+
+export type EntityMatchingUpdateResponseObject = {
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
+  name?: string;
+  description?: string;
+  featureType?: string;
+  classifier?: string;
+  keysFromTo?: Array<string[]>;
+  originalModelId?: number;
+};
+
+export interface EntityMatchingPredictRequest {
+  /**
+   * The ID of the model that will be used to predict matches. Must include either externalId or id.
+   */
+  id?: CogniteInternalId;
+  /**
+   * The externalId of the model that will be used to predict matches. Must include either externalId or id.
+   */
+  externalId?: CogniteExternalId;
+  /**
+   * List of entities with field id or externalId to match from, for example, time series.
+   */
+  matchFrom?: IdEither[];
+  /**
+   * List of entities with field id or externalId to match to, for example assets.
+   */
+  matchTo?: IdEither[];
+  /**
+   * The maximum number of results to return for each matchFrom.
+   */
+  numMatches?: number;
+  /**
+   * Only return matches with score above this threshold.
+   */
+  scoreThreshold?: number;
+}
+
+export interface EntityMatchingPredictResponse {
+  /**
+   * Contextualization job ID.
+   */
+  jobId: number;
+  /**
+   * The status of the job.
+   */
+  status: 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+}
