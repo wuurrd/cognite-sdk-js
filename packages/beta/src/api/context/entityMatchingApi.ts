@@ -1,18 +1,16 @@
 // Copyright 2020 Cognite AS
 
-import { BaseResourceAPI } from '@cognite/sdk-core';
+import { BaseResourceAPI, IdEither } from '@cognite/sdk-core';
 import {
   EntityMatchingFitRequest,
   EntityMatchingFitResponse,
-  EntityMatchingUpdateRequest,
-  EntityMatchingUpdateResponse,
-  EntityMatchingDeleteRequest,
-  EntityMatchingDeleteResponse,
+  EntityMatchingUpdateRequestItems,
+  EntityMatchingUpdateResponseObject,
   EntityMatchingPredictRequest,
   EntityMatchingPredictResponse,
 } from '../../types';
 
-export class EntityMatchingApi extends BaseResourceAPI<unknown> {
+export class EntityMatchingApi extends BaseResourceAPI<any> {
   public fit = async (
     scope: EntityMatchingFitRequest
   ): Promise<EntityMatchingFitResponse> => {
@@ -22,23 +20,13 @@ export class EntityMatchingApi extends BaseResourceAPI<unknown> {
     });
     return this.addToMapAndReturn(response.data, response);
   };
-  public update = async (
-    scope: EntityMatchingUpdateRequest
-  ): Promise<EntityMatchingUpdateResponse> => {
-    const path = this.updateUrl;
-    const response = await this.post<EntityMatchingUpdateResponse>(path, {
-      data: scope,
-    });
-    return this.addToMapAndReturn(response.data, response);
+  public update = (
+    changes: EntityMatchingUpdateRequestItems[]
+  ): Promise<EntityMatchingUpdateResponseObject[]> => {
+    return super.updateEndpoint(changes);
   };
-  public delete = async (
-    scope: EntityMatchingDeleteRequest
-  ): Promise<EntityMatchingDeleteResponse> => {
-    const path = this.deleteUrl;
-    const response = await this.post<EntityMatchingDeleteResponse>(path, {
-      data: scope,
-    });
-    return this.addToMapAndReturn(response.data, response);
+  public delete = async (ids: IdEither[]): Promise<{}> => {
+    return super.deleteEndpoint(ids);
   };
   public predict = async (
     scope: EntityMatchingPredictRequest
@@ -49,4 +37,22 @@ export class EntityMatchingApi extends BaseResourceAPI<unknown> {
     });
     return this.addToMapAndReturn(response.data, response);
   };
+  // public list = (
+  //   scope?: TimeseriesFilterQuery
+  // ): CursorAndAsyncIterator<Timeseries> => {
+  //   return super.listEndpoint(this.callListEndpointWithPost, scope);
+  // };
+  // public retrieve = (
+  //   ids: IdEither[],
+  // ) => {
+  //   return super.retrieveEndpoint(ids);
+  // };
+  // public retrieve = async (
+  //   modelId: CogniteInternalId,
+  //   revisionId: CogniteInternalId
+  // ): Promise<Revision3D> => {
+  //   const path = this.url(`${modelId}/revisions/${revisionId}`);
+  //   const response = await this.get<Revision3D>(path);
+  //   return this.addToMapAndReturn(response.data, response);
+  // };
 }

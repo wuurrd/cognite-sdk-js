@@ -11,6 +11,7 @@ import {
   Timestamp,
   Range,
   LabelFilter,
+  SinglePatchString,
 } from '@cognite/sdk';
 
 export * from '@cognite/sdk';
@@ -181,23 +182,18 @@ export type EntityMatchingFitRequestIdField = 'id' | 'externalId';
 export interface EntityMatchingUpdateRequest {
   items: EntityMatchingUpdateRequestItems;
 }
-
-export type EntityMatchingUpdateResponse = Array<
-  EntityMatchingUpdateResponseObject
->;
-// TODO Can I add doc under type?
-export type EntityMatchingUpdateRequestItems = {
+// TODO: check with team on items: array
+export interface EntityMatchingUpdateRequestItems {
+  /**
+   * id:
+   */
   id?: CogniteInternalId;
   externalId?: CogniteExternalId;
   update?: {
-    name?: {
-      set: string;
-    };
-    description: {
-      set: string;
-    };
+    name?: SinglePatchString;
+    description: SinglePatchString;
   };
-};
+}
 
 export type EntityMatchingUpdateResponseObject = {
   id?: CogniteInternalId;
@@ -209,21 +205,6 @@ export type EntityMatchingUpdateResponseObject = {
   keysFromTo?: Array<string[]>;
   originalModelId?: number;
 };
-
-export interface EntityMatchingDeleteRequest {
-  /*
-  * List of ids or externalIds for models
-  */
-  items: EntityMatchingDeleteRequestItems[];
-}
-
-export type EntityMatchingDeleteRequestItems = {
-  id?: CogniteInternalId;
-  externalId?: CogniteExternalId;
-};
-
-// TODO: What to do for empty response?
-export interface EntityMatchingDeleteResponse {}
 
 export interface EntityMatchingPredictRequest {
   /**
@@ -251,7 +232,6 @@ export interface EntityMatchingPredictRequest {
    */
   scoreThreshold?: number;
 }
-// TODO: numMatches should be integer
 
 export interface EntityMatchingPredictResponse {
   /**
@@ -263,4 +243,3 @@ export interface EntityMatchingPredictResponse {
    */
   status: 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
 }
-// TODO: job should be integer
