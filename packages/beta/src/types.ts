@@ -159,7 +159,7 @@ export interface EntityMatchingFitRequest {
 export type EntityMatchingFitMatchObject = IdEither & {
   name?: string;
   description?: string;
-}
+};
 
 export interface EntityMatchingFitResponse {
   id?: CogniteInternalId;
