@@ -134,11 +134,11 @@ export interface EntityMatchingFitRequest {
   /**
    * List of entities with field id or externalId to match from, for example, time series.
    */
-  matchFrom: IdEither[];
+  matchFrom: EntityMatchingFitMatchObject[];
   /**
    * List of entities with field id or externalId to match to, for example assets.
    */
-  matchTo: IdEither[];
+  matchTo: EntityMatchingFitMatchObject[];
   /**
    *
    */
@@ -152,6 +152,12 @@ export interface EntityMatchingFitRequest {
    * User defined name of the model.
    */
   name?: string;
+}
+
+// TODO: fix the interface
+export type EntityMatchingFitMatchObject = IdEither & {
+  name?: string;
+  description?: string;
 }
 
 export interface EntityMatchingFitResponse {
@@ -176,4 +182,5 @@ export const EntityMatchingFitRequestIdField = {
   externalId: 'externalId' as EntityMatchingFitRequestIdField,
 };
 
-export type EntityMatchingFitRequestIdField = 'id' | 'externalId';
+// TODO: why snake case??
+export type EntityMatchingFitRequestIdField = 'id' | 'external_id';
