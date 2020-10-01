@@ -6,6 +6,10 @@ import {
   EntityMatchingFitResponse,
   EntityMatchingUpdateRequest,
   EntityMatchingUpdateResponse,
+  EntityMatchingDeleteRequest,
+  EntityMatchingDeleteResponse,
+  EntityMatchingPredictRequest,
+  EntityMatchingPredictResponse,
 } from '../../types';
 
 export class EntityMatchingApi extends BaseResourceAPI<unknown> {
@@ -21,9 +25,28 @@ export class EntityMatchingApi extends BaseResourceAPI<unknown> {
   public update = async (
     scope: EntityMatchingUpdateRequest
   ): Promise<EntityMatchingUpdateResponse> => {
-    const path = this.url('update');
+    const path = this.updateUrl;
     const response = await this.post<EntityMatchingUpdateResponse>(path, {
       data: scope,
     });
+    return this.addToMapAndReturn(response.data, response);
+  };
+  public delete = async (
+    scope: EntityMatchingDeleteRequest
+  ): Promise<EntityMatchingDeleteResponse> => {
+    const path = this.deleteUrl;
+    const response = await this.post<EntityMatchingDeleteResponse>(path, {
+      data: scope,
+    });
+    return this.addToMapAndReturn(response.data, response);
+  };
+  public predict = async (
+    scope: EntityMatchingPredictRequest
+  ): Promise<EntityMatchingPredictResponse> => {
+    const path = this.url('predict');
+    const response = await this.post<EntityMatchingPredictResponse>(path, {
+      data: scope,
+    });
+    return this.addToMapAndReturn(response.data, response);
   };
 }

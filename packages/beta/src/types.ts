@@ -185,7 +185,7 @@ export interface EntityMatchingUpdateRequest {
 export type EntityMatchingUpdateResponse = Array<
   EntityMatchingUpdateResponseObject
 >;
-
+// TODO Can I add doc under type?
 export type EntityMatchingUpdateRequestItems = {
   id?: CogniteInternalId;
   externalId?: CogniteExternalId;
@@ -209,3 +209,58 @@ export type EntityMatchingUpdateResponseObject = {
   keysFromTo?: Array<string[]>;
   originalModelId?: number;
 };
+
+export interface EntityMatchingDeleteRequest {
+  /*
+  * List of ids or externalIds for models
+  */
+  items: EntityMatchingDeleteRequestItems[];
+}
+
+export type EntityMatchingDeleteRequestItems = {
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
+};
+
+// TODO: What to do for empty response?
+export interface EntityMatchingDeleteResponse {}
+
+export interface EntityMatchingPredictRequest {
+  /**
+   * The ID of the model that will be used to predict matches. Must include either externalId or id.
+   */
+  id?: CogniteInternalId;
+  /**
+   * The externalId of the model that will be used to predict matches. Must include either externalId or id.
+   */
+  externalId?: CogniteExternalId;
+  /**
+   * List of entities with field id or externalId to match from, for example, time series.
+   */
+  matchFrom?: IdEither[];
+  /**
+   * List of entities with field id or externalId to match to, for example assets.
+   */
+  matchTo?: IdEither[];
+  /**
+   * The maximum number of results to return for each matchFrom.
+   */
+  numMatches?: number;
+  /**
+   * Only return matches with score above this threshold.
+   */
+  scoreThreshold?: number;
+}
+// TODO: numMatches should be integer
+
+export interface EntityMatchingPredictResponse {
+  /**
+   * Contextualization job ID.
+   */
+  jobId: number;
+  /**
+   * The status of the job.
+   */
+  status: 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+}
+// TODO: job should be integer
