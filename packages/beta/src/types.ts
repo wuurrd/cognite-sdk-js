@@ -131,7 +131,7 @@ export interface RelationshipsFilter extends CreatedAndLastUpdatedTimeFilter {
   labels?: LabelFilter;
 }
 
-export type ContextResponseStatus =
+export type ContextJobStatus =
   | 'QUEUED'
   | 'RUNNING'
   | 'COMPLETED'
@@ -197,8 +197,12 @@ export interface EntityMatchingFitRequest {
    * TODO keysFromto and completeMissing
    */
   keysFromTo?: any;
+  /**
+   * If true, replaces missing data in keyFrom or keyTo with empty strings. Else, returns an error if there is missing data.
+   */
   completeMissing?: boolean;
 }
+// TODO: how to set default value in documentation?
 
 export interface EntityMatchingFitResponse {
   id?: CogniteInternalId;
@@ -214,30 +218,63 @@ export interface EntityMatchingFitResponse {
   /**
    * The status of the job.
    */
-  status?: ContextResponseStatus;
+  status?: ContextJobStatus;
 }
 
 // TODO: check with context team on items: array
 export interface EntityMatchingUpdateRequestItems {
   /**
-   * id:
+   * A server-generated ID for the object.
    */
   id?: CogniteInternalId;
+  /**
+   * External Id provided by client. Should be unique within the project.
+   */
   externalId?: CogniteExternalId;
   update?: {
+    /**
+     * Set a new value for the model name.
+     */
     name?: SinglePatchString;
+    /**
+     * Set a new value for the model description.
+     */
     description: SinglePatchString;
   };
 }
 
 export type EntityMatchingUpdateResponseObject = {
+  /**
+   * A server-generated ID for the object.
+   */
   id?: CogniteInternalId;
+  /**
+   * External Id provided by client. Should be unique within the project.
+   */
   externalId?: CogniteExternalId;
+  /**
+   * User defined name of the model.
+   */
   name?: string;
+  /**
+   * User defined description of the model.
+   */
   description?: string;
+  /**
+   * The feature type used to fit the model.
+   */
   featureType?: string;
+  /**
+   * Name of the classifier supervised model, "Unsupervised" if unsupervised model.
+   */
   classifier?: string;
+  /**
+   * List of pairs of fields from the matchTo and matchFrom items used to create features.
+   */
   keysFromTo?: Array<string[]>;
+  /**
+   * The ID of original model, only relevant when the model is a retrained model.
+   */
   originalModelId?: number;
 };
 
@@ -276,7 +313,7 @@ export interface EntityMatchingPredictResponse {
   /**
    * The status of the job.
    */
-  status: ContextResponseStatus;
+  status: ContextJobStatus;
 }
 
 export interface EntityMatchingRefitRequest {
@@ -304,4 +341,31 @@ export interface EntityMatchingRefitRequest {
    * Additional entities to match to. The new model uses a combination this and matchTo items from the orginal model. If there are identical ids, the matchTo items from the original model are dropped.
    */
   matchTo: EntityMatchingMatchObject;
+}
+
+export interface EntityMatchingRefitResponse {
+  /**
+   * User defined name of the model.
+   */
+  name: string;
+  /**
+   * User defined description of the model.
+   */
+  description: string;
+  /**
+   * The ID of the new model.
+   */
+  id: number;
+  /**
+   * The externalId of the new model.
+   */
+  externalId: string;
+  /**
+   * The status of the job.
+   */
+  status: ContextJobStatus;
+  /**
+   * ID of original model.
+   */
+  originalId: number;
 }
