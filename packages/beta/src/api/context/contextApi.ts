@@ -1,13 +1,17 @@
 // Copyright 2020 Cognite AS
 
-import { BaseResourceAPI, CDFHttpClient, MetadataMap } from '@cognite/sdk-core';
+import {
+  BaseResourceAPI,
+  CDFHttpClient,
+  MetadataMap,
+  IdEither,
+} from '@cognite/sdk-core';
 import {
   EntityMatchingFitRequest,
   EntityMatchingFitResponse,
   ContextJobId,
   EntityMatchingRetrievePredictResponse,
-  EntityMatchingRetrieveModelRequest,
-  EntityMatchingRetrieveModelResponse,
+  EntityMatchingRetrieveModelResponseItem,
 } from '../../types';
 import { EntityMatchingApi } from './entityMatchingApi';
 
@@ -42,19 +46,26 @@ export class ContextApi extends BaseResourceAPI<unknown> {
    * ```
    */
   public entityMatchingRetrieveModel = (
-    scope: EntityMatchingRetrieveModelRequest
-  ): Promise<EntityMatchingRetrieveModelResponse> => {
-    return this.entityMatchingApi.retrieveModel(scope);
+    ids: IdEither[]
+  ): Promise<EntityMatchingRetrieveModelResponseItem[]> => {
+    return this.entityMatchingApi.retrieveModel(ids);
   };
-
   /**
    *
    * ```js
    * ```
    */
-  public entityMatchingRetrievePredict = (
+  public entityMatchingDelete = (ids: IdEither[]): Promise<{}> => {
+    return this.entityMatchingApi.delete(ids);
+  };
+  /**
+   *
+   * ```js
+   * ```
+   */
+  public entityMatchingRetrievePredictResult = (
     scope: ContextJobId
   ): Promise<EntityMatchingRetrievePredictResponse> => {
-    return this.entityMatchingApi.retrievePredict(scope);
+    return this.entityMatchingApi.retrievePredictResult(scope);
   };
 }

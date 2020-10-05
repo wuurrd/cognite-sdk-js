@@ -1,6 +1,9 @@
 // Copyright 2020 Cognite AS
 
-import { randomInt } from '@cognite/sdk-core/src/testUtils';
+import {
+  randomInt,
+  runTestWithRetryWhenFailing,
+} from '@cognite/sdk-core/src/testUtils';
 import { Asset, Timeseries } from 'stable/src/types';
 import CogniteClient from '../../cogniteClient';
 import { setupLoggedInClient } from '../testUtils';
@@ -38,7 +41,23 @@ describe('context integration test', () => {
         externalId: fitExternalId,
         idField: 'id',
       });
-      expect(result.externalId).toEqual(fitExternalId);
+      expect(result.externalId).toBe(fitExternalId);
+    });
+    test('retrieveModel', async () => {
+      await runTestWithRetryWhenFailing(async () => {
+        const [result] = await client.context.entityMatchingRetrieveModel([
+          { externalId: fitExternalId },
+        ]);
+        expect(result.externalId).toBe(fitExternalId);
+        expect(result.status).toBe('Completed');
+      });
+      expect.hasAssertions();
+    });
+    test('delete', async () => {
+      const result = await client.context.entityMatchingDelete([
+        { externalId: fitExternalId },
+      ]);
+      expect(result).toEqual({});
     });
   });
 

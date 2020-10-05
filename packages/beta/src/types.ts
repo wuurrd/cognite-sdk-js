@@ -149,7 +149,7 @@ export const EntityMatchingFitRequestIdField = {
 // TODO: why snake case??
 export type EntityMatchingFitRequestIdField = 'id' | 'external_id';
 
-export type EntityMatchingFitRequestFeatureType =
+export type EntityMatchingFeatureType =
   | 'simple'
   | 'bigram'
   | 'frequency-weighted-bigram'
@@ -190,7 +190,7 @@ export interface EntityMatchingFitRequest {
    * Bigram-Extra-Tokenizers: Similar to bigram, but able to learn that leading zeros and spaces should be ignored in matching.
    * Bigram-Combo: Calculates all of the above options, relying on the model to determine the appropriate features to use. This is the slowest option.
    */
-  featureType?: EntityMatchingFitRequestFeatureType;
+  featureType?: EntityMatchingFeatureType;
   /**
    * TODO keysFromto and completeMissing
    */
@@ -368,28 +368,6 @@ export interface EntityMatchingRefitResponse {
   originalId: number;
 }
 
-export interface EntityMatchingRetrieveModelRequest {
-  /**
-   *
-   */
-  items: EntityMatchingRetrieveModelRequestItem[];
-}
-
-export interface EntityMatchingRetrieveModelRequestItem {
-  /**
-   * A server-generated ID for the object.
-   */
-  id?: CogniteInternalId;
-  /**
-   * External Id provided by client. Should be unique within the project.
-   */
-  externalId?: CogniteExternalId;
-}
-
-export interface EntityMatchingRetrieveModelResponse {
-  items: EntityMatchingRetrieveModelResponseItem[];
-}
-
 export interface EntityMatchingRetrieveModelResponseItem {
   /**
    * A server-generated ID for the object.
@@ -410,7 +388,7 @@ export interface EntityMatchingRetrieveModelResponseItem {
   /**
    * The feature type used to fit the model.
    */
-  featureType?: EntityMatchingFitRequestFeatureType;
+  featureType?: EntityMatchingFeatureType;
   /**
    * Name of the classifier supervised model, "Unsupervised" if unsupervised model.
    */
@@ -424,6 +402,8 @@ export interface EntityMatchingRetrieveModelResponseItem {
    * The ID of original model, only relevant when the model is a retrained model.
    */
   originalModelId?: number;
+
+  status?: ContextJobStatus;
   // TODO: we also have Status, idField fields but not in the doc
   /**
    * {
