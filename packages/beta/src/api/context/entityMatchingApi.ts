@@ -8,6 +8,8 @@ import {
 import {
   EntityMatchingFitRequest,
   EntityMatchingFitResponse,
+  EntityMatchingRefitRequest,
+  EntityMatchingRefitResponse,
   EntityMatchingUpdateRequestItems,
   EntityMatchingUpdateResponseObject,
   EntityMatchingPredictRequest,
@@ -51,7 +53,6 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
   ): Promise<EntityMatchingRetrieveModelResponseItem[]> => {
     return super.retrieveEndpoint(ids);
   };
-
   public retrievePredictResult = async (
     jobId: ContextJobId
   ): Promise<EntityMatchingRetrievePredictResponse> => {
@@ -61,17 +62,18 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
     );
     return this.addToMapAndReturn(response.data, response);
   };
+  public refit = async (
+    scope: EntityMatchingRefitRequest
+  ): Promise<EntityMatchingRefitResponse> => {
+    const path = this.url('refit');
+    const response = await this.post<EntityMatchingRefitResponse>(path, {
+      data: scope,
+    });
+    return this.addToMapAndReturn(response.data, response);
+  };
   public list = (
     scope?: EntityMatchingFilterRequest
   ): CursorAndAsyncIterator<EntityMatchingModel> => {
     return super.listEndpoint(this.callListEndpointWithPost, scope);
   };
-  // public retrieve = async (
-  //   modelId: CogniteInternalId,
-  //   revisionId: CogniteInternalId
-  // ): Promise<Revision3D> => {
-  //   const path = this.url(`${modelId}/revisions/${revisionId}`);
-  //   const response = await this.get<Revision3D>(path);
-  //   return this.addToMapAndReturn(response.data, response);
-  // };
 }

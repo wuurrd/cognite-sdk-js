@@ -331,6 +331,7 @@ export interface EntityMatchingPredictResponse {
   status: ContextJobStatus;
 }
 
+// TODO: fix trueMatches
 export interface EntityMatchingRefitRequest {
   /**
    * The ID of the original model. Must include either externalId or id.
@@ -347,15 +348,15 @@ export interface EntityMatchingRefitRequest {
   /**
    * List of additional confirmed matches used to train the model. The new model uses a combination of this and trueMatches from the orginal model. If there are identical match-from ids, the pair from the original model is dropped.
    */
-  trueMatches?: IdEither[][];
+  trueMatches: number[][];
   /**
    * Additional entities to match from. The new model uses a combination of this and matchFrom items from the orginal model. If there are identical ids, matchFrom items from original model are dropped.
    */
-  matchFrom: EntityMatchingMatchObject;
+  matchFrom: EntityMatchingMatchObject[];
   /**
    * Additional entities to match to. The new model uses a combination this and matchTo items from the orginal model. If there are identical ids, the matchTo items from the original model are dropped.
    */
-  matchTo: EntityMatchingMatchObject;
+  matchTo: EntityMatchingMatchObject[];
 }
 
 export interface EntityMatchingRefitResponse {

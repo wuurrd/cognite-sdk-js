@@ -10,6 +10,8 @@ import {
 import {
   EntityMatchingFitRequest,
   EntityMatchingFitResponse,
+  EntityMatchingRefitRequest,
+  EntityMatchingRefitResponse,
   ContextJobId,
   EntityMatchingRetrievePredictResponse,
   EntityMatchingRetrieveModelResponseItem,
@@ -85,6 +87,12 @@ export class ContextApi extends BaseResourceAPI<unknown> {
     scope: ContextJobId
   ): Promise<EntityMatchingRetrievePredictResponse> => {
     return this.entityMatchingApi.retrievePredictResult(scope);
+  };
+
+  public entityMatchingRefit = (
+    scope: EntityMatchingRefitRequest
+  ): Promise<EntityMatchingRefitResponse> => {
+    return this.entityMatchingApi.refit(scope);
   };
 
   public entityMatchingList = (

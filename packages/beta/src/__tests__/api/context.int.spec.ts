@@ -34,6 +34,7 @@ describe('context integration test', () => {
 
   describe('Entity Matching', () => {
     const modelExternalId = 'entity_matching_test_fit' + randomInt();
+    const newModelExternalId = 'entity_matching_test_refit' + randomInt();
     test('fit model', async () => {
       const result = await client.context.entityMatchingFit({
         matchFrom: [assetA, assetB],
@@ -76,6 +77,32 @@ describe('context integration test', () => {
           predictResponseJobId
         );
         expect(retrievePredictResultResponse.status).toBe('Completed');
+      });
+      expect.hasAssertions();
+    });
+    test('refit model', async () => {
+      const refitResult = await client.context.entityMatchingRefit({
+        newExternalId: newModelExternalId,
+        matchFrom: [assetA, assetB],
+        matchTo: [tsA, tsB],
+        externalId: modelExternalId,
+        trueMatches: [[assetA.id, tsA.id]],
+      });
+      // {
+      //   id: 884933358802613,
+      //   requestTimestamp: 1601911207092,
+      //   startTimestamp: null,
+      //   status: 'Queued',
+      //   statusTimestamp: 1601911207092
+      // }
+      // TODO: the result is different from the doc.
+      // Because we only has id now, we have to retrieve it can check the externalId
+      await runTestWithRetryWhenFailing(async () => {
+        const [result] = await client.context.entityMatchingRetrieveModel([
+          { id: refitResult.id },
+        ]);
+        expect(result.externalId).toBe(newModelExternalId);
+        expect(result.status).toBe('Completed');
       });
       expect.hasAssertions();
     });
