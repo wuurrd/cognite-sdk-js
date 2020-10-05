@@ -10,8 +10,7 @@ import {
   EntityMatchingFitResponse,
   EntityMatchingRefitRequest,
   EntityMatchingRefitResponse,
-  EntityMatchingUpdateRequestItems,
-  EntityMatchingUpdateResponseObject,
+  EntityMatchingChange,
   EntityMatchingPredictRequest,
   EntityMatchingPredictResponse,
   ContextJobId,
@@ -32,8 +31,8 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
     return this.addToMapAndReturn(response.data, response);
   };
   public update = (
-    changes: EntityMatchingUpdateRequestItems[]
-  ): Promise<EntityMatchingUpdateResponseObject[]> => {
+    changes: EntityMatchingChange[]
+  ): Promise<EntityMatchingModel[]> => {
     return super.updateEndpoint(changes);
   };
   public delete = async (ids: IdEither[]): Promise<{}> => {

@@ -19,6 +19,7 @@ import {
   EntityMatchingModel,
   EntityMatchingPredictRequest,
   EntityMatchingPredictResponse,
+  EntityMatchingChange,
 } from '../../types';
 import { EntityMatchingApi } from './entityMatchingApi';
 
@@ -60,6 +61,18 @@ export class ContextApi extends BaseResourceAPI<unknown> {
   ): Promise<EntityMatchingRetrieveModelResponseItem[]> => {
     return this.entityMatchingApi.retrieveModel(ids);
   };
+
+  /**
+   *
+   * ```js
+   * ```
+   */
+  public entityMatchingUpdate = (
+    items: EntityMatchingChange[]
+  ): Promise<EntityMatchingModel[]> => {
+    return this.entityMatchingApi.update(items);
+  };
+
   /**
    *
    * ```js

@@ -219,33 +219,10 @@ export interface EntityMatchingFitResponse {
   status?: ContextJobStatus;
 }
 
-export interface EntityMatchingModel {
-  id?: CogniteInternalId;
-  externalId?: CogniteExternalId;
-  /**
-   * User defined name of the model.
-   */
-  name?: string;
-  /**
-   * User defined description of the model
-   */
-  description?: string;
-  /**
-   * The status of the job.
-   */
-  status?: ContextJobStatus;
-}
-
 // TODO: check with context team on items: array
-export interface EntityMatchingUpdateRequestItems {
-  /**
-   * A server-generated ID for the object.
-   */
-  id?: CogniteInternalId;
-  /**
-   * External Id provided by client. Should be unique within the project.
-   */
-  externalId?: CogniteExternalId;
+export type EntityMatchingChange = IdEither & InterfaceEntityMatchingPatch;
+
+export interface InterfaceEntityMatchingPatch {
   update?: {
     /**
      * Set a new value for the model name.
@@ -258,7 +235,7 @@ export interface EntityMatchingUpdateRequestItems {
   };
 }
 
-export type EntityMatchingUpdateResponseObject = {
+export type EntityMatchingModel = {
   /**
    * A server-generated ID for the object.
    */

@@ -54,6 +54,16 @@ describe('context integration test', () => {
       expect(items[0].name).toBe(modelExternalId);
     });
 
+    test('update model', async () => {
+      const [item] = await client.context.entityMatchingUpdate([
+        {
+          externalId: modelExternalId,
+          update: { description: { set: 'ø' } },
+        },
+      ]);
+      expect(item.description).toBe('ø');
+    });
+
     test('retrieve model', async () => {
       await runTestWithRetryWhenFailing(async () => {
         const [result] = await client.context.entityMatchingRetrieveModel([
@@ -64,6 +74,7 @@ describe('context integration test', () => {
       });
       expect.hasAssertions();
     });
+
     test('predict', async () => {
       const predictResponse = await client.context.entityMatchingPredict({
         externalId: modelExternalId,
@@ -106,6 +117,7 @@ describe('context integration test', () => {
       });
       expect.hasAssertions();
     });
+
     test('delete model', async () => {
       const result = await client.context.entityMatchingDelete([
         { externalId: modelExternalId },
