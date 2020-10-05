@@ -4,6 +4,10 @@ import { BaseResourceAPI, CDFHttpClient, MetadataMap } from '@cognite/sdk-core';
 import {
   EntityMatchingFitRequest,
   EntityMatchingFitResponse,
+  ContextJobId,
+  EntityMatchingRetrievePredictResponse,
+  EntityMatchingRetrieveModelRequest,
+  EntityMatchingRetrieveModelResponse,
 } from '../../types';
 import { EntityMatchingApi } from './entityMatchingApi';
 
@@ -30,5 +34,27 @@ export class ContextApi extends BaseResourceAPI<unknown> {
     scope: EntityMatchingFitRequest
   ): Promise<EntityMatchingFitResponse> => {
     return this.entityMatchingApi.fit(scope);
+  };
+
+  /**
+   *
+   * ```js
+   * ```
+   */
+  public entityMatchingRetrieveModel = (
+    scope: EntityMatchingRetrieveModelRequest
+  ): Promise<EntityMatchingRetrieveModelResponse> => {
+    return this.entityMatchingApi.retrieveModel(scope);
+  };
+
+  /**
+   *
+   * ```js
+   * ```
+   */
+  public entityMatchingRetrievePredict = (
+    scope: ContextJobId
+  ): Promise<EntityMatchingRetrievePredictResponse> => {
+    return this.entityMatchingApi.retrievePredict(scope);
   };
 }

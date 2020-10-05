@@ -9,7 +9,9 @@ import {
   EntityMatchingPredictRequest,
   EntityMatchingPredictResponse,
   ContextJobId,
-  EntityMatchingRetrieveResponse,
+  EntityMatchingRetrievePredictResponse,
+  EntityMatchingRetrieveModelRequest,
+  EntityMatchingRetrieveModelResponse,
 } from '../../types';
 
 export class EntityMatchingApi extends BaseResourceAPI<any> {
@@ -49,11 +51,26 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
   // ) => {
   //   return super.retrieveEndpoint(ids);
   // };
-  public retrieve = async (
+  public retrieveModel = async (
+    scope: EntityMatchingRetrieveModelRequest
+  ): Promise<EntityMatchingRetrieveModelResponse> => {
+    const path = this.url('byids');
+    const response = await this.post<EntityMatchingRetrieveModelResponse>(
+      path,
+      {
+        data: scope,
+      }
+    );
+    return this.addToMapAndReturn(response.data, response);
+  };
+
+  public retrievePredict = async (
     jobId: ContextJobId
-  ): Promise<EntityMatchingRetrieveResponse> => {
+  ): Promise<EntityMatchingRetrievePredictResponse> => {
     const path = this.url(`jobs/${jobId}`);
-    const response = await this.get<EntityMatchingRetrieveResponse>(path);
+    const response = await this.get<EntityMatchingRetrievePredictResponse>(
+      path
+    );
     return this.addToMapAndReturn(response.data, response);
   };
 }
