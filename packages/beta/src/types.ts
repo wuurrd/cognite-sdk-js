@@ -480,10 +480,31 @@ export interface EntityMatchingRetrievePredictResponseItemMatche {
   score: number;
 }
 
-// TODO: ...
 export interface EntityMatchingFilter {
-  // ...
+  /**
+   * User defined name of the model.
+   */
   name?: string;
+  /**
+   * User defined description of the model.
+   */
+  description?: string;
+  /**
+   * The feature type used to fit the model.
+   */
+  featureType?: EntityMatchingFeatureType;
+  /**
+   * Name of the classifier supervised model, "Unsupervised" if unsupervised model
+   */
+  classifier?: string;
+  /**
+   * List of pairs of fields from the matchTo and matchFrom items used to create features.
+   */
+  keysFromTo?: any[]; // TODO: fix
+  /**
+   * The ID of original model, only relevant when the model is a retrained model.
+   */
+  originalModelId?: number;
 }
 
 export interface EntityMatchingFilterRequest extends FilterQuery {
