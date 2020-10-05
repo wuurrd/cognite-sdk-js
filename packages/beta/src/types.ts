@@ -131,11 +131,9 @@ export interface RelationshipsFilter extends CreatedAndLastUpdatedTimeFilter {
   labels?: LabelFilter;
 }
 
-export type ContextJobStatus =
-  | 'QUEUED'
-  | 'RUNNING'
-  | 'COMPLETED'
-  | 'FAILED';
+export type ContextJobStatus = 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+
+export type ContextJobId = string;
 
 // TODO: fix the interface
 export type EntityMatchingMatchObject = IdEither & {
@@ -368,4 +366,35 @@ export interface EntityMatchingRefitResponse {
    * ID of original model.
    */
   originalId: number;
+}
+
+export interface EntityMatchingRetrieveResponse {
+  /**
+   * Contextualization job ID.
+   */
+  jobId: ContextJobId;
+  /**
+   * The status of the job.
+   */
+  status: ContextJobStatus;
+  /**
+   * List of matched entities with confidence score.
+   */
+  items: EntityMatchingRetrieveResponseItem[];
+}
+
+export interface EntityMatchingRetrieveResponseItem {
+  /**
+   * The matchFrom item given to predict.
+   */
+  matchFrom: EntityMatchingMatchObject;
+  /**
+   * Matched items, sorted from highest score to lowest. May be empty.
+   */
+  matches: EntityMatchingRetrieveResponseItemMatche[];
+}
+
+export interface EntityMatchingRetrieveResponseItemMatche {
+  matchTo: EntityMatchingMatchObject;
+  score: number;
 }

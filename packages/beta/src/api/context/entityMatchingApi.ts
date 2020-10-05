@@ -8,6 +8,8 @@ import {
   EntityMatchingUpdateResponseObject,
   EntityMatchingPredictRequest,
   EntityMatchingPredictResponse,
+  ContextJobId,
+  EntityMatchingRetrieveResponse,
 } from '../../types';
 
 export class EntityMatchingApi extends BaseResourceAPI<any> {
@@ -47,12 +49,11 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
   // ) => {
   //   return super.retrieveEndpoint(ids);
   // };
-  // public retrieve = async (
-  //   modelId: CogniteInternalId,
-  //   revisionId: CogniteInternalId
-  // ): Promise<Revision3D> => {
-  //   const path = this.url(`${modelId}/revisions/${revisionId}`);
-  //   const response = await this.get<Revision3D>(path);
-  //   return this.addToMapAndReturn(response.data, response);
-  // };
+  public retrieve = async (
+    jobId: ContextJobId
+  ): Promise<EntityMatchingRetrieveResponse> => {
+    const path = this.url(`jobs/${jobId}`);
+    const response = await this.get<EntityMatchingRetrieveResponse>(path);
+    return this.addToMapAndReturn(response.data, response);
+  };
 }
