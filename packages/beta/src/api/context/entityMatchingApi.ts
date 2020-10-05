@@ -46,11 +46,6 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
     });
     return this.addToMapAndReturn(response.data, response);
   };
-  // public list = (
-  //   scope?: TimeseriesFilterQuery
-  // ): CursorAndAsyncIterator<Timeseries> => {
-  //   return super.listEndpoint(this.callListEndpointWithPost, scope);
-  // };
   public retrieveModel = (
     ids: IdEither[]
   ): Promise<EntityMatchingRetrieveModelResponseItem[]> => {

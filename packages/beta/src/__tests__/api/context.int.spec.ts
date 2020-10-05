@@ -33,30 +33,32 @@ describe('context integration test', () => {
   });
 
   describe('Entity Matching', () => {
-    const fitExternalId = 'entity_matching_test_fit' + randomInt();
+    const modelExternalId = 'entity_matching_test_fit' + randomInt();
     test('fit model', async () => {
       const result = await client.context.entityMatchingFit({
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
-        externalId: fitExternalId,
+        externalId: modelExternalId,
+        name: modelExternalId,
         idField: 'id',
       });
-      expect(result.externalId).toBe(fitExternalId);
+      expect(result.externalId).toBe(modelExternalId);
     });
 
     test('list models', async () => {
-      const result = await client.context.entityMatchingList({});
-      // console.log(JSON.stringify(result, null, 2))
-      expect(result.items.length).toBeGreaterThan(0);
-      expect.assertions(1);
+      const { items } = await client.context.entityMatchingList({
+        filter: { name: modelExternalId },
+      });
+      expect(items.length).toBeGreaterThan(0);
+      expect(items[0].name).toBe(modelExternalId);
     });
 
     test('retrieve model', async () => {
       await runTestWithRetryWhenFailing(async () => {
         const [result] = await client.context.entityMatchingRetrieveModel([
-          { externalId: fitExternalId },
+          { externalId: modelExternalId },
         ]);
-        expect(result.externalId).toBe(fitExternalId);
+        expect(result.externalId).toBe(modelExternalId);
         expect(result.status).toBe('Completed');
       });
       expect.hasAssertions();
@@ -79,7 +81,7 @@ describe('context integration test', () => {
     });
     test('delete model', async () => {
       const result = await client.context.entityMatchingDelete([
-        { externalId: fitExternalId },
+        { externalId: modelExternalId },
       ]);
       expect(result).toEqual({});
     });
