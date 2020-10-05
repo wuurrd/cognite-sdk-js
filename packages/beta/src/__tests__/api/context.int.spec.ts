@@ -65,7 +65,7 @@ describe('context integration test', () => {
     });
     test('predict', async () => {
       const predictResponse = await client.context.entityMatchingPredict({
-        externalId: fitExternalId,
+        externalId: modelExternalId,
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
       });
