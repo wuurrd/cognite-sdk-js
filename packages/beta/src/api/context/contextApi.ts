@@ -15,6 +15,8 @@ import {
   EntityMatchingRetrieveModelResponseItem,
   EntityMatchingFilterRequest,
   EntityMatchingModel,
+  EntityMatchingPredictRequest,
+  EntityMatchingPredictResponse,
 } from '../../types';
 import { EntityMatchingApi } from './entityMatchingApi';
 
@@ -55,6 +57,16 @@ export class ContextApi extends BaseResourceAPI<unknown> {
     ids: IdEither[]
   ): Promise<EntityMatchingRetrieveModelResponseItem[]> => {
     return this.entityMatchingApi.retrieveModel(ids);
+  };
+  /**
+   *
+   * ```js
+   * ```
+   */
+  public entityMatchingPredict = (
+    scope: EntityMatchingPredictRequest
+  ): Promise<EntityMatchingPredictResponse> => {
+    return this.entityMatchingApi.predict(scope);
   };
   /**
    *

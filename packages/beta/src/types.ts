@@ -133,7 +133,7 @@ export interface RelationshipsFilter extends CreatedAndLastUpdatedTimeFilter {
 
 export type ContextJobStatus = 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
 
-export type ContextJobId = string;
+export type ContextJobId = number;
 
 // TODO: fix the interface
 export type EntityMatchingMatchObject = IdEither & {

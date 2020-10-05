@@ -61,6 +61,22 @@ describe('context integration test', () => {
       });
       expect.hasAssertions();
     });
+    test('predict', async () => {
+      const predictResponse = await client.context.entityMatchingPredict({
+        externalId: fitExternalId,
+        matchFrom: [assetA, assetB],
+        matchTo: [tsA, tsB],
+      });
+      expect(predictResponse.status).toBe('Queued');
+      const predictResponseJobId = predictResponse.jobId;
+      await runTestWithRetryWhenFailing(async () => {
+        const retrievePredictResultResponse = await client.context.entityMatchingRetrievePredictResult(
+          predictResponseJobId
+        );
+        expect(retrievePredictResultResponse.status).toBe('Completed');
+      });
+      expect.hasAssertions();
+    });
     test('delete model', async () => {
       const result = await client.context.entityMatchingDelete([
         { externalId: fitExternalId },
