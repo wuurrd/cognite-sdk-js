@@ -34,7 +34,7 @@ describe('context integration test', () => {
 
   describe('Entity Matching', () => {
     const fitExternalId = 'entity_matching_test_fit' + randomInt();
-    test('fit', async () => {
+    test('fit model', async () => {
       const result = await client.context.entityMatchingFit({
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
@@ -43,7 +43,15 @@ describe('context integration test', () => {
       });
       expect(result.externalId).toBe(fitExternalId);
     });
-    test('retrieveModel', async () => {
+
+    test('list models', async () => {
+      const result = await client.context.entityMatchingList({});
+      // console.log(JSON.stringify(result, null, 2))
+      expect(result.items.length).toBeGreaterThan(0);
+      expect.assertions(1);
+    });
+
+    test('retrieve model', async () => {
       await runTestWithRetryWhenFailing(async () => {
         const [result] = await client.context.entityMatchingRetrieveModel([
           { externalId: fitExternalId },
@@ -53,7 +61,7 @@ describe('context integration test', () => {
       });
       expect.hasAssertions();
     });
-    test('delete', async () => {
+    test('delete model', async () => {
       const result = await client.context.entityMatchingDelete([
         { externalId: fitExternalId },
       ]);

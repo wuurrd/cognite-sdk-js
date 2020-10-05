@@ -5,6 +5,7 @@ import {
   CDFHttpClient,
   MetadataMap,
   IdEither,
+  CursorAndAsyncIterator,
 } from '@cognite/sdk-core';
 import {
   EntityMatchingFitRequest,
@@ -12,6 +13,8 @@ import {
   ContextJobId,
   EntityMatchingRetrievePredictResponse,
   EntityMatchingRetrieveModelResponseItem,
+  EntityMatchingFilterRequest,
+  EntityMatchingModel,
 } from '../../types';
 import { EntityMatchingApi } from './entityMatchingApi';
 
@@ -25,8 +28,11 @@ export class ContextApi extends BaseResourceAPI<unknown> {
     map: MetadataMap
   ) {
     super(resourcePath, httpClient, map);
-    const path = resourcePath + '/entitymatching';
-    this.entityMatchingApi = new EntityMatchingApi(path, httpClient, map);
+    this.entityMatchingApi = new EntityMatchingApi(
+      this.url('entitymatching'),
+      httpClient,
+      map
+    );
   }
 
   /**
@@ -67,5 +73,11 @@ export class ContextApi extends BaseResourceAPI<unknown> {
     scope: ContextJobId
   ): Promise<EntityMatchingRetrievePredictResponse> => {
     return this.entityMatchingApi.retrievePredictResult(scope);
+  };
+
+  public entityMatchingList = (
+    scope: EntityMatchingFilterRequest
+  ): CursorAndAsyncIterator<EntityMatchingModel> => {
+    return this.entityMatchingApi.list(scope);
   };
 }

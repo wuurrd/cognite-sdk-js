@@ -219,6 +219,23 @@ export interface EntityMatchingFitResponse {
   status?: ContextJobStatus;
 }
 
+export interface EntityMatchingModel {
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
+  /**
+   * User defined name of the model.
+   */
+  name?: string;
+  /**
+   * User defined description of the model
+   */
+  description?: string;
+  /**
+   * The status of the job.
+   */
+  status?: ContextJobStatus;
+}
+
 // TODO: check with context team on items: array
 export interface EntityMatchingUpdateRequestItems {
   /**
@@ -461,4 +478,14 @@ export interface EntityMatchingRetrievePredictResponseItem {
 export interface EntityMatchingRetrievePredictResponseItemMatche {
   matchTo: EntityMatchingMatchObject;
   score: number;
+}
+
+// TODO: ...
+export interface EntityMatchingFilter {
+  // ...
+  name?: string;
+}
+
+export interface EntityMatchingFilterRequest extends FilterQuery {
+  filter?: EntityMatchingFilter;
 }

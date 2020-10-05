@@ -1,6 +1,10 @@
 // Copyright 2020 Cognite AS
 
-import { BaseResourceAPI, IdEither } from '@cognite/sdk-core';
+import {
+  BaseResourceAPI,
+  CursorAndAsyncIterator,
+  IdEither,
+} from '@cognite/sdk-core';
 import {
   EntityMatchingFitRequest,
   EntityMatchingFitResponse,
@@ -11,6 +15,8 @@ import {
   ContextJobId,
   EntityMatchingRetrievePredictResponse,
   EntityMatchingRetrieveModelResponseItem,
+  EntityMatchingModel,
+  EntityMatchingFilterRequest,
 } from '../../types';
 
 export class EntityMatchingApi extends BaseResourceAPI<any> {
@@ -60,4 +66,17 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
     );
     return this.addToMapAndReturn(response.data, response);
   };
+  public list = (
+    scope?: EntityMatchingFilterRequest
+  ): CursorAndAsyncIterator<EntityMatchingModel> => {
+    return super.listEndpoint(this.callListEndpointWithPost, scope);
+  };
+  // public retrieve = async (
+  //   modelId: CogniteInternalId,
+  //   revisionId: CogniteInternalId
+  // ): Promise<Revision3D> => {
+  //   const path = this.url(`${modelId}/revisions/${revisionId}`);
+  //   const response = await this.get<Revision3D>(path);
+  //   return this.addToMapAndReturn(response.data, response);
+  // };
 }
