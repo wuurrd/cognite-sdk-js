@@ -269,19 +269,21 @@ export type EntityMatchingModel = {
   /**
    * The feature type used to fit the model.
    */
-  featureType?: string;
+  featureType?: EntityMatchingFeatureType;
   /**
    * Name of the classifier supervised model, "Unsupervised" if unsupervised model.
    */
   classifier?: string;
+  // TODO: classifier should be enum?
   /**
    * List of pairs of fields from the matchTo and matchFrom items used to create features.
    */
-  keysFromTo?: Array<string[]>;
+  keysFromTo?: string[][]; // TODO: fix
   /**
    * The ID of original model, only relevant when the model is a retrained model.
    */
   originalModelId?: number;
+  status?: EntityMatchingJobStatus;
 };
 
 export interface EntityMatchingPredictRequest {
@@ -374,70 +376,6 @@ export interface EntityMatchingRefitResponse {
    * ID of original model.
    */
   originalId: number;
-}
-
-export interface EntityMatchingRetrieveModelResponseItem {
-  /**
-   * A server-generated ID for the object.
-   */
-  id?: CogniteInternalId;
-  /**
-   * External Id provided by client. Should be unique within the project.
-   */
-  externalId?: CogniteExternalId;
-  /**
-   * User defined name of the model.
-   */
-  name?: string;
-  /**
-   * User defined description of the model.
-   */
-  description?: string;
-  /**
-   * The feature type used to fit the model.
-   */
-  featureType?: EntityMatchingFeatureType;
-  /**
-   * Name of the classifier supervised model, "Unsupervised" if unsupervised model.
-   */
-  classifier?: string;
-  // TODO: classifier should be enum?
-  /**
-   * List of pairs of fields from the matchTo and matchFrom items used to create features.
-   */
-  keysFromTo?: string[][];
-  /**
-   * The ID of original model, only relevant when the model is a retrained model.
-   */
-  originalModelId?: number;
-
-  status?: EntityMatchingJobStatus;
-  // TODO: we also have Status, idField fields but not in the doc
-  /**
-   * {
-    "items": [
-        {
-            "description": "Simple model 1",
-            "externalId": "test124",
-            "featureType": "bigram",
-            "id": 3426268844583535,
-            "idField": "external_id",
-            "keysFromTo": [
-                [
-                    "key_to",
-                    "key_from"
-                ],
-                [
-                    "key_to",
-                    "key_from"
-                ]
-            ],
-            "name": "simple_model_1",
-            "status": "Completed"
-        }
-    ]
-}
-   */
 }
 
 export interface EntityMatchingRetrievePredictResponse {
