@@ -156,6 +156,8 @@ export type EntityMatchingFeatureType =
   | 'bigram-extra-tokenizers'
   | 'bigram-combo';
 
+export type EntityMatchingTrueMatch = number | string;
+
 export interface EntityMatchingFitRequest {
   /**
    * List of entities with field id or externalId to match from, for example, time series.
@@ -168,7 +170,7 @@ export interface EntityMatchingFitRequest {
   /**
    * List of pairs of [match-from id,match-to id] that indicates a confirmed match used to train the model. If omitted, uses an unsupervised model.
    */
-  trueMatches?: IdEither[][];
+  trueMatches?: EntityMatchingTrueMatch[][];
   /**
    * Which field in matchFrom and matchTo to use as the id field
    */
@@ -308,7 +310,6 @@ export interface EntityMatchingPredictResponse {
   status: ContextJobStatus;
 }
 
-// TODO: fix trueMatches
 export interface EntityMatchingRefitRequest {
   /**
    * The ID of the original model. Must include either externalId or id.
@@ -325,7 +326,7 @@ export interface EntityMatchingRefitRequest {
   /**
    * List of additional confirmed matches used to train the model. The new model uses a combination of this and trueMatches from the orginal model. If there are identical match-from ids, the pair from the original model is dropped.
    */
-  trueMatches: number[][];
+  trueMatches: EntityMatchingTrueMatch[][];
   /**
    * Additional entities to match from. The new model uses a combination of this and matchFrom items from the orginal model. If there are identical ids, matchFrom items from original model are dropped.
    */

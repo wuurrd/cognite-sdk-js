@@ -99,13 +99,6 @@ describe('context integration test', () => {
         externalId: modelExternalId,
         trueMatches: [[assetA.id, tsA.id]],
       });
-      // {
-      //   id: 884933358802613,
-      //   requestTimestamp: 1601911207092,
-      //   startTimestamp: null,
-      //   status: 'Queued',
-      //   statusTimestamp: 1601911207092
-      // }
       // TODO: the result is different from the doc.
       // Because we only has id now, we have to retrieve it can check the externalId
       await runTestWithRetryWhenFailing(async () => {
