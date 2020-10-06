@@ -131,7 +131,18 @@ export interface RelationshipsFilter extends CreatedAndLastUpdatedTimeFilter {
   labels?: LabelFilter;
 }
 
-export type ContextJobStatus = 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+export type EntityMatchingJobStatus =
+  | 'QUEUED'
+  | 'RUNNING'
+  | 'COMPLETED'
+  | 'FAILED';
+
+export const EntityMatchingJobStatus = {
+  QUEUED: 'QUEUED' as EntityMatchingJobStatus,
+  RUNNING: 'RUNNING' as EntityMatchingJobStatus,
+  COMPLETED: 'COMPLETED' as EntityMatchingJobStatus,
+  FAILED: 'FAILED' as EntityMatchingJobStatus,
+};
 
 export type ContextJobId = number;
 
@@ -147,6 +158,7 @@ export const EntityMatchingFitRequestIdField = {
 };
 
 // TODO: why snake case??
+// TODO: this will be removed
 export type EntityMatchingFitRequestIdField = 'id' | 'external_id';
 
 export type EntityMatchingFeatureType =
@@ -218,7 +230,7 @@ export interface EntityMatchingFitResponse {
   /**
    * The status of the job.
    */
-  status?: ContextJobStatus;
+  status?: EntityMatchingJobStatus;
 }
 
 // TODO: check with context team on items: array
@@ -307,7 +319,7 @@ export interface EntityMatchingPredictResponse {
   /**
    * The status of the job.
    */
-  status: ContextJobStatus;
+  status: EntityMatchingJobStatus;
 }
 
 export interface EntityMatchingRefitRequest {
@@ -357,7 +369,7 @@ export interface EntityMatchingRefitResponse {
   /**
    * The status of the job.
    */
-  status: ContextJobStatus;
+  status: EntityMatchingJobStatus;
   /**
    * ID of original model.
    */
@@ -399,7 +411,7 @@ export interface EntityMatchingRetrieveModelResponseItem {
    */
   originalModelId?: number;
 
-  status?: ContextJobStatus;
+  status?: EntityMatchingJobStatus;
   // TODO: we also have Status, idField fields but not in the doc
   /**
    * {
@@ -436,7 +448,7 @@ export interface EntityMatchingRetrievePredictResponse {
   /**
    * The status of the job.
    */
-  status: ContextJobStatus;
+  status: EntityMatchingJobStatus;
   /**
    * List of matched entities with confidence score.
    */

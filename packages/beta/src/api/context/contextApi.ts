@@ -66,7 +66,7 @@ export class ContextApi extends BaseResourceAPI<unknown> {
   public entityMatchingRetrieveModel = (
     ids: IdEither[]
   ): Promise<EntityMatchingRetrieveModelResponseItem[]> => {
-    return this.entityMatchingApi.retrieveModel(ids);
+    return this.entityMatchingApi.retrieve(ids);
   };
 
   /**
@@ -106,7 +106,7 @@ export class ContextApi extends BaseResourceAPI<unknown> {
   public entityMatchingRetrievePredictResult = (
     scope: ContextJobId
   ): Promise<EntityMatchingRetrievePredictResponse> => {
-    return this.entityMatchingApi.retrievePredictResult(scope);
+    return this.entityMatchingApi.predictResult(scope);
   };
 
   public entityMatchingRefit = (
