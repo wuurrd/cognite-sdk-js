@@ -131,7 +131,11 @@ export interface RelationshipsFilter extends CreatedAndLastUpdatedTimeFilter {
   labels?: LabelFilter;
 }
 
-export type EntityMatchingJobStatus = 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+export type EntityMatchingJobStatus =
+  | 'QUEUED'
+  | 'RUNNING'
+  | 'COMPLETED'
+  | 'FAILED';
 
 export const EntityMatchingJobStatus = {
   QUEUED: 'QUEUED' as EntityMatchingJobStatus,
