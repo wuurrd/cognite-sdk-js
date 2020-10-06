@@ -24,20 +24,35 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
   public fit = async (
     scope: EntityMatchingFitRequest
   ): Promise<EntityMatchingFitResponse> => {
-    const path = this.url('fit');
+    const path = this.url();
     const response = await this.post<EntityMatchingFitResponse>(path, {
       data: scope,
     });
     return this.addToMapAndReturn(response.data, response);
   };
+
+  public retrieve = (
+    ids: IdEither[]
+  ): Promise<EntityMatchingRetrieveModelResponseItem[]> => {
+    return super.retrieveEndpoint(ids);
+  };
+
+  public list = (
+    scope?: EntityMatchingFilterRequest
+  ): CursorAndAsyncIterator<EntityMatchingModel> => {
+    return super.listEndpoint(this.callListEndpointWithPost, scope);
+  };
+
   public update = (
     changes: EntityMatchingChange[]
   ): Promise<EntityMatchingModel[]> => {
     return super.updateEndpoint(changes);
   };
+
   public delete = async (ids: IdEither[]): Promise<{}> => {
     return super.deleteEndpoint(ids);
   };
+
   public predict = async (
     scope: EntityMatchingPredictRequest
   ): Promise<EntityMatchingPredictResponse> => {
@@ -47,12 +62,8 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
     });
     return this.addToMapAndReturn(response.data, response);
   };
-  public retrieveModel = (
-    ids: IdEither[]
-  ): Promise<EntityMatchingRetrieveModelResponseItem[]> => {
-    return super.retrieveEndpoint(ids);
-  };
-  public retrievePredictResult = async (
+
+  public predictResult = async (
     jobId: ContextJobId
   ): Promise<EntityMatchingRetrievePredictResponse> => {
     const path = this.url(`jobs/${jobId}`);
@@ -61,6 +72,7 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
     );
     return this.addToMapAndReturn(response.data, response);
   };
+
   public refit = async (
     scope: EntityMatchingRefitRequest
   ): Promise<EntityMatchingRefitResponse> => {
@@ -69,10 +81,5 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
       data: scope,
     });
     return this.addToMapAndReturn(response.data, response);
-  };
-  public list = (
-    scope?: EntityMatchingFilterRequest
-  ): CursorAndAsyncIterator<EntityMatchingModel> => {
-    return super.listEndpoint(this.callListEndpointWithPost, scope);
   };
 }
