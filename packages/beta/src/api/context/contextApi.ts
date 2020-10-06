@@ -39,10 +39,17 @@ export class ContextApi extends BaseResourceAPI<unknown> {
       map
     );
   }
-
   /**
+   * [Fit entity matcher](https://docs.cognite.com/api/playground/#operation/entityMatchingFit)
    *
    * ```js
+   * await client.context.entityMatchingFit({
+   *  matchFrom: [{externalId: 'asset1', name: 'asset1'}, {externalId: 'asset2', name: 'asset2'}],
+   *  matchTo: [{externalId: 'ts1', name: 'ts1'}, {externalId: 'ts2', name: 'ts2'}],
+   *  externalId: 'model123',
+   *  name: 'model123',
+   *  idField: 'id'
+   * });
    * ```
    */
   public entityMatchingFit = (
