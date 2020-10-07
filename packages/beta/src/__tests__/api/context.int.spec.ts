@@ -99,8 +99,7 @@ describe('context integration test', () => {
         externalId: modelExternalId,
         trueMatches: [[assetA.id, tsA.id]],
       });
-      // TODO: the result is different from the doc.
-      // Because we only has id now, we have to retrieve it can check the externalId
+      expect(refitResult.externalId).toBe(newModelExternalId);
       await runTestWithRetryWhenFailing(async () => {
         const [result] = await client.context.entityMatchingRetrieveModel([
           { id: refitResult.id },
