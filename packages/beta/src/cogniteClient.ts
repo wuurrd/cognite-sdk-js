@@ -6,7 +6,7 @@ import {
 } from '@cognite/sdk';
 import { accessApi } from '@cognite/sdk-core';
 import { version } from '../package.json';
-import { ContextApi } from './api/context/contextApi';
+import { EntityMatchingApi } from './api/entityMatching/entityMatchingApi';
 import { RelationshipsApi } from './api/relationships/relationshipsApi';
 
 class CogniteClientCleaned extends CogniteClientStable {
@@ -15,7 +15,7 @@ class CogniteClientCleaned extends CogniteClientStable {
 
 export default class CogniteClient extends CogniteClientCleaned {
   private relationshipsApi?: RelationshipsApi;
-  private contextApi?: ContextApi;
+  private entityMatchingApi?: EntityMatchingApi;
 
   /**
    * Create a new SDK client (beta)
@@ -43,8 +43,8 @@ export default class CogniteClient extends CogniteClientCleaned {
     return accessApi(this.relationshipsApi);
   }
 
-  public get context() {
-    return accessApi(this.contextApi);
+  public get entityMatching() {
+    return accessApi(this.entityMatchingApi);
   }
 
   protected get version() {
@@ -57,8 +57,10 @@ export default class CogniteClient extends CogniteClientCleaned {
     this.relationshipsApi = this.apiFactory(RelationshipsApi, 'relationships');
     // this.contextApi = this.apiFactory(ContextApi, 'context');
     // TODO: replace the stuff below with the line above
-    this.contextApi = new ContextApi(
-      `/api/playground/projects/${encodeURIComponent(this.project)}/context`,
+    this.entityMatchingApi = new EntityMatchingApi(
+      `/api/playground/projects/${encodeURIComponent(
+        this.project
+      )}/context/entitymatching`,
       this.httpClient,
       this.metadataMap
     );

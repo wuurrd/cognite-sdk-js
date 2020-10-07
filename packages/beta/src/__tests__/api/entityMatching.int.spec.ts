@@ -36,7 +36,7 @@ describe('context integration test', () => {
     const modelExternalId = 'entity_matching_test_fit' + randomInt();
     const newModelExternalId = 'entity_matching_test_refit' + randomInt();
     test('fit model', async () => {
-      const result = await client.context.entityMatchingFit({
+      const result = await client.entityMatching.fit({
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
         externalId: modelExternalId,
@@ -47,7 +47,7 @@ describe('context integration test', () => {
     });
 
     test('list models', async () => {
-      const { items } = await client.context.entityMatchingList({
+      const { items } = await client.entityMatching.list({
         filter: { name: modelExternalId },
       });
       expect(items.length).toBeGreaterThan(0);
@@ -55,7 +55,7 @@ describe('context integration test', () => {
     });
 
     test('update model', async () => {
-      const [item] = await client.context.entityMatchingUpdate([
+      const [item] = await client.entityMatching.update([
         {
           externalId: modelExternalId,
           update: { description: { set: 'ø' } },
@@ -66,7 +66,7 @@ describe('context integration test', () => {
 
     test('retrieve model', async () => {
       await runTestWithRetryWhenFailing(async () => {
-        const [result] = await client.context.entityMatchingRetrieveModel([
+        const [result] = await client.entityMatching.retrieve([
           { externalId: modelExternalId },
         ]);
         expect(result.externalId).toBe(modelExternalId);
@@ -76,7 +76,7 @@ describe('context integration test', () => {
     });
 
     test('predict', async () => {
-      const predictResponse = await client.context.entityMatchingPredict({
+      const predictResponse = await client.entityMatching.predict({
         externalId: modelExternalId,
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
@@ -84,7 +84,7 @@ describe('context integration test', () => {
       expect(predictResponse.status).toBe('Queued');
       const predictResponseJobId = predictResponse.jobId;
       await runTestWithRetryWhenFailing(async () => {
-        const retrievePredictResultResponse = await client.context.entityMatchingRetrievePredictResult(
+        const retrievePredictResultResponse = await client.entityMatching.predictResult(
           predictResponseJobId
         );
         expect(retrievePredictResultResponse.status).toBe('Completed');
@@ -92,7 +92,7 @@ describe('context integration test', () => {
       expect.hasAssertions();
     });
     test('refit model', async () => {
-      const refitResult = await client.context.entityMatchingRefit({
+      const refitResult = await client.entityMatching.refit({
         newExternalId: newModelExternalId,
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
@@ -101,7 +101,7 @@ describe('context integration test', () => {
       });
       expect(refitResult.externalId).toBe(newModelExternalId);
       await runTestWithRetryWhenFailing(async () => {
-        const [result] = await client.context.entityMatchingRetrieveModel([
+        const [result] = await client.entityMatching.retrieve([
           { id: refitResult.id },
         ]);
         expect(result.externalId).toBe(newModelExternalId);
@@ -111,7 +111,7 @@ describe('context integration test', () => {
     });
 
     test('delete model', async () => {
-      const result = await client.context.entityMatchingDelete([
+      const result = await client.entityMatching.delete([
         { externalId: modelExternalId },
       ]);
       expect(result).toEqual({});
