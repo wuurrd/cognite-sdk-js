@@ -97,7 +97,7 @@ describe('context integration test', () => {
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
         externalId: modelExternalId,
-        trueMatches: [[assetA.id, tsA.id]],
+        trueMatches: [{ fromId: assetA.id, toExternalId: tsA.externalId }],
       });
       expect(refitResult.externalId).toBe(newModelExternalId);
       await runTestWithRetryWhenFailing(async () => {

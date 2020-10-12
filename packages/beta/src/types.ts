@@ -168,7 +168,24 @@ export type EntityMatchingFeatureType =
   | 'bigram-extra-tokenizers'
   | 'bigram-combo';
 
-export type EntityMatchingTrueMatch = number | string;
+export interface EntityMatchingTrueMatch {
+  /**
+   * The id for the from-object of the match.
+   */
+  fromId?: CogniteInternalId;
+  /**
+   * The id for the to-object of the match.
+   */
+  toId?: CogniteInternalId;
+  /**
+   * The external for the from-object of the match.
+   */
+  fromExternalId?: CogniteExternalId;
+  /**
+   * The external for the to-object of the match.
+   */
+  toExternalId?: CogniteExternalId;
+}
 
 export interface EntityMatchingFitRequest {
   /**
@@ -180,9 +197,9 @@ export interface EntityMatchingFitRequest {
    */
   matchTo: EntityMatchingMatchObject[];
   /**
-   * List of pairs of [match-from id,match-to id] that indicates a confirmed match used to train the model. If omitted, uses an unsupervised model.
+   * List of objects of pairs of fromId or fromExternalId and toId or toExternalId, that corresponds to entities in matchFrom and matchTo respectively, that indicates a confirmed match used to train the model. If omitted, an unsupervised model is used.
    */
-  trueMatches?: EntityMatchingTrueMatch[][];
+  trueMatches?: EntityMatchingTrueMatch[];
   /**
    * Which field in matchFrom and matchTo to use as the id field
    */
@@ -340,7 +357,7 @@ export interface EntityMatchingRefitRequest {
   /**
    * List of additional confirmed matches used to train the model. The new model uses a combination of this and trueMatches from the orginal model. If there are identical match-from ids, the pair from the original model is dropped.
    */
-  trueMatches: EntityMatchingTrueMatch[][];
+  trueMatches: EntityMatchingTrueMatch[];
   /**
    * Additional entities to match from. The new model uses a combination of this and matchFrom items from the orginal model. If there are identical ids, matchFrom items from original model are dropped.
    */
