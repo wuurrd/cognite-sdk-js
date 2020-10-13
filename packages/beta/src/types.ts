@@ -152,21 +152,24 @@ export type EntityMatchingMatchObject = IdEither & {
   description?: string;
 };
 
-export const EntityMatchingFitRequestIdField = {
-  id: 'id' as EntityMatchingFitRequestIdField,
-  externalId: 'externalId' as EntityMatchingFitRequestIdField,
-};
-
-// TODO: why snake case??
-// TODO: this will be removed
-export type EntityMatchingFitRequestIdField = 'id' | 'external_id';
-
 export type EntityMatchingFeatureType =
   | 'simple'
   | 'bigram'
   | 'frequency-weighted-bigram'
   | 'bigram-extra-tokenizers'
   | 'bigram-combo';
+
+export type EntityMatchingClassifier =
+  | 'RandomForest'
+  | 'DecisionTree'
+  | 'LogisticRegression'
+  | 'AugmentedLogisticRegression'
+  | 'AugmentedRandomForest';
+
+export interface EntityMatchingMatchField {
+  from: string;
+  to: string;
+}
 
 export interface EntityMatchingTrueMatch {
   /**
@@ -178,11 +181,11 @@ export interface EntityMatchingTrueMatch {
    */
   toId?: CogniteInternalId;
   /**
-   * The external for the from-object of the match.
+   * The external id for the from-object of the match.
    */
   fromExternalId?: CogniteExternalId;
   /**
-   * The external for the to-object of the match.
+   * The external id for the to-object of the match.
    */
   toExternalId?: CogniteExternalId;
 }
@@ -201,9 +204,8 @@ export interface EntityMatchingFitRequest {
    */
   trueMatches?: EntityMatchingTrueMatch[];
   /**
-   * Which field in matchFrom and matchTo to use as the id field
+   * External Id provided by client. Should be unique within the project.
    */
-  idField?: EntityMatchingFitRequestIdField;
   externalId?: CogniteExternalId;
   /**
    * User defined name of the model.
@@ -214,6 +216,10 @@ export interface EntityMatchingFitRequest {
    */
   description?: string;
   /**
+   * List of pairs of fields from the matchTo and matchFrom items used to calculate features. All matchFrom and matchTo items should have all the keyFrom and keyTo properties specified here.
+   */
+  matchFields?: EntityMatchingMatchField[];
+  /**
    * Defines the combination of features used. The options are:
    * Simple: Calculates a single cosine-distance similarity score for each of the fields defined in keysFromTo. This is the fastest option.
    * Bigram: Adds similarity score based on the sequence of the terms.
@@ -223,15 +229,14 @@ export interface EntityMatchingFitRequest {
    */
   featureType?: EntityMatchingFeatureType;
   /**
-   * TODO keysFromto and completeMissing
+   * The classifier used in the model. Only relevant if there are trueMatches/labeled data.
    */
-  keysFromTo?: any;
+  classifier?: EntityMatchingClassifier;
   /**
    * If true, replaces missing data in keyFrom or keyTo with empty strings. Else, returns an error if there is missing data.
    */
-  completeMissing?: boolean;
+  ignoreMissingFields?: boolean;
 }
-// TODO: how to set default value in documentation?
 
 export interface EntityMatchingFitResponse {
   id?: CogniteInternalId;

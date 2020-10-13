@@ -41,7 +41,6 @@ describe('context integration test', () => {
         matchTo: [tsA, tsB],
         externalId: modelExternalId,
         name: modelExternalId,
-        idField: 'id',
       });
       expect(result.externalId).toBe(modelExternalId);
     });
