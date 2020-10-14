@@ -30,7 +30,6 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
    *  matchTo: [{externalId: 'ts1', name: 'ts1'}, {externalId: 'ts2', name: 'ts2'}],
    *  externalId: 'model123',
    *  name: 'model123',
-   *  idField: 'external_id'
    * });
    * ```
    */
@@ -139,7 +138,7 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
    *  matchFrom: [{externalId: 'asset1', name: 'asset1'}, {externalId: 'asset2', name: 'asset2'}],
    *  matchTo: [{externalId: 'ts1', name: 'ts1'}, {externalId: 'ts2', name: 'ts2'}],
    *  externalId: 'model123',
-   *  trueMatches: [['asset1', 'ts1']]
+   *  trueMatches: [{fromExternalId: 'asset1', toExternalId: 'ts1'}]
    * };
    * ```
    */
