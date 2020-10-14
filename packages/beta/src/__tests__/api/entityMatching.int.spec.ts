@@ -4,7 +4,7 @@ import {
   randomInt,
   runTestWithRetryWhenFailing,
 } from '@cognite/sdk-core/src/testUtils';
-import { Asset, Timeseries } from 'stable/src/types';
+import { ExternalEntityToMatch } from '../../types';
 import CogniteClient from '../../cogniteClient';
 import { setupLoggedInClient } from '../testUtils';
 
@@ -15,21 +15,21 @@ describe('context integration test', () => {
   const tsNameB = `TS_${assetNameB}`;
 
   let client: CogniteClient;
-  let assetA: Asset;
-  let assetB: Asset;
-  let tsA: Timeseries;
-  let tsB: Timeseries;
+  let assetA: ExternalEntityToMatch;
+  let assetB: ExternalEntityToMatch;
+  let tsA: ExternalEntityToMatch;
+  let tsB: ExternalEntityToMatch;
 
   beforeAll(async () => {
     client = setupLoggedInClient();
-    [assetA, assetB] = await client.assets.create([
+    [assetA, assetB] = [
       { externalId: assetNameA, name: assetNameA },
       { externalId: assetNameB, name: assetNameB },
-    ]);
-    [tsA, tsB] = await client.timeseries.create([
+    ];
+    [tsA, tsB] = [
       { externalId: tsNameA, name: tsNameA },
       { externalId: tsNameB, name: tsNameB },
-    ]);
+    ];
   });
 
   describe('Entity Matching', () => {
@@ -96,7 +96,9 @@ describe('context integration test', () => {
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
         externalId: modelExternalId,
-        trueMatches: [{ fromId: assetA.id, toExternalId: tsA.externalId }],
+        trueMatches: [
+          { fromExternalId: assetA.externalId!, toExternalId: tsA.externalId! },
+        ],
       });
       expect(refitResult.externalId).toBe(newModelExternalId);
       await runTestWithRetryWhenFailing(async () => {
@@ -115,12 +117,9 @@ describe('context integration test', () => {
       ]);
       expect(result).toEqual({});
     });
-  });
 
-  afterAll(async () => {
-    await client.assets.delete([
-      { externalId: assetNameA },
-      { externalId: assetNameB },
-    ]);
+    afterAll(async () => {
+      await client.entityMatching.delete([{ externalId: modelExternalId }]);
+    });
   });
 });

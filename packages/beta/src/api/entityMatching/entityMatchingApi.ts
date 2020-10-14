@@ -14,12 +14,13 @@ import {
   EntityMatchingPredictRequest,
   EntityMatchingPredictResponse,
   ContextJobId,
-  EntityMatchingRetrievePredictResponse,
+  EntityMatchingPredictions,
   EntityMatchingModel,
   EntityMatchingFilterRequest,
 } from '../../types';
 
 export class EntityMatchingApi extends BaseResourceAPI<any> {
+  // TODO: this will be renamed to "create"
   /**
    * [Fit entity matcher](https://docs.cognite.com/api/playground/#operation/entityMatchingFit)
    *
@@ -124,11 +125,9 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
    */
   public predictResult = async (
     jobId: ContextJobId
-  ): Promise<EntityMatchingRetrievePredictResponse> => {
+  ): Promise<EntityMatchingPredictions> => {
     const path = this.url(`jobs/${jobId}`);
-    const response = await this.get<EntityMatchingRetrievePredictResponse>(
-      path
-    );
+    const response = await this.get<EntityMatchingPredictions>(path);
     return this.addToMapAndReturn(response.data, response);
   };
 

@@ -131,27 +131,28 @@ export interface RelationshipsFilter extends CreatedAndLastUpdatedTimeFilter {
   labels?: LabelFilter;
 }
 
-export type EntityMatchingJobStatus =
-  | 'QUEUED'
-  | 'RUNNING'
-  | 'COMPLETED'
-  | 'FAILED';
+export type ContextJobStatus = 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED';
 
-export const EntityMatchingJobStatus = {
-  QUEUED: 'QUEUED' as EntityMatchingJobStatus,
-  RUNNING: 'RUNNING' as EntityMatchingJobStatus,
-  COMPLETED: 'COMPLETED' as EntityMatchingJobStatus,
-  FAILED: 'FAILED' as EntityMatchingJobStatus,
+export const ContextJobStatus = {
+  QUEUED: 'QUEUED' as ContextJobStatus,
+  RUNNING: 'RUNNING' as ContextJobStatus,
+  COMPLETED: 'COMPLETED' as ContextJobStatus,
+  FAILED: 'FAILED' as ContextJobStatus,
 };
 
+/**
+ * Contextualization job ID.
+ */
 export type ContextJobId = number;
 
-// TODO: fix the interface
-export type EntityMatchingMatchObject = IdEither & {
-  name?: string;
-  description?: string;
-};
+// TODO: fix the interface when docs changed
+export interface ExternalEntityToMatch {
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
+  [key: string]: string | number | undefined;
+}
 
+// TODO: fix to camelCase when api changes
 export type EntityMatchingFeatureType =
   | 'simple'
   | 'bigram'
@@ -159,50 +160,81 @@ export type EntityMatchingFeatureType =
   | 'bigram-extra-tokenizers'
   | 'bigram-combo';
 
+export const EntityMatchingFeatureType = {
+  SIMPLE: 'simple' as EntityMatchingFeatureType,
+  BIGRAM: 'bigram' as EntityMatchingFeatureType,
+  FREQUENCY_WEIGHTED_BIGRAM: 'frequency-weighted-bigram' as EntityMatchingFeatureType,
+  BIGRAM_EXTRA_TOKENIZERS: 'bigram-extra-tokenizers' as EntityMatchingFeatureType,
+  BIGRAM_COMBO: 'bigram-combo' as EntityMatchingFeatureType,
+};
+
+// TODO: fix to camelCase when api changes
 export type EntityMatchingClassifier =
   | 'RandomForest'
   | 'DecisionTree'
   | 'LogisticRegression'
   | 'AugmentedLogisticRegression'
-  | 'AugmentedRandomForest';
+  | 'AugmentedRandomForest'
+  | 'Unsupervised';
 
-export interface EntityMatchingMatchField {
+export const EntityMatchingClassifier = {
+  RANDOM_FOREST: 'RandomForest' as EntityMatchingClassifier,
+  DECISION_TREE: 'DecisionTree' as EntityMatchingClassifier,
+  LOGISTIC_REGRESSION: 'LogisticRegression' as EntityMatchingClassifier,
+  AUGMENTED_LOGISTIC_REGRESSION: 'AugmentedLogisticRegression' as EntityMatchingClassifier,
+  AUGMENTED_RANDOM_FOREST: 'AugmentedRandomForest' as EntityMatchingClassifier,
+  UNSUPERVISED: 'Unsupervised' as EntityMatchingClassifier,
+};
+
+export interface EntityMatchingField {
   from: string;
   to: string;
 }
 
-export interface EntityMatchingTrueMatch {
-  /**
-   * The id for the from-object of the match.
-   */
-  fromId?: CogniteInternalId;
-  /**
-   * The id for the to-object of the match.
-   */
-  toId?: CogniteInternalId;
-  /**
-   * The external id for the from-object of the match.
-   */
-  fromExternalId?: CogniteExternalId;
-  /**
-   * The external id for the to-object of the match.
-   */
-  toExternalId?: CogniteExternalId;
-}
+export type ExternalEntityTrueMatch = ExternalEntityTrueMatchFrom &
+  ExternalEntityTrueMatchTo;
+
+type ExternalEntityTrueMatchFrom =
+  | {
+      /**
+       * The id for the from-object of the match.
+       */
+      fromId: CogniteInternalId;
+    }
+  | {
+      /**
+       * The external id for the from-object of the match.
+       */
+      fromExternalId: CogniteExternalId;
+    };
+
+type ExternalEntityTrueMatchTo =
+  | {
+      /**
+       * The id for the to-object of the match.
+       */
+      toId: CogniteInternalId;
+    }
+  | {
+      /**
+       * The external id for the to-object of the match.
+       */
+      toExternalId: CogniteExternalId;
+    };
 
 export interface EntityMatchingFitRequest {
   /**
    * List of entities with field id or externalId to match from, for example, time series.
    */
-  matchFrom: EntityMatchingMatchObject[];
+  matchFrom: ExternalEntityToMatch[];
   /**
    * List of entities with field id or externalId to match to, for example assets.
    */
-  matchTo: EntityMatchingMatchObject[];
+  matchTo: ExternalEntityToMatch[];
   /**
    * List of objects of pairs of fromId or fromExternalId and toId or toExternalId, that corresponds to entities in matchFrom and matchTo respectively, that indicates a confirmed match used to train the model. If omitted, an unsupervised model is used.
    */
-  trueMatches?: EntityMatchingTrueMatch[];
+  trueMatches?: ExternalEntityTrueMatch[];
   /**
    * External Id provided by client. Should be unique within the project.
    */
@@ -218,7 +250,8 @@ export interface EntityMatchingFitRequest {
   /**
    * List of pairs of fields from the matchTo and matchFrom items used to calculate features. All matchFrom and matchTo items should have all the keyFrom and keyTo properties specified here.
    */
-  matchFields?: EntityMatchingMatchField[];
+  matchFields?: EntityMatchingField[];
+  // TODO: fox docs for keysFromTo
   /**
    * Defines the combination of features used. The options are:
    * Simple: Calculates a single cosine-distance similarity score for each of the fields defined in keysFromTo. This is the fastest option.
@@ -232,6 +265,7 @@ export interface EntityMatchingFitRequest {
    * The classifier used in the model. Only relevant if there are trueMatches/labeled data.
    */
   classifier?: EntityMatchingClassifier;
+  // TODO: fix docs for keyFrom
   /**
    * If true, replaces missing data in keyFrom or keyTo with empty strings. Else, returns an error if there is missing data.
    */
@@ -252,13 +286,13 @@ export interface EntityMatchingFitResponse {
   /**
    * The status of the job.
    */
-  status?: EntityMatchingJobStatus;
+  status?: ContextJobStatus;
 }
 
 // TODO: check with context team on items: array
-export type EntityMatchingChange = IdEither & InterfaceEntityMatchingPatch;
+export type EntityMatchingChange = IdEither & EntityMatchingPatch;
 
-export interface InterfaceEntityMatchingPatch {
+export interface EntityMatchingPatch {
   update?: {
     /**
      * Set a new value for the model name.
@@ -271,7 +305,7 @@ export interface InterfaceEntityMatchingPatch {
   };
 }
 
-export type EntityMatchingModel = {
+export interface EntityMatchingModel {
   /**
    * A server-generated ID for the object.
    */
@@ -295,18 +329,17 @@ export type EntityMatchingModel = {
   /**
    * Name of the classifier supervised model, "Unsupervised" if unsupervised model.
    */
-  classifier?: string;
-  // TODO: classifier should be enum?
+  classifier?: EntityMatchingClassifier;
   /**
-   * List of pairs of fields from the matchTo and matchFrom items used to create features.
+   * TODO: fix typedoc when ready
    */
-  keysFromTo?: string[][]; // TODO: fix
+  matchFields?: EntityMatchingField[];
   /**
    * The ID of original model, only relevant when the model is a retrained model.
    */
   originalModelId?: number;
-  status?: EntityMatchingJobStatus;
-};
+  status?: ContextJobStatus;
+}
 
 export interface EntityMatchingPredictRequest {
   /**
@@ -320,11 +353,11 @@ export interface EntityMatchingPredictRequest {
   /**
    * List of entities with field id or externalId to match from, for example, time series.
    */
-  matchFrom?: IdEither[];
+  matchFrom?: ExternalEntityToMatch[];
   /**
    * List of entities with field id or externalId to match to, for example assets.
    */
-  matchTo?: IdEither[];
+  matchTo?: ExternalEntityToMatch[];
   /**
    * The maximum number of results to return for each matchFrom.
    */
@@ -343,7 +376,7 @@ export interface EntityMatchingPredictResponse {
   /**
    * The status of the job.
    */
-  status: EntityMatchingJobStatus;
+  status: ContextJobStatus;
 }
 
 export interface EntityMatchingRefitRequest {
@@ -362,15 +395,15 @@ export interface EntityMatchingRefitRequest {
   /**
    * List of additional confirmed matches used to train the model. The new model uses a combination of this and trueMatches from the orginal model. If there are identical match-from ids, the pair from the original model is dropped.
    */
-  trueMatches: EntityMatchingTrueMatch[];
+  trueMatches: ExternalEntityTrueMatch[];
   /**
    * Additional entities to match from. The new model uses a combination of this and matchFrom items from the orginal model. If there are identical ids, matchFrom items from original model are dropped.
    */
-  matchFrom: EntityMatchingMatchObject[];
+  matchFrom: ExternalEntityToMatch[];
   /**
    * Additional entities to match to. The new model uses a combination this and matchTo items from the orginal model. If there are identical ids, the matchTo items from the original model are dropped.
    */
-  matchTo: EntityMatchingMatchObject[];
+  matchTo: ExternalEntityToMatch[];
 }
 
 export interface EntityMatchingRefitResponse {
@@ -385,49 +418,52 @@ export interface EntityMatchingRefitResponse {
   /**
    * The ID of the new model.
    */
-  id: number;
+  id: CogniteInternalId;
   /**
    * The externalId of the new model.
    */
-  externalId: string;
+  externalId: CogniteExternalId;
   /**
    * The status of the job.
    */
-  status: EntityMatchingJobStatus;
+  status: ContextJobStatus;
   /**
    * ID of original model.
    */
-  originalId: number;
+  originalId: CogniteInternalId;
 }
 
-export interface EntityMatchingRetrievePredictResponse {
-  /**
-   * Contextualization job ID.
-   */
+export interface EntityMatchingPredictions {
   jobId: ContextJobId;
   /**
    * The status of the job.
    */
-  status: EntityMatchingJobStatus;
+  status: ContextJobStatus;
   /**
    * List of matched entities with confidence score.
    */
-  items: EntityMatchingRetrievePredictResponseItem[];
+  items: EntityMatchingPrediction[];
 }
 
-export interface EntityMatchingRetrievePredictResponseItem {
+export interface EntityMatchingPrediction {
   /**
    * The matchFrom item given to predict.
    */
-  matchFrom: EntityMatchingMatchObject;
+  matchFrom: ExternalEntityToMatch;
   /**
    * Matched items, sorted from highest score to lowest. May be empty.
    */
-  matches: EntityMatchingRetrievePredictResponseItemMatche[];
+  matches: EntityMatchingPredictedItem[];
 }
 
-export interface EntityMatchingRetrievePredictResponseItemMatche {
-  matchTo: EntityMatchingMatchObject;
+export interface EntityMatchingPredictedItem {
+  /**
+   * The matchTo item given to predict.
+   */
+  matchTo: ExternalEntityToMatch;
+  /**
+   * The model's confidence in the match.
+   */
   score: number;
 }
 
@@ -451,11 +487,11 @@ export interface EntityMatchingFilter {
   /**
    * List of pairs of fields from the matchTo and matchFrom items used to create features.
    */
-  keysFromTo?: any[]; // TODO: fix
+  matchFields?: EntityMatchingField[];
   /**
    * The ID of original model, only relevant when the model is a retrained model.
    */
-  originalModelId?: number;
+  originalModelId?: CogniteInternalId;
 }
 
 export interface EntityMatchingFilterRequest extends FilterQuery {
