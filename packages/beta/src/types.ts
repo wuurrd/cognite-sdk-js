@@ -366,7 +366,7 @@ export interface EntityMatchingPredictResponse {
 export type EntityMatchingRefitRequest = IdEither &
   EntityMatchingRefitRequestBase;
 
-export interface EntityMatchingRefitRequestBase {
+interface EntityMatchingRefitRequestBase {
   /**
    * External ID for the new refitted model provided by client. Should be unique within the project.
    */
