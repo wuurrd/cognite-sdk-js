@@ -174,8 +174,7 @@ export type EntityMatchingClassifier =
   | 'DecisionTree'
   | 'LogisticRegression'
   | 'AugmentedLogisticRegression'
-  | 'AugmentedRandomForest'
-  | 'Unsupervised';
+  | 'AugmentedRandomForest';
 
 export const EntityMatchingClassifier = {
   RANDOM_FOREST: 'RandomForest' as EntityMatchingClassifier,
@@ -183,7 +182,6 @@ export const EntityMatchingClassifier = {
   LOGISTIC_REGRESSION: 'LogisticRegression' as EntityMatchingClassifier,
   AUGMENTED_LOGISTIC_REGRESSION: 'AugmentedLogisticRegression' as EntityMatchingClassifier,
   AUGMENTED_RANDOM_FOREST: 'AugmentedRandomForest' as EntityMatchingClassifier,
-  UNSUPERVISED: 'Unsupervised' as EntityMatchingClassifier,
 };
 
 export interface EntityMatchingField {

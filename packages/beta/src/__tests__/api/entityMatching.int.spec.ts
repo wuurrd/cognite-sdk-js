@@ -19,6 +19,7 @@ describe('context integration test', () => {
   let assetB: ExternalEntityToMatch;
   let tsA: ExternalEntityToMatch;
   let tsB: ExternalEntityToMatch;
+  let predictJobId: number;
 
   beforeAll(async () => {
     client = setupLoggedInClient();
@@ -37,10 +38,10 @@ describe('context integration test', () => {
     const newModelExternalId = 'entity_matching_test_refit' + randomInt();
     test('fit model', async () => {
       const result = await client.entityMatching.fit({
+        name: modelExternalId,
+        externalId: modelExternalId,
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
-        externalId: modelExternalId,
-        name: modelExternalId,
       });
       expect(result.externalId).toBe(modelExternalId);
     });
@@ -81,24 +82,29 @@ describe('context integration test', () => {
         matchTo: [tsA, tsB],
       });
       expect(predictResponse.status).toBe('Queued');
-      const predictResponseJobId = predictResponse.jobId;
+      predictJobId = predictResponse.jobId;
+    });
+
+    test('retrieve predict result', async () => {
       await runTestWithRetryWhenFailing(async () => {
-        const retrievePredictResultResponse = await client.entityMatching.predictResult(
-          predictResponseJobId
+        const { status } = await client.entityMatching.predictResult(
+          predictJobId
         );
-        expect(retrievePredictResultResponse.status).toBe('Completed');
+        expect(status).toBe('Completed');
       });
       expect.hasAssertions();
     });
-    test('refit model', async () => {
+
+    test('refit model with some true matches', async () => {
+      const trueMatches = [
+        { fromExternalId: assetA.externalId!, toExternalId: tsA.externalId! },
+      ];
       const refitResult = await client.entityMatching.refit({
+        trueMatches,
+        externalId: modelExternalId,
         newExternalId: newModelExternalId,
         matchFrom: [assetA, assetB],
         matchTo: [tsA, tsB],
-        externalId: modelExternalId,
-        trueMatches: [
-          { fromExternalId: assetA.externalId!, toExternalId: tsA.externalId! },
-        ],
       });
       expect(refitResult.externalId).toBe(newModelExternalId);
       await runTestWithRetryWhenFailing(async () => {
