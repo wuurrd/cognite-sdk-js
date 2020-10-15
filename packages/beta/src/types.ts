@@ -233,9 +233,6 @@ export interface EntityMatchingFitRequest {
    * List of objects of pairs of fromId or fromExternalId and toId or toExternalId, that corresponds to entities in matchFrom and matchTo respectively, that indicates a confirmed match used to train the model. If omitted, an unsupervised model is used.
    */
   trueMatches?: ExternalEntityTrueMatch[];
-  /**
-   * External Id provided by client. Should be unique within the project.
-   */
   externalId?: CogniteExternalId;
   /**
    * User defined name of the model.
@@ -304,13 +301,7 @@ export interface EntityMatchingPatch {
 }
 
 export interface EntityMatchingModel {
-  /**
-   * A server-generated ID for the object.
-   */
   id?: CogniteInternalId;
-  /**
-   * External Id provided by client. Should be unique within the project.
-   */
   externalId?: CogniteExternalId;
   /**
    * User defined name of the model.
@@ -339,15 +330,10 @@ export interface EntityMatchingModel {
   status?: ContextJobStatus;
 }
 
-export interface EntityMatchingPredictRequest {
-  /**
-   * The ID of the model that will be used to predict matches. Must include either externalId or id.
-   */
-  id?: CogniteInternalId;
-  /**
-   * The externalId of the model that will be used to predict matches. Must include either externalId or id.
-   */
-  externalId?: CogniteExternalId;
+export type EntityMatchingPredictRequest = IdEither &
+  EntityMatchingPredictRequestBase;
+
+interface EntityMatchingPredictRequestBase {
   /**
    * List of entities with field id or externalId to match from, for example, time series.
    */
@@ -377,15 +363,10 @@ export interface EntityMatchingPredictResponse {
   status: ContextJobStatus;
 }
 
-export interface EntityMatchingRefitRequest {
-  /**
-   * The ID of the original model. Must include either externalId or id.
-   */
-  id?: CogniteInternalId;
-  /**
-   * The externalId of the original model. Must include either externalId or id.
-   */
-  externalId?: CogniteExternalId;
+export type EntityMatchingRefitRequest = IdEither &
+  EntityMatchingRefitRequestBase;
+
+export interface EntityMatchingRefitRequestBase {
   /**
    * External ID for the new refitted model provided by client. Should be unique within the project.
    */

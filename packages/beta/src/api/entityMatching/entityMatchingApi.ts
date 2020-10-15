@@ -19,7 +19,15 @@ import {
   EntityMatchingFilterRequest,
 } from '../../types';
 
-export class EntityMatchingApi extends BaseResourceAPI<any> {
+export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
+  // TODO: fix timestamps conversion
+  // protected getDateProps() {
+  //   return this.pickDateProps(
+  //     ['items'],
+  //     ['createdTime', ...]
+  //   );
+  // }
+
   // TODO: this will be renamed to "create"
   /**
    * [Create entity matcher](https://docs.cognite.com/api/playground/#operation/entityMatchingFit)
