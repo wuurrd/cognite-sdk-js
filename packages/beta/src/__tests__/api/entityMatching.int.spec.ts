@@ -36,8 +36,8 @@ describe('context integration test', () => {
   describe('Entity Matching', () => {
     const modelExternalId = 'entity_matching_test_fit' + randomInt();
     const newModelExternalId = 'entity_matching_test_refit' + randomInt();
-    test('fit model', async () => {
-      const result = await client.entityMatching.fit({
+    test('create a model', async () => {
+      const result = await client.entityMatching.create({
         name: modelExternalId,
         externalId: modelExternalId,
         matchFrom: [assetA, assetB],

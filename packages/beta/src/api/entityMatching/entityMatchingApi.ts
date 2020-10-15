@@ -22,10 +22,10 @@ import {
 export class EntityMatchingApi extends BaseResourceAPI<any> {
   // TODO: this will be renamed to "create"
   /**
-   * [Fit entity matcher](https://docs.cognite.com/api/playground/#operation/entityMatchingFit)
+   * [Create entity matcher](https://docs.cognite.com/api/playground/#operation/entityMatchingFit)
    *
    * ```js
-   * await client.entityMatching.fit({
+   * await client.entityMatching.create({
    *  matchFrom: [{externalId: 'asset1', name: 'asset1'}, {externalId: 'asset2', name: 'asset2'}],
    *  matchTo: [{externalId: 'ts1', name: 'ts1'}, {externalId: 'ts2', name: 'ts2'}],
    *  externalId: 'model123',
@@ -33,7 +33,7 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
    * });
    * ```
    */
-  public fit = async (
+  public create = async (
     scope: EntityMatchingFitRequest
   ): Promise<EntityMatchingFitResponse> => {
     const path = this.url();
@@ -45,10 +45,9 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
 
   /**
    * [Retrieve entity matching models](https://docs.cognite.com/api/playground/#operation/entityMatchingRetrive)
+   *
    * ```js
-   * await client.entityMatching.retrieve({
-   *   { externalId: 'model123' }
-   * });
+   * await client.entityMatching.retrieve([{ externalId: 'model123' }]);
    * ```
    */
   public retrieve = (ids: IdEither[]): Promise<EntityMatchingModel[]> => {
@@ -57,10 +56,9 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
 
   /**
    * [List entity matching models](https://docs.cognite.com/api/playground/#operation/entityMatchingFilter)
+   *
    * ```js
-   * await client.entityMatching.list{
-   *   filter: {name: 'model123'},
-   * };
+   * await client.entityMatching.list({ filter: { name: 'model123' }});
    * ```
    */
   public list = (
@@ -71,11 +69,12 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
 
   /**
    * [Update entity matching models](https://docs.cognite.com/api/playground/#operation/entityMatchingUpdate)
+   *
    * ```js
-   * await client.entityMatching.update({
+   * await client.entityMatching.update([{
    *  externalId: 'model123',
    *  update: { description: { set: 'ø' }}
-   * });
+   * }]);
    * ```
    */
   public update = (
@@ -85,11 +84,10 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
   };
 
   /**
-   * [Delete entity matcher model](https://docs.cognite.com/api/playground/#operation/entityMatchingPredict)
+   * [Delete entity matcher model](https://docs.cognite.com/api/playground/#operation/entityMatchingDelete)
+   *
    * ```js
-   * await client.entityMatching.delete({
-   *  externalId: 'model123',
-   * });
+   * await client.entityMatching.delete([{ externalId: 'model123' }]);
    * ```
    */
   public delete = async (ids: IdEither[]): Promise<{}> => {
@@ -98,6 +96,7 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
 
   /**
    * [Predict matches](https://docs.cognite.com/api/playground/#operation/entityMatchingPredict)
+   *
    * ```js
    * await client.entityMatching.predict({
    *  externalId: 'model123',
@@ -118,6 +117,7 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
 
   /**
    * [Retrieve entity matcher predict result](https://docs.cognite.com/api/playground/#operation/entityMatchingPredictResults)
+   *
    * ```js
    * await client.entityMatching.predictResult(12345678);
    * ```
@@ -132,14 +132,15 @@ export class EntityMatchingApi extends BaseResourceAPI<any> {
 
   /**
    * [Re-fit entity matcher model](https://docs.cognite.com/api/playground/#operation/entityMatchingReFit)
+   *
    * ```js
-   * await client.entityMatching.refit{
+   * await client.entityMatching.refit({
    *  newExternalId: 'newModel123',
    *  matchFrom: [{externalId: 'asset1', name: 'asset1'}, {externalId: 'asset2', name: 'asset2'}],
    *  matchTo: [{externalId: 'ts1', name: 'ts1'}, {externalId: 'ts2', name: 'ts2'}],
    *  externalId: 'model123',
    *  trueMatches: [{fromExternalId: 'asset1', toExternalId: 'ts1'}]
-   * };
+   * });
    * ```
    */
   public refit = async (
