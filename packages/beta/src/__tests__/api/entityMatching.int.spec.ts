@@ -40,8 +40,8 @@ describe('context integration test', () => {
       const result = await client.entityMatching.create({
         name: modelExternalId,
         externalId: modelExternalId,
-        matchFrom: [assetA, assetB],
-        matchTo: [tsA, tsB],
+        sources: [assetA, assetB],
+        targets: [tsA, tsB],
       });
       expect(result.externalId).toBe(modelExternalId);
     });
@@ -97,14 +97,17 @@ describe('context integration test', () => {
 
     test('refit model with some true matches', async () => {
       const trueMatches = [
-        { fromExternalId: assetA.externalId!, toExternalId: tsA.externalId! },
+        {
+          sourceExternalId: assetA.externalId!,
+          targetExternalId: tsA.externalId!,
+        },
       ];
       const refitResult = await client.entityMatching.refit({
-        trueMatches,
+        trueMatches: trueMatches,
         externalId: modelExternalId,
         newExternalId: newModelExternalId,
-        matchFrom: [assetA, assetB],
-        matchTo: [tsA, tsB],
+        sources: [assetA, assetB],
+        targets: [tsA, tsB],
       });
       expect(refitResult.externalId).toBe(newModelExternalId);
       await runTestWithRetryWhenFailing(async () => {
