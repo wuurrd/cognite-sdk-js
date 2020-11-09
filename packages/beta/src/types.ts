@@ -11,6 +11,7 @@ import {
   Timestamp,
   Range,
   LabelFilter,
+  SinglePatchString,
   CreatedAndLastUpdatedTime,
 } from '@cognite/sdk';
 
@@ -291,11 +292,11 @@ export interface EntityMatchingPatch {
     /**
      * Set a new value for the model name.
      */
-    name?: CreatedAndLastUpdatedTime;
+    name?: SinglePatchString;
     /**
      * Set a new value for the model description.
      */
-    description: CreatedAndLastUpdatedTime;
+    description: SinglePatchString;
   };
 }
 
