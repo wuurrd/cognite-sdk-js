@@ -36,7 +36,6 @@ export default class CogniteClient extends CogniteClientCleaned {
    */
   constructor(options: ClientOptions) {
     super(options);
-    this.httpClient.setDefaultHeader('version', 'beta');
   }
 
   public get relationships() {
