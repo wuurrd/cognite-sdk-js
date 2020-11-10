@@ -30,7 +30,7 @@ export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
 
   // TODO: this will be renamed to "create"
   /**
-   * [Create entity matcher](https://docs.cognite.com/api/playground/#operation/entityMatchingFit)
+   * [Create entity matcher](https://docs.cognite.com/api/v1/#operation/entityMatchingFit)
    *
    * ```js
    * await client.entityMatching.create({
@@ -52,7 +52,7 @@ export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
   };
 
   /**
-   * [Retrieve entity matching models](https://docs.cognite.com/api/playground/#operation/entityMatchingRetrive)
+   * [Retrieve entity matching models](https://docs.cognite.com/api/v1/#operation/entityMatchingRetrive)
    *
    * ```js
    * await client.entityMatching.retrieve([{ externalId: 'model123' }]);
@@ -63,7 +63,7 @@ export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
   };
 
   /**
-   * [List entity matching models](https://docs.cognite.com/api/playground/#operation/entityMatchingFilter)
+   * [List entity matching models](https://docs.cognite.com/api/v1/#operation/entityMatchingFilter)
    *
    * ```js
    * await client.entityMatching.list({ filter: { name: 'model123' }});
@@ -76,7 +76,7 @@ export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
   };
 
   /**
-   * [Update entity matching models](https://docs.cognite.com/api/playground/#operation/entityMatchingUpdate)
+   * [Update entity matching models](https://docs.cognite.com/api/v1/#operation/entityMatchingUpdate)
    *
    * ```js
    * await client.entityMatching.update([{
@@ -92,7 +92,7 @@ export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
   };
 
   /**
-   * [Delete entity matcher model](https://docs.cognite.com/api/playground/#operation/entityMatchingDelete)
+   * [Delete entity matcher model](https://docs.cognite.com/api/v1/#operation/entityMatchingDelete)
    *
    * ```js
    * await client.entityMatching.delete([{ externalId: 'model123' }]);
@@ -103,7 +103,7 @@ export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
   };
 
   /**
-   * [Predict matches](https://docs.cognite.com/api/playground/#operation/entityMatchingPredict)
+   * [Predict matches](https://docs.cognite.com/api/v1/#operation/entityMatchingPredict)
    *
    * ```js
    * await client.entityMatching.predict({
@@ -139,7 +139,7 @@ export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
   };
 
   /**
-   * [Re-fit entity matcher model](https://docs.cognite.com/api/playground/#operation/entityMatchingReFit)
+   * [Re-fit entity matcher model](https://docs.cognite.com/api/v1/#operation/entityMatchingReFit)
    *
    * ```js
    * await client.entityMatching.refit({
