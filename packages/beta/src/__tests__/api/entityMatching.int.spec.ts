@@ -78,8 +78,8 @@ describe('context integration test', () => {
     test('predict', async () => {
       const predictResponse = await client.entityMatching.predict({
         externalId: modelExternalId,
-        matchFrom: [assetA, assetB],
-        matchTo: [tsA, tsB],
+        sources: [assetA, assetB],
+        targets: [tsA, tsB],
       });
       expect(predictResponse.status).toBe('Queued');
       predictJobId = predictResponse.jobId;

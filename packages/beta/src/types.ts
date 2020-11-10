@@ -335,13 +335,13 @@ export type EntityMatchingPredictRequest = IdEither &
 
 interface EntityMatchingPredictRequestBase {
   /**
-   * List of entities with field id or externalId to match from, for example, time series.
+   * List of source entities to predict matches for, for example, time series. If omitted, will use data source fit.
    */
-  matchFrom?: ExternalEntityToMatch[];
+  sources?: ExternalEntityToMatch[];
   /**
-   * List of entities with field id or externalId to match to, for example assets.
+   * LList of potential target entities to match to one or more of the source entities, for example, assets. If omitted, will use data from fit.
    */
-  matchTo?: ExternalEntityToMatch[];
+  targets?: ExternalEntityToMatch[];
   /**
    * The maximum number of results to return for each matchFrom.
    */
