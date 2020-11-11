@@ -149,7 +149,24 @@ export const ContextJobStatus = {
  */
 export type ContextJobId = number;
 
-// TODO: fix the interface when docs changed
+export interface EntityMatchingResponseBase {
+  /**
+   * User defined name of the model.
+   */
+  name?: string;
+  /**
+   * User defined description of the model
+   */
+  description?: string;
+  /**
+   * The status of the job.
+   */
+  status?: ContextJobStatus;
+  createdTime?: Date;
+  startTime?: Date;
+  statusTime?: Date;
+}
+
 export interface ExternalEntityToMatch {
   id?: CogniteInternalId;
   externalId?: CogniteExternalId;
@@ -191,38 +208,38 @@ export interface EntityMatchingField {
   to: string;
 }
 
-export type ExternalEntityTrueMatch = ExternalEntityTrueMatchFrom &
-  ExternalEntityTrueMatchTo;
+export type ExternalEntityTrueMatch = ExternalEntityTrueMatchSource &
+  ExternalEntityTrueMatchTarget;
 
-type ExternalEntityTrueMatchFrom =
+type ExternalEntityTrueMatchSource =
   | {
       /**
-       * The id for the from-object of the match.
+       * The id for the source object of the match.
        */
       sourceId: CogniteInternalId;
     }
   | {
       /**
-       * The external id for the from-object of the match.
+       * The external id for the source object of the match.
        */
       sourceExternalId: CogniteExternalId;
     };
 
-type ExternalEntityTrueMatchTo =
+type ExternalEntityTrueMatchTarget =
   | {
       /**
-       * The id for the to-object of the match.
+       * The id for the target object of the match.
        */
       targetId: CogniteInternalId;
     }
   | {
       /**
-       * The external id for the to-object of the match.
+       * The external id for the target object of the match.
        */
       targetExternalId: CogniteExternalId;
     };
 
-export interface EntityMatchingFitRequest {
+export interface EntityMatchingCreateRequest {
   /**
    * List of custom source object to match from, for example, time series. String key -> value. Only string values are considered in the matching. Optional id and/or externalId fields.
    */
@@ -245,7 +262,7 @@ export interface EntityMatchingFitRequest {
    */
   description?: string;
   /**
-   * List of pairs of fields from the matchTo and matchFrom items used to calculate features. All matchFrom and matchTo items should have all the keyFrom and keyTo properties specified here.
+   * List of pairs of fields from the target and source items used to calculate features. All source and target items should have all the source and target fields specified here.
    */
   matchFields?: EntityMatchingField[];
   /**
@@ -267,28 +284,64 @@ export interface EntityMatchingFitRequest {
   ignoreMissingFields?: boolean;
 }
 
-export interface EntityMatchingFitResponse {
+export interface EntityMatchingCreateResponseBase {
   id?: CogniteInternalId;
   externalId?: CogniteExternalId;
   /**
-   * User defined name of the model.
+   * Defines the combination of features used in the entity matcher model.
    */
-  name?: string;
+  featureType?: EntityMatchingFeatureType;
   /**
-   * User defined description of the model
+   * Name of the classifier used in the model, "Unsupervised" if unsupervised model.
    */
-  description?: string;
+  classifier?: EntityMatchingClassifier;
   /**
-   * The status of the job.
+   * If True, missing fields in sources or targets entities set in matchFields, are replaced with empty strings.
    */
-  status?: ContextJobStatus;
+  ignoreMissingFields?: boolean;
+  /**
+   * List of pairs of fields from the target and source items used to calculate features. All source and target items should have all the source and target fields specified here.
+   */
+  matchFields?: EntityMatchingField[];
+  /**
+   * The ID of original model, only relevant when the model is a retrained model.
+   */
+  originalId?: CogniteInternalId;
 }
 
-// TODO: check with context team on items: array
+export interface EntityMatchingCreateResponse
+  extends EntityMatchingCreateResponseBase,
+    EntityMatchingResponseBase {}
+
+export interface EntityMatchingModelBase {
+  id?: CogniteInternalId;
+  externalId?: CogniteExternalId;
+  /**
+   * Defines the combination of features used in the entity matcher model.
+   */
+  featureType?: EntityMatchingFeatureType;
+  /**
+   * Name of the classifier used in the model, "Unsupervised" if unsupervised model.
+   */
+  classifier?: EntityMatchingClassifier;
+  /**
+   * Array of objects (MatchFields) List of pairs of fields from the target and source items used to calculate features. All source and target items should have all the source and target fields specified here.
+   */
+  matchFields?: EntityMatchingField[];
+  /**
+   * The ID of original model, only relevant when the model is a retrained model.
+   */
+  originalId?: number;
+}
+
+export interface EntityMatchingModel
+  extends EntityMatchingModelBase,
+    EntityMatchingResponseBase {}
+
 export type EntityMatchingChange = IdEither & EntityMatchingPatch;
 
 export interface EntityMatchingPatch {
-  update?: {
+  update: {
     /**
      * Set a new value for the model name.
      */
@@ -298,36 +351,6 @@ export interface EntityMatchingPatch {
      */
     description: SinglePatchString;
   };
-}
-
-export interface EntityMatchingModel {
-  id?: CogniteInternalId;
-  externalId?: CogniteExternalId;
-  /**
-   * User defined name of the model.
-   */
-  name?: string;
-  /**
-   * User defined description of the model.
-   */
-  description?: string;
-  /**
-   * The feature type used to fit the model.
-   */
-  featureType?: EntityMatchingFeatureType;
-  /**
-   * Name of the classifier supervised model, "Unsupervised" if unsupervised model.
-   */
-  classifier?: EntityMatchingClassifier;
-  /**
-   * TODO: fix typedoc when ready
-   */
-  matchFields?: EntityMatchingField[];
-  /**
-   * The ID of original model, only relevant when the model is a retrained model.
-   */
-  originalModelId?: number;
-  status?: ContextJobStatus;
 }
 
 export type EntityMatchingPredictRequest = IdEither &
@@ -352,16 +375,16 @@ interface EntityMatchingPredictRequestBase {
   scoreThreshold?: number;
 }
 
-export interface EntityMatchingPredictResponse {
+export interface EntityMatchingPredictResponseBase {
   /**
    * Contextualization job ID.
    */
   jobId: number;
-  /**
-   * The status of the job.
-   */
-  status: ContextJobStatus;
 }
+
+export interface EntityMatchingPredictResponse
+  extends EntityMatchingPredictResponseBase,
+    EntityMatchingResponseBase {}
 
 export type EntityMatchingRefitRequest = IdEither &
   EntityMatchingRefitRequestBase;
@@ -378,22 +401,14 @@ interface EntityMatchingRefitRequestBase {
   /**
    * List of source entities, for example, time series. If omitted, will use data from fit.
    */
-  sources: ExternalEntityToMatch[];
+  sources?: ExternalEntityToMatch[];
   /**
    * List of target entities, for example, assets. If omitted, will use data from fit.
    */
-  targets: ExternalEntityToMatch[];
+  targets?: ExternalEntityToMatch[];
 }
 
-export interface EntityMatchingRefitResponse {
-  /**
-   * User defined name of the model.
-   */
-  name: string;
-  /**
-   * User defined description of the model.
-   */
-  description: string;
+export interface EntityMatchingRefitResponseBase {
   /**
    * The ID of the new model.
    */
@@ -403,14 +418,14 @@ export interface EntityMatchingRefitResponse {
    */
   externalId: CogniteExternalId;
   /**
-   * The status of the job.
-   */
-  status: ContextJobStatus;
-  /**
    * ID of original model.
    */
   originalId: CogniteInternalId;
 }
+
+export interface EntityMatchingRefitResponse
+  extends EntityMatchingRefitResponseBase,
+    EntityMatchingResponseBase {}
 
 export interface EntityMatchingPredictions {
   jobId: ContextJobId;

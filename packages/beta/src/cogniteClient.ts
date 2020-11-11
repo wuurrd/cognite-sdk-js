@@ -54,15 +54,9 @@ export default class CogniteClient extends CogniteClientCleaned {
     super.initAPIs();
 
     this.relationshipsApi = this.apiFactory(RelationshipsApi, 'relationships');
-    // this.entityMatchingApi = this.apiFactory(EntityMatchingApi, 'entityMatching');
-    // TODO: replace the stuff below with the line above
-    // TODO: v1 or beta?
-    this.entityMatchingApi = new EntityMatchingApi(
-      `/api/v1/projects/${encodeURIComponent(
-        this.project
-      )}/context/entitymatching`,
-      this.httpClient,
-      this.metadataMap
+    this.entityMatchingApi = this.apiFactory(
+      EntityMatchingApi,
+      'context/entitymatching'
     );
   }
 }

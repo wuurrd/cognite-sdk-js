@@ -6,8 +6,8 @@ import {
   IdEither,
 } from '@cognite/sdk-core';
 import {
-  EntityMatchingFitRequest,
-  EntityMatchingFitResponse,
+  EntityMatchingCreateRequest,
+  EntityMatchingCreateResponse,
   EntityMatchingRefitRequest,
   EntityMatchingRefitResponse,
   EntityMatchingChange,
@@ -20,17 +20,18 @@ import {
 } from '../../types';
 
 export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
-  // TODO: fix timestamps conversion
-  // protected getDateProps() {
-  //   return this.pickDateProps(
-  //     ['items'],
-  //     ['createdTime', ...]
-  //   );
-  // }
-
-  // TODO: this will be renamed to "create"
   /**
-   * [Create entity matcher](https://docs.cognite.com/api/v1/#operation/entityMatchingFit)
+   * @hidden
+   */
+  protected getDateProps() {
+    return this.pickDateProps(
+      ['items'],
+      ['createdTime', 'startTime', 'statusTime']
+    );
+  }
+
+  /**
+   * [Create entity matcher](https://docs.cognite.com/api/v1/#operation/entityMatchingCreate)
    *
    * ```js
    * await client.entityMatching.create({
@@ -42,10 +43,10 @@ export class EntityMatchingApi extends BaseResourceAPI<EntityMatchingModel> {
    * ```
    */
   public create = async (
-    scope: EntityMatchingFitRequest
-  ): Promise<EntityMatchingFitResponse> => {
+    scope: EntityMatchingCreateRequest
+  ): Promise<EntityMatchingCreateResponse> => {
     const path = this.url();
-    const response = await this.post<EntityMatchingFitResponse>(path, {
+    const response = await this.post<EntityMatchingCreateResponse>(path, {
       data: scope,
     });
     return this.addToMapAndReturn(response.data, response);
