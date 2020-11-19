@@ -112,7 +112,7 @@ export interface AclScopeCurrentUser {
 export type AclScopeDatasets = AclScopeAll | AclScopeDatasetsIds;
 
 export interface AclScopeDatasetsIds {
-  datasetScope: {
+  idScope: {
     ids: CogniteInternalId[];
   };
 }
